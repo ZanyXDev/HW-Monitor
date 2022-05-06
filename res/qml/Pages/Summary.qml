@@ -67,18 +67,63 @@ Item {
         }
 
         InfoLabel{
+            id:summaryLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignRight
-             Layout.topMargin: 10 *dp
+            Layout.topMargin: 10 *dp
             Layout.rightMargin: 10 *dp
             font {
                 pointSize: 24
                 italic: true
             }
-
             text: qsTr("Summary")
         }
 
+        Item{
+            id:uptimeBlock
+            Layout.preferredHeight: 24 * dp
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            Layout.topMargin: 10 *dp
+            RowLayout{
+                id:uptimeLayout
+                spacing: 10 * dp
+                anchors.fill: parent
+                Item {
+                    // spacer item
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+                QQC2.Label{
+                    id:uptimeLabel
+                    Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+                    text: qsTr("Uptime:")
+                    font {
+                        pointSize: 18
+                    }
+                    color:"white"
+                }
+                QQC2.Label{
+                    id:uptimeValueLabel
+                    Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+                    text: "2h:02m:33s"//monitor.uptime
+                    font {
+                        pointSize: 18
+                    }
+                    color:"white"
+                }
+                Item {
+                    // spacer item
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+            }
+        }
+        Item {
+            // spacer item
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
     }
     // ----- Qt provided non-visual children
     // ----- Custom non-visual children
