@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>res/qml/main.qml</file>
+        <file>res/qml/Pages/Summary.qml</file>
     </qresource>
 </RCC>
