@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 import QtGraphicalEffects 1.0
 
+import io.github.zanyxdev.qml_hwmonitor 1.0
 
 Item {
     id:summaryPage
@@ -106,7 +107,7 @@ Item {
                 QQC2.Label{
                     id:uptimeValueLabel
                     Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-                    text: "2h:02m:33s"//monitor.uptime
+                    text: Monitor.uptime
                     font {
                         pointSize: 18
                     }
@@ -126,6 +127,10 @@ Item {
         }
     }
     // ----- Qt provided non-visual children
+    Timer {
+        interval: 1000; running: true; repeat: true;
+        onTriggered: Monitor.updateSystemInfo()
+    }
     // ----- Custom non-visual children
     // ----- JavaScript functions
 
