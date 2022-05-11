@@ -95,23 +95,18 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                 }
-                QQC2.Label{
+                InfoLabel{
                     id:uptimeLabel
                     Layout.alignment: Qt.AlignTop | Qt.AlignCenter
                     text: qsTr("Uptime:")
-                    font {
-                        pointSize: 18
-                    }
-                    color:"white"
+                    font { pointSize: 18 }
+
                 }
-                QQC2.Label{
+                InfoLabel{
                     id:uptimeValueLabel
                     Layout.alignment: Qt.AlignTop | Qt.AlignCenter
                     text: Monitor.uptime
-                    font {
-                        pointSize: 18
-                    }
-                    color:"white"
+                    font { pointSize: 18 }
                 }
                 Item {
                     // spacer item
