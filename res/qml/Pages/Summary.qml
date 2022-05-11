@@ -53,19 +53,19 @@ Item {
         console.log("Summary page completed")
     }
     // ----- Visual children.
+    component InfoLabel:QQC2.Label {
+
+        font { family: font_families}
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        padding: 2 * dp
+        color:"white"
+    }
+
     ColumnLayout{
         id:mainScreenLayout
         anchors.fill: parent
         spacing: 2 *dp
-
-        component InfoLabel:QQC2.Label {
-
-            font { family: font_families}
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            padding: 2 * dp
-            color:"white"
-        }
 
         InfoLabel{
             id:summaryLabel
