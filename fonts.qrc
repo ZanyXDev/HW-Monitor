@@ -1,9 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>res/fonts/COPYRIGHT.txt</file>
-        <file>res/fonts/DroidSansFallback.ttf</file>
         <file>res/fonts/DroidSansMono.ttf</file>
-        <file>res/fonts/LICENSE</file>
-        <file>res/fonts/LICENSE.txt</file>
     </qresource>
 </RCC>

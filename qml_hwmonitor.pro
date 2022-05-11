@@ -36,8 +36,8 @@ HEADERS += \
 
 RESOURCES += \
      qml.qrc \
-     images.qrc
- #fonts.qrc
+     images.qrc \
+     fonts.qrc
 
 #TRANSLATIONS += \
 #    G2_ru_RU.ts
