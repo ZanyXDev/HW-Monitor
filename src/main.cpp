@@ -33,7 +33,8 @@ void createAppConfigFolder()
 
 const QString getAppFont(){
     QStringList font_families;
-    int id = QFontDatabase::addApplicationFont(":/res/fonts/DroidSansFallback.ttf");
+
+    int id = QFontDatabase::addApplicationFont(":/res/fonts/DroidSansMono.ttf");
 
     if(id != -1){
         font_families = QFontDatabase::applicationFontFamilies(id);
@@ -41,7 +42,9 @@ const QString getAppFont(){
         QFont font;
         font_families << font.defaultFamily();
     }
+    qDebug() << "font:" <<font_families.first();
     return font_families.first();
+
 }
 
 int main(int argc, char *argv[]) {
@@ -54,6 +57,7 @@ int main(int argc, char *argv[]) {
                 QString("%1-%2[%3]").arg(VERSION).arg(GIT_HASH).arg(GIT_BRANCH));
 
     QGuiApplication app(argc, argv);
+
     /*!
      * \brief Make docs encourage readers to query locale right
      * \sa https://codereview.qt-project.org/c/qt/qtdoc/+/297560
@@ -131,10 +135,9 @@ int main(int argc, char *argv[]) {
 #endif
 
     double scale = density >= 640 ? 4 :
-                   density >= 480 ? 3 :
-                   density >= 320 ? 2 :
-                   density >= 240 ? 1.5 : 1;
-
+                                    density >= 480 ? 3 :
+                                                     density >= 320 ? 2 :
+                                                                      density >= 240 ? 1.5 : 1;
 #ifdef QT_DEBUG
     scale = 1.75;
 #endif
