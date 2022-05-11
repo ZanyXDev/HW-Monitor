@@ -97,15 +97,51 @@ Item {
                 }
                 InfoLabel{
                     id:uptimeLabel
-                    Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
                     text: qsTr("Uptime:")
                     font { pointSize: 18 }
 
                 }
                 InfoLabel{
                     id:uptimeValueLabel
-                    Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+                    Layout.alignment: Qt.AlignTop | Qt.AlignRight
                     text: Monitor.uptime
+                    font { pointSize: 18 }
+                }
+                Item {
+                    // spacer item
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+            }
+        }
+
+        Item{
+            id:memoryUsageBlock
+            Layout.preferredHeight: 24 * dp
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            Layout.topMargin: 10 *dp
+            RowLayout{
+                id:memoryUsageLayout
+                spacing: 10 * dp
+                anchors.fill: parent
+                Item {
+                    // spacer item
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+                InfoLabel{
+                    id:memoryUsageLabel
+                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                    text: qsTr("Memory usage:")
+                    font { pointSize: 18 }
+
+                }
+                InfoLabel{
+                    id:memoryUsageValueLabel
+                    Layout.alignment: Qt.AlignTop | Qt.AlignRight
+                    text: Monitor.memoryUsage
                     font { pointSize: 18 }
                 }
                 Item {
