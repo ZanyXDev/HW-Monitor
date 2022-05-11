@@ -44,15 +44,21 @@ private:
     QString m_uptime;
     QString m_hostname;
     QString m_memoryUsage;
-    quint64 m_PCStartSeconds;
-    quint64 totalram;	/* Total usable main memory size */
-    quint64 freeram;    /* Available memory size */
-    quint64 sharedram;	/* Amount of shared memory */
-    quint64 totalswap;	/* Total swap space size */
-    quint64 freeswap ;  /* swap space still available */
-    double  memoryUsagePercent;
 
-    void updateUpTime( );
-    void updateMemory( );
-   void bytesToKiloMegaGiga(quint64 m_bytes);
+    quint64 m_PCStartSeconds; /* Seconds since boot */
+    quint64 m_totalram;	  /* Total usable main memory size */
+    quint64 m_freeram;    /* Available memory size */
+    quint64 m_sharedram;  /* Amount of shared memory */
+    quint64 m_totalswap;  /* Total swap space size */
+    quint64 m_freeswap;   /* swap space still available */
+    double  m_memoryUsagePercent;
+
+    void updateUpTime();
+    void updateMemory();
+   /**
+    * float tb = 1099511627776;
+    * float gb = 1073741824;
+    * float mb = 1048576;
+    *float kb = 1024;
+    */
 };
