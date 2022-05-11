@@ -6,6 +6,7 @@ import QtQuick.LocalStorage 2.12
 
 import "Pages"
 
+
 QQC2.ApplicationWindow {
     id:appWnd
     // ----- Property Declarations
@@ -35,6 +36,7 @@ QQC2.ApplicationWindow {
         screenOrientationUpdated(screenOrientation);
     }
     Component.onCompleted: {
+
         var component = Qt.createComponent("qrc:/res/qml/Pages/Summary.qml");
 
         if (component.status === Component.Ready) {
@@ -166,7 +168,8 @@ QQC2.ApplicationWindow {
         }
 
     }
-    // ----- Qt provided non-visual children
+
+     // ----- Qt provided non-visual children
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
@@ -197,6 +200,8 @@ QQC2.ApplicationWindow {
         }
     }
     // ----- Custom non-visual children
+
+
     // ----- JavaScript functions
     // Обработка нажатия кнопки выхода с текущей страницы
     function pageBack(event) {
