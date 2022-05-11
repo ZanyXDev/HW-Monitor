@@ -9,7 +9,9 @@
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
 #include <QtQuickControls2/QQuickStyle>
+#include <QtQml/qqml.h>
 #include <QScreen>
+
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QtAndroid>
@@ -17,6 +19,7 @@
 #include <QtAndroidExtras/QAndroidJniEnvironment>
 #endif
 
+#include "monitor.h"
 
 void createAppConfigFolder()
 {
@@ -46,7 +49,7 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     QCoreApplication::setOrganizationName("ZanyXDev");
-    QCoreApplication::setApplicationName("QML HWMonitor");
+    QCoreApplication::setApplicationName("QML-HWMonitor");
     QCoreApplication::setApplicationVersion(
                 QString("%1-%2[%3]").arg(VERSION).arg(GIT_HASH).arg(GIT_BRANCH));
 
@@ -115,7 +118,7 @@ int main(int argc, char *argv[]) {
              << "Logical Density: " << logicalDensity << " | "
              << "yDpi: " << yDpi  << " | "
              << "xDpi: " << xDpi ;
-     qDebug() << "++++++++++++++++++++++++";
+    qDebug() << "++++++++++++++++++++++++";
 #else
 
     QScreen *screen = qApp->primaryScreen();
@@ -131,10 +134,15 @@ int main(int argc, char *argv[]) {
                    density >= 480 ? 3 :
                    density >= 320 ? 2 :
                    density >= 240 ? 1.5 : 1;
+
 #ifdef QT_DEBUG
     scale = 1.75;
 #endif
-///TODO release https://code.qt.io/cgit/qt/qtandroidextras.git/tree/examples/androidextras/customactivity?h=5.15
+
+    // allocate monitor before the engine to ensure that it outlives it
+    QScopedPointer<Monitor> monitor(new Monitor);
+
+    ///TODO release https://code.qt.io/cgit/qt/qtandroidextras.git/tree/examples/androidextras/customactivity?h=5.15
     QQmlApplicationEngine engine;
 
     QQmlContext *context = engine.rootContext();
@@ -150,6 +158,11 @@ int main(int argc, char *argv[]) {
         if (!obj && url == objUrl) QCoreApplication::exit(-1);
     },
     Qt::QueuedConnection);
+
+    // Third, register the singleton type provider with QML by calling this
+    // function in an initialization function.
+    qmlRegisterSingletonInstance("io.github.zanyxdev.qml_hwmonitor", 1, 0, "Monitor", monitor.get());
+
     engine.load(url);
 
     return app.exec();
