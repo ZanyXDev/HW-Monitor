@@ -34,7 +34,11 @@ void Monitor::updateSystemInfo()
         int mins = round((m_nPCStartSeconds - days*60*60*24 - hours*60*60) / 60);
         int sec = round(m_nPCStartSeconds - days*60*60*24 - hours*60*60 - mins*60);
 
-        m_uptime   = QString("%1d %2h:%3m:%4s").arg(days).arg(hours).arg(mins).arg(sec);
+        m_uptime   = QString("%1d %2h:%3m:%4s")
+                .arg(days, 2, 10, QChar('0'))
+                .arg(hours,2, 10, QChar('0'))
+                .arg(mins,2, 10, QChar('0'))
+                .arg(sec,2, 10, QChar('0'));
         m_hostname = QSysInfo::machineHostName();
         emit uptimeChanged();
     }

@@ -22,7 +22,7 @@
 class Monitor : public QObject {
     Q_OBJECT
     //Q_PROPERTY(int moves READ moves WRITE setMoves NOTIFY movesChanged);
-    Q_PROPERTY(QString uptime READ getUptime CONSTANT NOTIFY uptimeChanged);
+    Q_PROPERTY(QString uptime READ getUptime NOTIFY uptimeChanged);
     Q_PROPERTY(QString hostname READ getHostname CONSTANT);
     //Q_PROPERTY(int tiles READ tiles CONSTANT)
 public:
