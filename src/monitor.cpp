@@ -6,12 +6,12 @@ Monitor::Monitor(QObject *parent)
     , m_hostname(QString(""))
     , m_memoryUsage(QString(""))
     , m_PCStartSeconds(0)
-    , totalram(0)
-    , freeram (0)
-    , sharedram(0)
-    , totalswap(0)
-    , freeswap (0)
-    , memoryUsagePercent (0.0)
+    , m_totalram(0)
+    , m_freeram (0)
+    , m_sharedram(0)
+    , m_totalswap(0)
+    , m_freeswap (0)
+    , m_memoryUsagePercent (0.0)
 {
 #ifdef Q_OS_ANDROID
     //https://github.com/mzlogin/CleanExpert/blob/master/app/src/main/java/org/mazhuang/cleanexpert/util/MemStat.java
@@ -49,11 +49,11 @@ void Monitor::updateSystemInfo()
 
         m_PCStartSeconds = s_info.uptime;
 
-        totalram  = s_info.totalram;
-        freeram   = s_info.freeram;
-        sharedram = s_info.sharedram;
-        totalswap = s_info.totalswap;
-        freeswap  = s_info.freeswap;
+        m_totalram  = s_info.totalram;
+        m_freeram   = s_info.freeram;
+        m_sharedram = s_info.sharedram;
+        m_totalswap = s_info.totalswap;
+        m_freeswap  = s_info.freeswap;
 
         updateUpTime( );
         updateMemory( );
@@ -80,7 +80,7 @@ void Monitor::updateUpTime()
 
 void Monitor::updateMemory()
 {
-    double percent = 100 - qRound((qreal)freeram / (qreal)totalram * 100.0f);
+    double percent = 100 - qRound((qreal)m_freeram / (qreal)m_totalram * 100.0f);
     m_memoryUsage = tr("%1 \%").arg( percent );
     emit memoryUsageChanged();
 }
