@@ -22,14 +22,7 @@ QQC2.ProgressBar {
         implicitHeight: 16
         color: control.proBackgroundColor
         radius: control.proRadius
-        Text{
-            id:progressBarText
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color: control.proTextColor
-            font: control.font
-            text: control.proText + " " + progress + " %"
-        }
+
     }
 
     contentItem: Item {
@@ -41,8 +34,18 @@ QQC2.ProgressBar {
             height: parent.height
             radius: proRadius
             color: getColor(progress)
-
+            //opacity: 0.7
         }
+    }
+
+    Text{
+        id:progressBarText
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        color: control.proTextColor
+        font: control.font
+        text: control.proText + " " + progress + " %"
+        z:2
     }
 
     function getColor(percent){
