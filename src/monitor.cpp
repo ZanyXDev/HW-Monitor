@@ -4,14 +4,15 @@ Monitor::Monitor(QObject *parent)
     : QObject(parent)
     , m_uptime(QString(""))
     , m_hostname(QString(""))
-    , m_memoryUsage(QString(""))
+    , m_currentProcess(QString(""))
     , m_PCStartSeconds(0)
     , m_totalram(0)
     , m_freeram (0)
     , m_sharedram(0)
     , m_totalswap(0)
     , m_freeswap (0)
-    , m_memoryUsagePercent (0.0)
+    , m_procs (0)
+    , m_memoryUsage (0.0)
 {
 #ifdef Q_OS_ANDROID
     //https://github.com/mzlogin/CleanExpert/blob/master/app/src/main/java/org/mazhuang/cleanexpert/util/MemStat.java
@@ -32,9 +33,14 @@ const QString &Monitor::getHostname() const
 {
     return m_hostname;
 }
-const QString &Monitor::getMemoryUsage() const
+double Monitor::getMemoryUsage() const
 {
     return m_memoryUsage;
+}
+
+const QString &Monitor::getcurrentProcess() const
+{
+    return m_currentProcess;
 }
 
 // ------------------------------- SLOTS -------------------------------------
@@ -48,12 +54,13 @@ void Monitor::updateSystemInfo()
     if ( 0 == sysinfo(&s_info)){
 
         m_PCStartSeconds = s_info.uptime;
-
         m_totalram  = s_info.totalram;
         m_freeram   = s_info.freeram;
         m_sharedram = s_info.sharedram;
         m_totalswap = s_info.totalswap;
         m_freeswap  = s_info.freeswap;
+
+        m_procs     = s_info.procs;
 
         updateUpTime( );
         updateMemory( );
@@ -80,7 +87,13 @@ void Monitor::updateUpTime()
 
 void Monitor::updateMemory()
 {
-    double percent = 100 - qRound((qreal)m_freeram / (qreal)m_totalram * 100.0f);
-    m_memoryUsage = tr("%1 \%").arg( percent );
+    // m_memoryUsage= 100 - qRound((qreal)m_freeram / (qreal)m_totalram * 100.0f);
+    m_memoryUsage++;
     emit memoryUsageChanged();
+}
+
+void Monitor::updateProcess()
+{
+    m_currentProcess = tr("%1").arg( m_procs );
+    emit currentProcessChanged();
 }
