@@ -131,6 +131,7 @@ Item {
         }
 
         HWProgressBar{
+            id:memoryProgressBar
             Layout.preferredHeight: 24 * dp
             Layout.preferredWidth: parent.width - 30 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
@@ -139,11 +140,28 @@ Item {
             proPadding:  2 * dp
             progress:  Monitor.memoryUsage
             proText: "Memory usage:"
-            font {
-                pointSize: 18
-            }
+            font { pointSize: 18 }
         }
 
+        InfoLabel{
+            id:cpuLabel
+            Layout.preferredHeight: 24 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            Layout.topMargin: 10 * dp
+            font { pointSize: 18 }
+            text: qsTr("CPUs:" + Monitor.cpuUsage + " %")
+        }
+        Item{
+            id:separatorCPU
+            Layout.preferredHeight: 4 * dp
+            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            layer.enabled: true
+            layer.samples: 4
+            DotShape{
+                anchors.fill: parent
+            }
+        }
         InfoLabel{
             id:processLabel
             Layout.preferredHeight: 24 * dp
@@ -154,13 +172,13 @@ Item {
         }
 
         Item{
+            id:separatorProcess
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
             DotShape{
-                id:separatorCPU
                 anchors.fill: parent
             }
         }
