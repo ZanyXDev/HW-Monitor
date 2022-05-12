@@ -24,7 +24,8 @@ class Monitor : public QObject {
     //Q_PROPERTY(int moves READ moves WRITE setMoves NOTIFY movesChanged);
     Q_PROPERTY(QString uptime READ getUptime NOTIFY uptimeChanged);
     Q_PROPERTY(double memoryUsage READ getMemoryUsage NOTIFY memoryUsageChanged);
-    Q_PROPERTY(QString currentProcess READ getcurrentProcess NOTIFY currentProcessChanged);
+
+    Q_PROPERTY(int currentProcess READ getcurrentProcess NOTIFY currentProcessChanged);
     Q_PROPERTY(QString hostname READ getHostname CONSTANT);
     //Q_PROPERTY(int tiles READ tiles CONSTANT)
 public:
@@ -34,7 +35,7 @@ public:
     const QString &getHostname() const;
     double getMemoryUsage() const;
 
-    const QString &getcurrentProcess() const;
+    int getcurrentProcess() const;
 
 public slots:
     Q_INVOKABLE void updateSystemInfo();
@@ -47,7 +48,6 @@ signals:
 private:
     QString m_uptime;
     QString m_hostname;
-    QString m_currentProcess;
 
     quint64 m_PCStartSeconds; /* Seconds since boot */
     quint64 m_totalram;	  /* Total usable main memory size */
@@ -60,6 +60,7 @@ private:
 
     void updateUpTime();
     void updateMemory();
+
     void updateProcess();
    /**
     * float tb = 1099511627776;
