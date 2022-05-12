@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <math.h>
+#include <QFile>
 #endif
 
 class Monitor : public QObject {
@@ -24,7 +25,7 @@ class Monitor : public QObject {
     //Q_PROPERTY(int moves READ moves WRITE setMoves NOTIFY movesChanged);
     Q_PROPERTY(QString uptime READ getUptime NOTIFY uptimeChanged);
     Q_PROPERTY(double memoryUsage READ getMemoryUsage NOTIFY memoryUsageChanged);
-
+    Q_PROPERTY(QString cpuUsage READ getCpuUsage NOTIFY cpuUsageChanged);
     Q_PROPERTY(int currentProcess READ getcurrentProcess NOTIFY currentProcessChanged);
     Q_PROPERTY(QString hostname READ getHostname CONSTANT);
     //Q_PROPERTY(int tiles READ tiles CONSTANT)
@@ -34,7 +35,7 @@ public:
     const QString &getUptime() const;
     const QString &getHostname() const;
     double getMemoryUsage() const;
-
+    const QString &getCpuUsage() const;
     int getcurrentProcess() const;
 
 public slots:
@@ -45,10 +46,12 @@ signals:
     void uptimeChanged();
     void memoryUsageChanged();
     void currentProcessChanged();
+    void cpuUsageChanged();
 
 private:
     QString m_uptime;
     QString m_hostname;
+    QString m_cpuUsageStr;
 
     quint64 m_PCStartSeconds; /* Seconds since boot */
     quint64 m_totalram;	  /* Total usable main memory size */
@@ -58,12 +61,16 @@ private:
     quint64 m_freeswap;   /* swap space still available */
     quint16 m_procs;      /* Number of current processes */
     double  m_memoryUsage;
+    double  m_cpuUsage;
+
+    int prevIdleTime;
+    int prevTotalTime;
 
     void updateUpTime();
     void updateMemory();
-
     void updateProcess();
-   /**
+    void updateCpuUsage();
+    /**
     * float tb = 1099511627776;
     * float gb = 1073741824;
     * float mb = 1048576;
