@@ -39,6 +39,7 @@ public:
 
 public slots:
     Q_INVOKABLE void updateSystemInfo();
+    Q_INVOKABLE void init();
 
 signals:
     void uptimeChanged();

@@ -2,17 +2,8 @@
 
 Monitor::Monitor(QObject *parent)
     : QObject(parent)
-    , m_uptime(QString(""))
-    , m_hostname(QString(""))
-    , m_PCStartSeconds(0)
-    , m_totalram(0)
-    , m_freeram (0)
-    , m_sharedram(0)
-    , m_totalswap(0)
-    , m_freeswap (0)
-    , m_procs (0)
-    , m_memoryUsage (0.0)
 {
+    init();
 #ifdef Q_OS_ANDROID
     //https://github.com/mzlogin/CleanExpert/blob/master/app/src/main/java/org/mazhuang/cleanexpert/util/MemStat.java
     //https://github.com/jaredrummler/AndroidDeviceNames
@@ -68,6 +59,26 @@ void Monitor::updateSystemInfo()
 
 #endif
 }
+
+void Monitor::init()
+{
+    m_uptime = QString("");
+    m_hostname = QString("");
+    m_cpuUsageStr = QString("");
+    m_PCStartSeconds = 0;
+    m_totalram = 0;
+    m_freeram  = 0;
+    m_sharedram = 0;
+    m_totalswap = 0;
+    m_freeswap  = 0;
+    m_procs  = 0;
+    m_memoryUsage  = 0.0;
+    m_cpuUsage = 0.0;
+    prevIdleTime  = 0;
+    prevTotalTime = 0;
+    qDebug() << Q_FUNC_INFO;
+}
+//------------------------------------------------------------------------------
 
 void Monitor::updateUpTime()
 {
