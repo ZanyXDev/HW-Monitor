@@ -39,7 +39,7 @@ Item {
         if (appInForeground && pageActive) {
             if (!pageInitialized) {
                 pageInitialized = true;
-
+                Monitor.init();
             }
         } else {
             console.log("onAppInForegroundChanged:[appInForeground"+appInForeground+", pageInitialized"+pageInitialized+"]")
