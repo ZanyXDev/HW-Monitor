@@ -34,9 +34,10 @@ public:
 
     const QString &getUptime() const;
     const QString &getHostname() const;
-    double getMemoryUsage() const;
     const QString &getCpuUsage() const;
+
     int getcurrentProcess() const;
+    double getMemoryUsage() const;
 
 public slots:
     Q_INVOKABLE void updateSystemInfo();
@@ -51,7 +52,7 @@ signals:
 private:
     QString m_uptime;
     QString m_hostname;
-    QString m_cpuUsageStr;
+    QString m_cpuUsage;
 
     quint64 m_PCStartSeconds; /* Seconds since boot */
     quint64 m_totalram;	  /* Total usable main memory size */
@@ -61,7 +62,6 @@ private:
     quint64 m_freeswap;   /* swap space still available */
     quint16 m_procs;      /* Number of current processes */
     double  m_memoryUsage;
-    double  m_cpuUsage;
 
     int prevIdleTime;
     int prevTotalTime;
