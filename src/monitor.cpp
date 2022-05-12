@@ -4,7 +4,6 @@ Monitor::Monitor(QObject *parent)
     : QObject(parent)
     , m_uptime(QString(""))
     , m_hostname(QString(""))
-    , m_currentProcess(QString(""))
     , m_PCStartSeconds(0)
     , m_totalram(0)
     , m_freeram (0)
@@ -38,9 +37,9 @@ double Monitor::getMemoryUsage() const
     return m_memoryUsage;
 }
 
-const QString &Monitor::getcurrentProcess() const
+int Monitor::getcurrentProcess() const
 {
-    return m_currentProcess;
+    return m_procs;
 }
 
 // ------------------------------- SLOTS -------------------------------------
@@ -62,8 +61,9 @@ void Monitor::updateSystemInfo()
 
         m_procs     = s_info.procs;
 
-        updateUpTime( );
-        updateMemory( );
+        updateUpTime();
+        updateMemory();
+        updateProcess();
     }
 
 #endif
@@ -87,13 +87,12 @@ void Monitor::updateUpTime()
 
 void Monitor::updateMemory()
 {
-    // m_memoryUsage= 100 - qRound((qreal)m_freeram / (qreal)m_totalram * 100.0f);
-    m_memoryUsage++;
+    m_memoryUsage= 100 - qRound((qreal)m_freeram / (qreal)m_totalram * 100.0f);
+    //m_memoryUsage++;
     emit memoryUsageChanged();
 }
 
 void Monitor::updateProcess()
 {
-    m_currentProcess = tr("%1").arg( m_procs );
     emit currentProcessChanged();
 }
