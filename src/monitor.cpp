@@ -30,7 +30,7 @@ double Monitor::getMemoryUsage() const
 
 const QString &Monitor::getCpuUsage() const
 {
-    return m_cpuUsageStr;
+    return m_cpuUsage;
 }
 
 int Monitor::getcurrentProcess() const
@@ -70,7 +70,7 @@ void Monitor::init()
 {
     m_uptime = QString("");
     m_hostname = QString("");
-    m_cpuUsageStr = QString("");
+    m_cpuUsage = QString("");
     m_PCStartSeconds = 0;
     m_totalram = 0;
     m_freeram  = 0;
@@ -79,7 +79,6 @@ void Monitor::init()
     m_freeswap  = 0;
     m_procs  = 0;
     m_memoryUsage  = 0.0;
-    m_cpuUsage = 0.0;
     prevIdleTime  = 0;
     prevTotalTime = 0;
     qDebug() << Q_FUNC_INFO;
@@ -118,9 +117,8 @@ void Monitor::updateCpuUsage()
 {
     QFile file("/proc/stat");
     file.open(QFile::ReadOnly);
+
     const QList<QByteArray> times = file.readLine().simplified().split(' ').mid(1);
-
-
     const int idleTime = times.at(3).toInt();
 
     int totalTime = 0;
@@ -128,10 +126,12 @@ void Monitor::updateCpuUsage()
         totalTime += time.toInt();
     }
 
-    m_cpuUsage = ((1 - (1.0*idleTime-prevIdleTime) / (totalTime-prevTotalTime)) * 100.0f );
-    m_cpuUsageStr = QString::number(m_cpuUsage, 'f', 2);
+    const  double  m_cpu = ((1 - (1.0*idleTime-prevIdleTime) / (totalTime-prevTotalTime)) * 100.0f );
+    m_cpuUsage = QString::number(m_cpu, 'f', 2);
 
-    qDebug() <<"m_cpuUsageStr:" <<m_cpuUsageStr ;
+    if (m_cpuUsage.length() < 5){
+        m_cpuUsage = " " + m_cpuUsage;
+    }
     prevIdleTime = idleTime;
     prevTotalTime = totalTime;
 
