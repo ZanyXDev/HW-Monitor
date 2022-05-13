@@ -55,23 +55,6 @@ Item {
         console.log("Summary page completed")
     }
     // ----- Visual children.
-    component InfoLabel:QQC2.Label {
-        property string toolTipText: "Tap for more information"
-
-        font { family: font_families}
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        padding: 2 * dp
-        color:"white"
-
-        QQC2.ToolTip.text: toolTipText
-        QQC2.ToolTip.visible: toolTipText ? ma.containsMouse : false
-        MouseArea {
-            id: ma
-            anchors.fill: parent
-            hoverEnabled: true
-        }
-    }
 
     component DotShape:Shape{
         id:separatorHLine
@@ -117,14 +100,12 @@ Item {
             Layout.fillWidth: true
         }
 
-        InfoLabel{
+        LinkButton{
             id:uptimeLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            //Layout.topMargin: 10 * dp
             font { pointSize: 18 }
-            text: qsTr("Uptime:" + Monitor.uptime)
-
+            text: qsTr("Uptime: " + Monitor.uptime)
         }
 
         Item{
@@ -132,34 +113,24 @@ Item {
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            Layout.topMargin: 5 * dp
+
             layer.enabled: true
             layer.samples: 4
             DotShape{
                 anchors.fill: parent
             }
         }
-        //        HWProgressBar{
-        //            id:memoryProgressBar
-        //            Layout.preferredHeight: 24 * dp
-        //            Layout.preferredWidth: parent.width - 30 * dp
-        //            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-        //            Layout.topMargin: 10 *dp
-        //            proRadius: 2 * dp
-        //            proPadding:  2 * dp
-        //            progress:  Monitor.memoryUsage
-        //            proText: "Memory usage:"
-        //            font { pointSize: 18 }
-        //        }
 
-        InfoLabel{
+        LinkButton{
             id:memoryUsageLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font { pointSize: 18 }
-            text: qsTr("Memory usage:" + Monitor.memoryUsage + " %")
-            //mouseArea.onClicked: actionMemoryUsage()
-
+            text: qsTr("Memory usage: " + Monitor.memoryUsage + " %")
+            toolTipText: qsTr("Tap for more information about memory usage")
+            action: memoryUsageAction
         }
 
         Item{
@@ -174,13 +145,15 @@ Item {
             }
         }
 
-        InfoLabel{
+        LinkButton{
             id:cpuLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font { pointSize: 18 }
             text: qsTr("CPUs:" + Monitor.cpuUsage + " %")
+            toolTipText: qsTr("Tap for more information about CPUs usage")
+            action: cpuUsageAction
         }
 
         Item{
@@ -195,13 +168,15 @@ Item {
             }
         }
 
-        InfoLabel{
+        LinkButton{
             id:battareyCapacityLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font { pointSize: 18 }
             text: qsTr("Battery capacity:" + Monitor.battareyCapacity + " %")
+            toolTipText: qsTr("Tap for more information about Battery")
+            action: batteryInfoAction
         }
 
         Item{
@@ -215,13 +190,16 @@ Item {
                 anchors.fill: parent
             }
         }
-        InfoLabel{
+
+        LinkButton{
             id:storageLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font { pointSize: 18 }
             text: qsTr("Storage usage:" + Monitor.storageUsage + " %")
+            toolTipText: qsTr("Tap for more information about Storage usage")
+            action: storageUsageAction
         }
 
         Item{
@@ -235,13 +213,16 @@ Item {
                 anchors.fill: parent
             }
         }
-        InfoLabel{
+
+        LinkButton{
             id:processLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font { pointSize: 18 }
             text: qsTr("Processes: " + Monitor.currentProcess)
+            toolTipText: qsTr("Tap for more information about Processes")
+            action: processesInfoAction
         }
 
         Item{
@@ -267,17 +248,6 @@ Item {
         interval: 1000; running: true; repeat: true;
         onTriggered: Monitor.updateSystemInfo()
     }
-
-    QQC2.Action {
-        id: actionMemoryUsage
-        text:  qsTr("&Memory usage...")
-        icon.name: "memory"
-        onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("About.qml"))
-            console.log("Memory usage click")
-        }
-    }
-
 
     // ----- Custom non-visual children
     // ----- JavaScript functions
