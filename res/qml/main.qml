@@ -89,6 +89,11 @@ QQC2.ApplicationWindow {
                         action:settingsMenuAction
                     }
                     QQC2.MenuItem {
+                        id: menuMemoryItem
+                        action:memoryUsageAction
+                    }
+
+                    QQC2.MenuItem {
                         id: menuHelpItem
                         action:helpMenuAction
                     }
@@ -198,6 +203,15 @@ QQC2.ApplicationWindow {
         onTriggered:  {
             mainStackView.push(Qt.resolvedUrl("About.qml"))
             console.log("About")
+        }
+    }
+    QQC2.Action {
+        id: memoryUsageAction
+        text:  qsTr("&Memory usage...")
+        icon.name: "about"
+        onTriggered:  {
+            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
+            console.log("Memory usage click")
         }
     }
     // ----- Custom non-visual children
