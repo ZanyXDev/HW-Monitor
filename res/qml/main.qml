@@ -6,6 +6,7 @@ import QtQuick.LocalStorage 2.12
 
 import "Pages"
 
+///TODO текст как в матрице фоном https://thecode.media/cloudly/
 
 QQC2.ApplicationWindow {
     id:appWnd

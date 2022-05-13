@@ -94,53 +94,64 @@ Item {
             text: qsTr("Summary")
         }
 
-        Item{
-            id:uptimeBlock
-            Layout.preferredHeight: 24 * dp
+        Item {
+            // spacer item
+            Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 *dp
-            RowLayout{
-                id:uptimeLayout
-                spacing: 10 * dp
-                anchors.fill: parent
-                Item {
-                    // spacer item
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                }
-                InfoLabel{
-                    id:uptimeLabel
-                    Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                    text: qsTr("Uptime:")
-                    font { pointSize: 18 }
-
-                }
-                InfoLabel{
-                    id:uptimeValueLabel
-                    Layout.alignment: Qt.AlignTop | Qt.AlignRight
-                    text: Monitor.uptime
-                    font { pointSize: 18 }
-                }
-                Item {
-                    // spacer item
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                }
-            }
         }
 
-        HWProgressBar{
-            id:memoryProgressBar
+        InfoLabel{
+            id:uptimeLabel
             Layout.preferredHeight: 24 * dp
-            Layout.preferredWidth: parent.width - 30 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 *dp
-            proRadius: 2 * dp
-            proPadding:  2 * dp
-            progress:  Monitor.memoryUsage
-            proText: "Memory usage:"
+            //Layout.topMargin: 10 * dp
             font { pointSize: 18 }
+            text: qsTr("Uptime:" + Monitor.uptime)
+        }
+
+        Item{
+            id:separatorUptime
+            Layout.preferredHeight: 4 * dp
+            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            layer.enabled: true
+            layer.samples: 4
+            DotShape{
+                anchors.fill: parent
+            }
+        }
+        //        HWProgressBar{
+        //            id:memoryProgressBar
+        //            Layout.preferredHeight: 24 * dp
+        //            Layout.preferredWidth: parent.width - 30 * dp
+        //            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+        //            Layout.topMargin: 10 *dp
+        //            proRadius: 2 * dp
+        //            proPadding:  2 * dp
+        //            progress:  Monitor.memoryUsage
+        //            proText: "Memory usage:"
+        //            font { pointSize: 18 }
+        //        }
+
+        InfoLabel{
+            id:memoryUsageLabel
+            Layout.preferredHeight: 24 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            Layout.topMargin: 10 * dp
+            font { pointSize: 18 }
+            text: qsTr("Memory usage:" + Monitor.memoryUsage + " %")
+        }
+
+        Item{
+            id:separatorMemoryUsage
+            Layout.preferredHeight: 4 * dp
+            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            layer.enabled: true
+            layer.samples: 4
+            DotShape{
+                anchors.fill: parent
+            }
         }
 
         InfoLabel{
@@ -151,8 +162,50 @@ Item {
             font { pointSize: 18 }
             text: qsTr("CPUs:" + Monitor.cpuUsage + " %")
         }
+
         Item{
             id:separatorCPU
+            Layout.preferredHeight: 4 * dp
+            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            layer.enabled: true
+            layer.samples: 4
+            DotShape{
+                anchors.fill: parent
+            }
+        }
+
+        InfoLabel{
+            id:battareyCapacityLabel
+            Layout.preferredHeight: 24 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            Layout.topMargin: 10 * dp
+            font { pointSize: 18 }
+            text: qsTr("Battery capacity:" + Monitor.battareyCapacity + " %")
+        }
+
+        Item{
+            id:separatorbattareyCapacity
+            Layout.preferredHeight: 4 * dp
+            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            layer.enabled: true
+            layer.samples: 4
+            DotShape{
+                anchors.fill: parent
+            }
+        }
+        InfoLabel{
+            id:storageLabel
+            Layout.preferredHeight: 24 * dp
+            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
+            Layout.topMargin: 10 * dp
+            font { pointSize: 18 }
+            text: qsTr("Storage usage:" + Monitor.storageUsage + " %")
+        }
+
+        Item{
+            id:separatorStorage
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
@@ -168,7 +221,7 @@ Item {
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font { pointSize: 18 }
-            text: qsTr("Processes:" + Monitor.currentProcess)
+            text: qsTr("Processes: " + Monitor.currentProcess)
         }
 
         Item{
