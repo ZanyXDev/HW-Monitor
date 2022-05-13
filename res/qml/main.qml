@@ -92,12 +92,27 @@ QQC2.ApplicationWindow {
                         id: menuMemoryItem
                         action:memoryUsageAction
                     }
-
+                    QQC2.MenuItem {
+                        id: menuCpuItem
+                        action:cpuUsageAction
+                    }
+                    QQC2.MenuItem {
+                        id: menuStorageUsageItem
+                        action:storageUsageAction
+                    }
+                    QQC2.MenuItem {
+                        id: menuBatteryItem
+                        action:batteryInfoAction
+                    }
+                    QQC2.MenuItem {
+                        id: menuProcessesItem
+                        action:processesInfoAction
+                    }
+                    QQC2.MenuSeparator { }
                     QQC2.MenuItem {
                         id: menuHelpItem
                         action:helpMenuAction
                     }
-                    QQC2.MenuSeparator { }
                     QQC2.MenuItem {
                         id: menuAboutItem
                         action:aboutMenuAction
@@ -175,7 +190,7 @@ QQC2.ApplicationWindow {
 
     }
 
-     // ----- Qt provided non-visual children
+    // ----- Qt provided non-visual children
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
@@ -212,6 +227,43 @@ QQC2.ApplicationWindow {
         onTriggered:  {
             //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
             console.log("Memory usage click")
+        }
+    }
+    QQC2.Action {
+        id: cpuUsageAction
+        text:  qsTr("&CPUs usage...")
+        icon.name: "about"
+        onTriggered:  {
+            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
+            console.log("CPUs usage click")
+        }
+    }
+    QQC2.Action {
+        id: storageUsageAction
+        text:  qsTr("&Storage usage...")
+        icon.name: "about"
+        onTriggered:  {
+            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
+            console.log("Storage usage click")
+        }
+    }
+
+    QQC2.Action {
+        id: batteryInfoAction
+        text:  qsTr("&Battery info...")
+        icon.name: "about"
+        onTriggered:  {
+            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
+            console.log("Battery Info click")
+        }
+    }
+    QQC2.Action {
+        id: processesInfoAction
+        text:  qsTr("&Processes info...")
+        icon.name: "about"
+        onTriggered:  {
+            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
+            console.log("Processes click")
         }
     }
     // ----- Custom non-visual children
