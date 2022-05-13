@@ -1,7 +1,7 @@
 !versionAtLeast(QT_VERSION, 5.10.0):error("Requires Qt version 5.10.0 or greater.")
 
 TEMPLATE +=app
-TARGET = QML-HWMonitor
+TARGET = QML_HWMonitor
 
 QT       += core gui concurrent qml quick quickcontrols2 multimedia
 
@@ -28,14 +28,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #don't use precompiled headers https://www.kdab.com/beware-of-qt-module-wide-includes/
 
 SOURCES += \
-    src/main.cpp
+    src/main.cpp \
+    src/monitor.cpp
 
-#HEADERS += \
+HEADERS += \
+    src/monitor.h
 
 RESOURCES += \
      qml.qrc \
-     images.qrc
- #fonts.qrc
+     images.qrc \
+     fonts.qrc
 
 #TRANSLATIONS += \
 #    G2_ru_RU.ts
