@@ -3,5 +3,6 @@
         <file>res/qml/main.qml</file>
         <file>res/qml/Pages/Summary.qml</file>
         <file>res/qml/common/HWProgressBar.qml</file>
+        <file>res/qml/common/LinkButton.qml</file>
     </qresource>
 </RCC>
