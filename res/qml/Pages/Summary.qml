@@ -56,11 +56,21 @@ Item {
     }
     // ----- Visual children.
     component InfoLabel:QQC2.Label {
+        property string toolTipText: "Tap for more information"
+
         font { family: font_families}
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         padding: 2 * dp
         color:"white"
+
+        QQC2.ToolTip.text: toolTipText
+        QQC2.ToolTip.visible: toolTipText ? ma.containsMouse : false
+        MouseArea {
+            id: ma
+            anchors.fill: parent
+            hoverEnabled: true
+        }
     }
 
     component DotShape:Shape{
@@ -81,13 +91,20 @@ Item {
         anchors.fill: parent
         spacing: 2 * dp
 
-        InfoLabel{
+        QQC2.Label {
             id:summaryLabel
+
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignRight
-            Layout.topMargin: 10 *dp
+            Layout.topMargin: 16 *dp
             Layout.rightMargin: 10 *dp
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            padding: 2 * dp
+            color:"white"
             font {
+                family: font_families
                 pointSize: 24
                 italic: true
             }
@@ -96,7 +113,7 @@ Item {
 
         Item {
             // spacer item
-            Layout.fillHeight: true
+            Layout.preferredHeight: 32 * dp
             Layout.fillWidth: true
         }
 
@@ -107,6 +124,7 @@ Item {
             //Layout.topMargin: 10 * dp
             font { pointSize: 18 }
             text: qsTr("Uptime:" + Monitor.uptime)
+
         }
 
         Item{
@@ -140,6 +158,8 @@ Item {
             Layout.topMargin: 10 * dp
             font { pointSize: 18 }
             text: qsTr("Memory usage:" + Monitor.memoryUsage + " %")
+            //mouseArea.onClicked: actionMemoryUsage()
+
         }
 
         Item{
@@ -247,8 +267,19 @@ Item {
         interval: 1000; running: true; repeat: true;
         onTriggered: Monitor.updateSystemInfo()
     }
+
+    QQC2.Action {
+        id: actionMemoryUsage
+        text:  qsTr("&Memory usage...")
+        icon.name: "memory"
+        onTriggered:  {
+            //mainStackView.push(Qt.resolvedUrl("About.qml"))
+            console.log("Memory usage click")
+        }
+    }
+
+
     // ----- Custom non-visual children
     // ----- JavaScript functions
-
 }
 
