@@ -40,8 +40,8 @@ QQC2.Label {
 
     enabled: !action || action.enabled
 
-    font.underline: isActive
-
+   // font.underline: isActive
+font.capitalization:  isActive ? Font.AllUppercase : Font.Capitalize
     color: isActive ? linkColor : textColor
 
     QQC2.ToolTip.text: toolTipText
