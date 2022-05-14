@@ -213,12 +213,14 @@ QQC2.ApplicationWindow {
     }
     QQC2.Action {
         id: aboutMenuAction
-        text:  qsTr("&About")
-        icon.name: "about"
+        text: qsTr("About")
+         icon.name: "about"
         onTriggered:  {
-            mainStackView.push(Qt.resolvedUrl("About.qml"))
+            mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/About.qml"))
             console.log("About")
         }
+
+
     }
     QQC2.Action {
         id: memoryUsageAction
@@ -247,7 +249,6 @@ QQC2.ApplicationWindow {
             console.log("Storage usage click")
         }
     }
-
     QQC2.Action {
         id: batteryInfoAction
         text:  qsTr("&Battery info...")
@@ -276,7 +277,7 @@ QQC2.ApplicationWindow {
         if( mainStackView.depth > 1 ) {
 
             mainStackView.pop()
-            event.accepted = true
+            if ( event ) event.accepted = true
         }
     }
 }
