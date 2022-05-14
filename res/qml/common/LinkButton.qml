@@ -27,7 +27,7 @@ QQC2.Label {
     /** This property Enables accessibility of QML items.
       * See <a href="https://doc.qt.io/qt-5/qml-qtquick-accessible.html">Qt documentation</a>.
      */
-    property color linkColor: "blue"
+    property color linkColor: "lightgreen"
     property color textColor: "white"
 
     property string toolTipText: "Tap for more information"
