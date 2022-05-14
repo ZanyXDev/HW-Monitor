@@ -54,7 +54,7 @@ font.capitalization:  isActive ? Font.AllUppercase : Font.Capitalize
 
     signal pressed(QtObject mouse)
     signal clicked(QtObject mouse)
-    signal test()
+    signal hoverChanged()
 
     onClicked: if (action) action.trigger()
 
@@ -66,11 +66,7 @@ font.capitalization:  isActive ? Font.AllUppercase : Font.Capitalize
 
         onClicked: control.clicked(mouse)
         onPressed: control.pressed(mouse)
-        onEntered:  {
-            console.log("emit test signal")
-             control.test()
-        }
-
+        onHoveredChanged: control.hoverChanged()
     }
 }
 
