@@ -61,6 +61,5 @@ Shape{
         if (control.state === "ON")
             control.state= "OFF"
         else control.state = "ON"
-        console.log("Dashline.state:"+control.state)
     }
 }
