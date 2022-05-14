@@ -3,5 +3,8 @@
         <file>res/qml/main.qml</file>
         <file>res/qml/Pages/Summary.qml</file>
         <file>res/qml/common/HWProgressBar.qml</file>
+        <file>res/qml/common/LinkButton.qml</file>
+        <file>res/qml/common/DashLine.qml</file>
+        <file>res/qml/Pages/About.qml</file>
     </qresource>
 </RCC>
