@@ -103,7 +103,7 @@ void Monitor::updateUpTime()
 
 void Monitor::updateMemory()
 {
-    m_memoryUsage= 100 - round((qreal)m_freeram / (qreal)m_totalram * 100.0f);
+    m_memoryUsage= round((qreal)m_freeram / (qreal)m_totalram * 100.0f);
     //m_memoryUsage++;
     emit memoryUsageChanged();
 }
