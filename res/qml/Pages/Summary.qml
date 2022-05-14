@@ -55,20 +55,6 @@ Item {
         console.log("Summary page completed")
     }
     // ----- Visual children.
-
-    component DotShape:Shape{
-        id:separatorHLine
-        ShapePath {
-            NumberAnimation on strokeWidth { from: 1; to: 5; duration: 500 }
-            strokeColor: "white"
-            strokeWidth: 2 * dp
-            strokeStyle: ShapePath.DashLine
-            startX: 0
-            startY: 0
-            PathLine { x: separatorHLine.width; y: 0 }
-        }
-    }
-
     ColumnLayout{
         id:mainScreenLayout
         anchors.fill: parent
@@ -104,20 +90,20 @@ Item {
             id:uptimeLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            font { pointSize: 18 }
+            font {
+                family: font_families
+                pointSize: 18
+            }
             text: qsTr("Uptime: " + Monitor.uptime)
         }
 
         Item{
-            id:separatorUptime
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 5 * dp
-
             layer.enabled: true
             layer.samples: 4
-            DotShape{
+            DashLine{
                 anchors.fill: parent
             }
         }
@@ -127,21 +113,30 @@ Item {
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
-            font { pointSize: 18 }
+            font {
+                family: font_families
+                pointSize: 18
+            }
             text: qsTr("Memory usage: " + Monitor.memoryUsage + " %")
             toolTipText: qsTr("Tap for more information about memory usage")
             action: memoryUsageAction
         }
 
         Item{
-            id:separatorMemoryUsage
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
-            DotShape{
+            DashLine{
+                id:memoryDashLine
                 anchors.fill: parent
+                Connections {
+                    target: memoryUsageLabel
+                    function onHoverChanged() {
+                        memoryDashLine.toggle()
+                    }
+                }
             }
         }
 
@@ -150,44 +145,62 @@ Item {
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
-            font { pointSize: 18 }
+            font {
+                family: font_families
+                pointSize: 18
+            }
             text: qsTr("CPUs:" + Monitor.cpuUsage + " %")
             toolTipText: qsTr("Tap for more information about CPUs usage")
             action: cpuUsageAction
         }
 
         Item{
-            id:separatorCPU
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
-            DotShape{
+            DashLine{
+                id:cpuDashLine
                 anchors.fill: parent
+                Connections {
+                    target: cpuLabel
+                    function onHoverChanged() {
+                        cpuDashLine.toggle()
+                    }
+                }
             }
         }
 
         LinkButton{
-            id:battareyCapacityLabel
+            id:batteryCapacityLabel
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
-            font { pointSize: 18 }
+            font {
+                 family: font_families
+                 pointSize: 18
+            }
             text: qsTr("Battery capacity:" + Monitor.battareyCapacity + " %")
             toolTipText: qsTr("Tap for more information about Battery")
             action: batteryInfoAction
         }
 
         Item{
-            id:separatorbattareyCapacity
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
-            DotShape{
+            DashLine{
+                id:batteryDashLine
                 anchors.fill: parent
+                Connections {
+                    target: batteryCapacityLabel
+                    function onHoverChanged() {
+                        batteryDashLine.toggle()
+                    }
+                }
             }
         }
 
@@ -196,21 +209,30 @@ Item {
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
-            font { pointSize: 18 }
+            font {
+                family: font_families
+                pointSize: 18
+            }
             text: qsTr("Storage usage:" + Monitor.storageUsage + " %")
             toolTipText: qsTr("Tap for more information about Storage usage")
             action: storageUsageAction
         }
 
         Item{
-            id:separatorStorage
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
-            DotShape{
+            DashLine{
+                id:storageDashLine
                 anchors.fill: parent
+                Connections {
+                    target: storageLabel
+                    function onHoverChanged() {
+                        storageDashLine.toggle()
+                    }
+                }
             }
         }
 
@@ -219,21 +241,30 @@ Item {
             Layout.preferredHeight: 24 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
-            font { pointSize: 18 }
+            font {
+                 family: font_families
+                 pointSize: 18
+            }
             text: qsTr("Processes: " + Monitor.currentProcess)
             toolTipText: qsTr("Tap for more information about Processes")
             action: processesInfoAction
         }
 
         Item{
-            id:separatorProcess
             Layout.preferredHeight: 4 * dp
             Layout.preferredWidth: parent.width - 140 * dp
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
-            DotShape{
+            DashLine{
+                id:processDashLine
                 anchors.fill: parent
+                Connections {
+                    target: processLabel
+                    function onHoverChanged() {
+                        processDashLine.toggle()
+                    }
+                }
             }
         }
 
@@ -250,6 +281,12 @@ Item {
     }
 
     // ----- Custom non-visual children
+    Connections {
+        target: memoryUsageLabel
+        function hovered() {
+            console.log("memoryUsageLabel hovered signal")
+        }
+    }
     // ----- JavaScript functions
 }
 
