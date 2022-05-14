@@ -1,11 +1,14 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Shapes 1.0
 
 /**
  * Shows a Button that looks like a link
  * based on  <a href="https://api.kde.org/frameworks/kirigami/html/LinkButton_8qml_source.html">KDE kirigami LinkButton</a>
  * Uses the link color settings and allows to trigger an action when clicked.
  */
+
+
 QQC2.Label {
     id: control
 
@@ -35,23 +38,25 @@ QQC2.Label {
     Accessible.name: text
     Accessible.onPressAction: control.clicked(null)
 
-    text: action ? action.text : ""
-
     enabled: !action || action.enabled
-    onClicked: if (action) action.trigger()
 
     font.underline: isActive
+
     color: isActive ? linkColor : textColor
 
+    QQC2.ToolTip.text: toolTipText
+    QQC2.ToolTip.visible: toolTipText ? isActive : false
+
+    text: action ? action.text : ""
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
     elide: Text.ElideRight
 
     signal pressed(QtObject mouse)
     signal clicked(QtObject mouse)
+    signal test()
 
-    QQC2.ToolTip.text: toolTipText
-    QQC2.ToolTip.visible: toolTipText ? isActive : false
+    onClicked: if (action) action.trigger()
 
     MouseArea {
         id: area
@@ -61,6 +66,12 @@ QQC2.Label {
 
         onClicked: control.clicked(mouse)
         onPressed: control.pressed(mouse)
+        onEntered:  {
+            console.log("emit test signal")
+             control.test()
+        }
 
     }
 }
+
+
