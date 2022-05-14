@@ -11,7 +11,7 @@
 #include <QtQuickControls2/QQuickStyle>
 #include <QtQml/qqml.h>
 #include <QScreen>
-
+#include <QVersionNumber>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QtAndroid>
@@ -55,6 +55,8 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setApplicationName("QML-HWMonitor");
     QCoreApplication::setApplicationVersion(
                 QString("%1-%2[%3]").arg(VERSION).arg(GIT_HASH).arg(GIT_BRANCH));
+
+    ///TODO usage QVersionNumber version(1, 2, 3);
 
     QGuiApplication app(argc, argv);
 

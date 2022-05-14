@@ -3,7 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 import QtGraphicalEffects 1.0
-import QtQuick.Shapes 1.0
+
 
 import io.github.zanyxdev.qml_hwmonitor 1.0
 import "../common"
@@ -20,7 +20,7 @@ Item {
 
     // ----- Size information
     // ----- Then comes the other properties. There's no predefined order to these.
-    anchors.fill: parent
+
     // ----- Then attached properties and attached signal handlers.
     // ----- States and transitions.
     // ----- Signal handlers
@@ -46,10 +46,6 @@ Item {
         }
     }
 
-    QQC2.StackView.onRemoved: {
-        console.log("Summary page destroy")
-        destroy();
-    }
 
     Component.onCompleted: {
         console.log("Summary page completed")
@@ -178,8 +174,8 @@ Item {
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font {
-                 family: font_families
-                 pointSize: 18
+                family: font_families
+                pointSize: 18
             }
             text: qsTr("Battery capacity:" + Monitor.battareyCapacity + " %")
             toolTipText: qsTr("Tap for more information about Battery")
@@ -242,8 +238,8 @@ Item {
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             Layout.topMargin: 10 * dp
             font {
-                 family: font_families
-                 pointSize: 18
+                family: font_families
+                pointSize: 18
             }
             text: qsTr("Processes: " + Monitor.currentProcess)
             toolTipText: qsTr("Tap for more information about Processes")

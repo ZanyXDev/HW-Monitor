@@ -30,7 +30,7 @@ QQC2.Label {
     property color linkColor: "lightgreen"
     property color textColor: "white"
 
-    property string toolTipText: "Tap for more information"
+    property string toolTipText: ""
 
     property bool isActive: action && control.enabled && area.containsMouse
 
@@ -40,8 +40,8 @@ QQC2.Label {
 
     enabled: !action || action.enabled
 
-   // font.underline: isActive
-font.capitalization:  isActive ? Font.AllUppercase : Font.Capitalize
+
+    font.capitalization:  isActive ? Font.AllUppercase : Font.Capitalize
     color: isActive ? linkColor : textColor
 
     QQC2.ToolTip.text: toolTipText
@@ -66,7 +66,10 @@ font.capitalization:  isActive ? Font.AllUppercase : Font.Capitalize
 
         onClicked: control.clicked(mouse)
         onPressed: control.pressed(mouse)
-        onHoveredChanged: control.hoverChanged()
+        onHoveredChanged: {
+
+            control.hoverChanged()
+    }
     }
 }
 
