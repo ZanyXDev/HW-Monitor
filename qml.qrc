@@ -6,5 +6,6 @@
         <file>res/qml/common/LinkButton.qml</file>
         <file>res/qml/common/DashLine.qml</file>
         <file>res/qml/Pages/About.qml</file>
+        <file>res/qml/common/SVGImage.qml</file>
     </qresource>
 </RCC>
