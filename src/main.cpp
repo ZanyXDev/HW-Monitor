@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("mm",density / 25.4);
     context->setContextProperty("pt", 1);
-    context->setContextProperty("dp", scale);
+    context->setContextProperty("DevicePixelRatio", scale);
     context->setContextProperty("isMobile",isMobile);
     context->setContextProperty("font_families",getAppFont() );
 

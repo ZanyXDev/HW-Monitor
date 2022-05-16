@@ -56,19 +56,19 @@ QQC2.Page {
     ColumnLayout{
         id:mainScreenLayout
         anchors.fill: parent
-        spacing: 2 * dp
+        spacing: 2 * DevicePixelRatio
 
         QQC2.Label {
             id:summaryLabel
 
-            Layout.preferredHeight: 24 * dp
+            Layout.preferredHeight: 24 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignRight
-            Layout.topMargin: 16 *dp
-            Layout.rightMargin: 10 *dp
+            Layout.topMargin: 16 * DevicePixelRatio
+            Layout.rightMargin: 10 * DevicePixelRatio
 
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            padding: 2 * dp
+            padding: 2 * DevicePixelRatio
             color:"white"
             font {
                 family: font_families
@@ -80,13 +80,13 @@ QQC2.Page {
 
         Item {
             // spacer item
-            Layout.preferredHeight: 32 * dp
+            Layout.preferredHeight: 32 * DevicePixelRatio
             Layout.fillWidth: true
         }
 
         LinkButton{
             id:uptimeLabel
-            Layout.preferredHeight: 24 * dp
+            Layout.preferredHeight: 24 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             font {
                 family: font_families
@@ -96,8 +96,8 @@ QQC2.Page {
         }
 
         Item{
-            Layout.preferredHeight: 4 * dp
-            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.preferredHeight: 4 * DevicePixelRatio
+            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
@@ -108,9 +108,9 @@ QQC2.Page {
 
         LinkButton{
             id:memoryUsageLabel
-            Layout.preferredHeight: 24 * dp
+            Layout.preferredHeight: 24 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * dp
+            Layout.topMargin: 10 * DevicePixelRatio
             font {
                 family: font_families
                 pointSize: 18
@@ -121,8 +121,8 @@ QQC2.Page {
         }
 
         Item{
-            Layout.preferredHeight: 4 * dp
-            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.preferredHeight: 4 * DevicePixelRatio
+            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
@@ -140,9 +140,9 @@ QQC2.Page {
 
         LinkButton{
             id:cpuLabel
-            Layout.preferredHeight: 24 * dp
+            Layout.preferredHeight: 24 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * dp
+            Layout.topMargin: 10 * DevicePixelRatio
             font {
                 family: font_families
                 pointSize: 18
@@ -153,8 +153,8 @@ QQC2.Page {
         }
 
         Item{
-            Layout.preferredHeight: 4 * dp
-            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.preferredHeight: 4 * DevicePixelRatio
+            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
@@ -172,9 +172,9 @@ QQC2.Page {
 
         LinkButton{
             id:batteryCapacityLabel
-            Layout.preferredHeight: 24 * dp
+            Layout.preferredHeight: 24 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * dp
+            Layout.topMargin: 10 * DevicePixelRatio
             font {
                 family: font_families
                 pointSize: 18
@@ -185,8 +185,8 @@ QQC2.Page {
         }
 
         Item{
-            Layout.preferredHeight: 4 * dp
-            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.preferredHeight: 4 * DevicePixelRatio
+            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
@@ -204,9 +204,9 @@ QQC2.Page {
 
         LinkButton{
             id:storageLabel
-            Layout.preferredHeight: 24 * dp
+            Layout.preferredHeight: 24 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * dp
+            Layout.topMargin: 10 * DevicePixelRatio
             font {
                 family: font_families
                 pointSize: 18
@@ -217,8 +217,8 @@ QQC2.Page {
         }
 
         Item{
-            Layout.preferredHeight: 4 * dp
-            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.preferredHeight: 4 * DevicePixelRatio
+            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4
@@ -236,9 +236,9 @@ QQC2.Page {
 
         LinkButton{
             id:processLabel
-            Layout.preferredHeight: 24 * dp
+            Layout.preferredHeight: 24 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * dp
+            Layout.topMargin: 10 * DevicePixelRatio
             font {
                 family: font_families
                 pointSize: 18
@@ -249,8 +249,8 @@ QQC2.Page {
         }
 
         Item{
-            Layout.preferredHeight: 4 * dp
-            Layout.preferredWidth: parent.width - 140 * dp
+            Layout.preferredHeight: 4 * DevicePixelRatio
+            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
             Layout.alignment: Qt.AlignTop | Qt.AlignCenter
             layer.enabled: true
             layer.samples: 4

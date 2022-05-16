@@ -26,7 +26,7 @@ QQC2.Page {
 
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        padding: 2 * dp
+        padding: 2 * DevicePixelRatio
         color:"white"
         font {
             family: font_families
