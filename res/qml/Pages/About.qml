@@ -4,10 +4,12 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 
 import "../common"
-Item {
+QQC2.Page {
     id:aboutPage
+
     // ----- Property Declarations
     // Required properties should be at the top.
+     title:  qsTr("About")
     // ----- Signal declarations
 
     // ----- Size information
@@ -16,8 +18,10 @@ Item {
     Component.onCompleted: {
         console.log("About page completed")
     }
-      // ----- Visual children.
-    QQC2.Label {
+
+    // ----- Visual children.
+    background:{ null }
+    header:  QQC2.Label {
         id:aboutLabel
 
         horizontalAlignment: Text.AlignHCenter

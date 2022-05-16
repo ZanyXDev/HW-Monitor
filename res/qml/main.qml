@@ -36,16 +36,7 @@ QQC2.ApplicationWindow {
     onScreenOrientationChanged: {
         screenOrientationUpdated(screenOrientation);
     }
-    Component.onCompleted: {
 
-        var component = Qt.createComponent("qrc:/res/qml/Pages/Summary.qml");
-
-        if (component.status === Component.Ready) {
-            mainStackView.push(component);
-        } else {
-            console.error(component.errorString());
-        }
-    }
 
     // ----- Visual children
     header: QQC2.ToolBar {
@@ -60,7 +51,8 @@ QQC2.ApplicationWindow {
                 onClicked: pageBack()
             }
             QQC2.Label {
-                text: qsTr("Hardware monitor")
+                id:pageTitle
+                text: swipeView.currentItem ? swipeView.currentItem.title : qsTr("Hardware monitor")
                 font {
                     family: font_families;
                     pointSize:16
@@ -122,74 +114,41 @@ QQC2.ApplicationWindow {
         }
     }
 
-    Image{
-        id:bgImage
-        z: -1
-        source: "qrc:/res/images/cover.jpg"
-        anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
-        opacity: 0.8
-    }
+//    Image{
+//        id:bgImage
+//        z: -1
+//        source: "qrc:/res/images/cover.jpg"
+//        anchors.fill: parent
+//        fillMode: Image.PreserveAspectCrop
+//        opacity: 0.8
+//    }
 
-    QQC2.StackView {
-        id:           mainStackView
+    QQC2.SwipeView {
+        id: swipeView
         anchors.fill: parent
-        focus: true
-
-        MultiPointTouchArea {
+        background: Image {
+            source: "qrc:/res/images/cover.jpg"
             anchors.fill: parent
-            z:            1
-            enabled:      mainStackView.busy
-        }
-        pushEnter: Transition {
-            PropertyAnimation {
-                property: "scale"
-                from: 0
-                to:1
-                duration: 200
-            }
-        }
-        pushExit: Transition {
-            PropertyAnimation {
-                property: "scale"
-                from: 1
-                to:0
-                duration: 200
-            }
-        }
-        popEnter: Transition {
-            PropertyAnimation {
-                property: "scale"
-                from: 0
-                to:1
-                duration: 200
-            }
-        }
-        popExit: Transition {
-            PropertyAnimation {
-                property: "scale"
-                from: 1
-                to:0
-                duration: 200
-            }
+            fillMode: Image.PreserveAspectCrop
+            opacity: 0.8
         }
 
-        Keys.onReleased: {
-            if (event.key === Qt.Key_Back) {
-                pageBack(event)
-                console.log("Qt.Key_Back Released")
-            }
+        Summary {
+            id:summaryPage
         }
 
-        Keys.onPressed: {
-            if (event.key === Qt.Key_Escape){
-                pageBack(event)
-                console.log("Qt.Key_Escape pressed")
-            }
+        About {
+            id:aboutPage
         }
-
     }
 
+    QQC2.PageIndicator {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        currentIndex: swipeView.currentIndex
+        count: swipeView.count
+    }
     // ----- Qt provided non-visual children
     QQC2.Action {
         id: optionsMenuAction
@@ -214,9 +173,10 @@ QQC2.ApplicationWindow {
     QQC2.Action {
         id: aboutMenuAction
         text: qsTr("About")
-         icon.name: "about"
+        icon.name: "about"
         onTriggered:  {
-            mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/About.qml"))
+            swipeView.setCurrentIndex(1)
+            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/About.qml"))
             console.log("About")
         }
 
@@ -272,13 +232,6 @@ QQC2.ApplicationWindow {
 
     // ----- JavaScript functions
     // Обработка нажатия кнопки выхода с текущей страницы
-    function pageBack(event) {
-        console.log("pageBack(event)->mainStackView.dept:"+mainStackView.depth)
-        if( mainStackView.depth > 1 ) {
 
-            mainStackView.pop()
-            if ( event ) event.accepted = true
-        }
-    }
 }
 

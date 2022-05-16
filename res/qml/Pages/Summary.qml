@@ -8,7 +8,7 @@ import QtGraphicalEffects 1.0
 import io.github.zanyxdev.qml_hwmonitor 1.0
 import "../common"
 
-Item {
+QQC2.Page {
     id:summaryPage
 
     // ----- Property Declarations
@@ -16,6 +16,7 @@ Item {
     readonly property bool appInForeground:     Qt.application.state === Qt.ApplicationActive
     readonly property bool pageActive:          QQC2.StackView.status === QQC2.StackView.Active
     property bool pageInitialized:          false
+     title:  qsTr("Summary")
     // ----- Signal declarations
 
     // ----- Size information
@@ -46,11 +47,12 @@ Item {
         }
     }
 
-
     Component.onCompleted: {
         console.log("Summary page completed")
     }
     // ----- Visual children.
+    background:{ null }
+
     ColumnLayout{
         id:mainScreenLayout
         anchors.fill: parent
