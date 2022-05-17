@@ -5,5 +5,11 @@
         <file>res/images/icons/ic_bullet.svg</file>
         <file>res/images/icons/ic_drawer.svg</file>
         <file>res/images/logo.svg</file>
+        <file>res/images/icons/ic_battery.png</file>
+        <file>res/images/icons/ic_hardware.png</file>
+        <file>res/images/icons/ic_ram.png</file>
+        <file>res/images/icons/ic_smartphone.png</file>
+        <file>res/images/icons/id_sd-card.png</file>
+        <file>res/images/icons/ic_cpu.png</file>
     </qresource>
 </RCC>
