@@ -2,10 +2,11 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
+import QtQuick.Controls.Material 2.12
 
 
 QQC2.Drawer {
-    id: drawer
+    id: control
 
     //
     // Default size options
@@ -33,28 +34,9 @@ QQC2.Drawer {
     //     - separatorText: optional text for the separator item
     //     - pageIcon: the source of the image to display next to the title
     //
-    property alias items: listView.model
-    property alias index: listView.currentIndex
+    property alias items: inlineListView.model
+    property alias index: inlineListView.currentIndex
 
-    //
-    // Execute appropiate action when the index changes
-    //
-    onIndexChanged: {
-        var isSpacer = false
-        var isSeparator = false
-        var item = items.get (index)
-
-        if (typeof (item) !== "undefined") {
-            if (typeof (item.spacer) !== "undefined")
-                isSpacer = item.spacer
-
-            if (typeof (item.separator) !== "undefined")
-                isSpacer = item.separator
-
-            if (!isSpacer && !isSeparator)
-                actions [index]()
-        }
-    }
 
     //
     // A list with functions that correspond with the index of each drawer item
@@ -92,7 +74,7 @@ QQC2.Drawer {
         //
         Rectangle {
             z: 1
-            height: 120
+            height: 64 * DevicePixelRatio
             id: iconRect
             Layout.fillWidth: true
 
@@ -112,12 +94,12 @@ QQC2.Drawer {
             }
 
             RowLayout {
-                spacing: 16
+                spacing: 8 * DevicePixelRatio
 
                 anchors {
                     fill: parent
                     centerIn: parent
-                    margins: 16
+                    margins: 8 * DevicePixelRatio
                 }
 
                 Image {
@@ -126,7 +108,7 @@ QQC2.Drawer {
                 }
 
                 ColumnLayout {
-                    spacing: 8
+                    spacing: 8 * DevicePixelRatio
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
@@ -137,15 +119,24 @@ QQC2.Drawer {
                     QQC2.Label {
                         color: "#fff"
                         text: iconTitle
-                        font.weight: Font.Medium
-                        font.pixelSize: 16
+
+                        elide: Text.ElideRight
+                        font {
+                            weight: Font.Medium
+                            family: font_families
+                            pointSize: 14
+                        }
                     }
 
                     QQC2.Label {
                         color: "#fff"
                         opacity: 0.87
                         text: iconSubtitle
-                        font.pixelSize: 12
+                        elide: Text.ElideRight
+                        font {
+                            family: font_families
+                            pointSize: 10
+                        }
                     }
 
                     Item {
@@ -160,31 +151,100 @@ QQC2.Drawer {
             }
         }
 
-        //
-        // Page selector
-        //
+
+
         ListView {
             z: 0
-            id: listView
+            id: inlineListView
+
             currentIndex: -1
+
+            focus: true
+            clip: true
+
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Component.onCompleted: currentIndex = 0
 
-            delegate: DrawerItem {
-                model: items
-                width: parent.width
-                pageSelector: listView
+            highlightFollowsCurrentItem: true
+            highlight: Component{
+                Rectangle {
+                    visible: isActiveItem( index )
 
-                onClicked: {
-                    if (listView.currentIndex !== index)
-                        listView.currentIndex = index
+                    color: Material.color(Material.Orange)
+                    radius: 5 * DevicePixelRatio
 
-                    drawer.close()
+                    y: inlineListView.currentItem.y
+
+                    Behavior on y {
+                        SpringAnimation {
+                            spring: 3
+                            damping: 0.2
+                        }
+                    }
                 }
             }
 
-            QQC2.ScrollIndicator.vertical: QQC2.ScrollIndicator { }
+            delegate: DrawerItem {
+                id:drawerItem
+                model: items
+                width: parent.width
+                listView:  inlineListView
+
+                onClicked: {
+                    runActions( index )
+                    inlineListView.currentIndex = index
+                    // control.close()
+                }
+
+            }
+
+            QQC2.ScrollBar.vertical: QQC2.ScrollBar {
+                policy: inlineListView.contentHeight > inlineListView.height ?
+                            QQC2.ScrollBar.AlwaysOn : QQC2.ScrollBar.AlwaysOff
+            }
+            keyNavigationEnabled: false // Disable key up and key down
+            Component.onCompleted: currentIndex = 0
         }
     }
+    // ----- JavaScript functions
+    function runActions( idx ){
+        var isSpacer = false
+        var isSeparator = false
+        var item = items.get (idx)
+
+        if (typeof (item) !== "undefined") {
+            if (typeof (item.spacer) !== "undefined")
+                isSpacer = item.spacer
+
+            if (typeof (item.separator) !== "undefined")
+                isSeparator = item.separator
+
+            if (!isSpacer && !isSeparator){
+                if (typeof (actions [idx]) !== "undefined")
+                    actions [idx]()
+                else
+                    console.log("actions[" + idx +"] " + actions [idx])
+            }
+        }
+    }
+
+    function isActiveItem (index){
+        var isSpacer = false
+        var isSeparator = false
+        var item = items.get ( index )
+
+        if (typeof (item) !== "undefined") {
+            if (typeof (item.spacer) !== "undefined")
+                isSpacer = item.spacer
+
+            if (typeof (item.separator) !== "undefined")
+                isSeparator = item.separator
+        } else{
+            console.log("item(" + index +") undefined" )
+            return false
+        }
+        console.log("isActiveItem(" + index +")" + !isSpacer + !isSeparator )
+        return (!isSpacer && !isSeparator)
+    }
+
 }
