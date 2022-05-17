@@ -52,9 +52,9 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     QCoreApplication::setOrganizationName("ZanyXDev");
-    QCoreApplication::setApplicationName("QML-HWMonitor");
+    QCoreApplication::setApplicationName("HWMonitor");
     QCoreApplication::setApplicationVersion(
-                QString("%1-%2[%3]").arg(VERSION).arg(GIT_HASH).arg(GIT_BRANCH));
+                QString("%1.%2").arg(VERSION).arg(GIT_HASH));
 
     ///TODO usage QVersionNumber version(1, 2, 3);
 
