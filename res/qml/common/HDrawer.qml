@@ -193,7 +193,7 @@ QQC2.Drawer {
                 onClicked: {
                     runActions( index )
                     inlineListView.currentIndex = index
-                    // control.close()
+                    control.close()
                 }
 
             }
@@ -207,25 +207,11 @@ QQC2.Drawer {
         }
     }
     // ----- JavaScript functions
-    function runActions( idx ){
-        var isSpacer = false
-        var isSeparator = false
-        var item = items.get (idx)
-
-        if (typeof (item) !== "undefined") {
-            if (typeof (item.spacer) !== "undefined")
-                isSpacer = item.spacer
-
-            if (typeof (item.separator) !== "undefined")
-                isSeparator = item.separator
-
-            if (!isSpacer && !isSeparator){
-                if (typeof (actions [idx]) !== "undefined")
-                    actions [idx]()
-                else
-                    console.log("actions[" + idx +"] " + actions [idx])
-            }
-        }
+    function runActions( index ){
+        if ( isActiveItem(index) && (typeof (actions [index]) !== "undefined") )
+            actions [index]()
+        else
+            console.log("actions[" + index +"] " + actions [index])
     }
 
     function isActiveItem (index){
@@ -243,7 +229,7 @@ QQC2.Drawer {
             console.log("item(" + index +") undefined" )
             return false
         }
-        console.log("isActiveItem(" + index +")" + !isSpacer + !isSeparator )
+
         return (!isSpacer && !isSeparator)
     }
 
