@@ -3,7 +3,9 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12  as QQC2
 import QtQuick.LocalStorage 2.12
+import QtQuick.Controls.Material 2.12
 
+import "common"
 import "Pages"
 
 ///TODO текст как в матрице фоном https://thecode.media/cloudly/
@@ -11,6 +13,7 @@ import "Pages"
 QQC2.ApplicationWindow {
     id:appWnd
     // ----- Property Declarations
+    property bool isMoreMenuNeed: false
 
     // Required properties should be at the top.
     readonly property int screenOrientation: Screen.orientation
@@ -19,8 +22,8 @@ QQC2.ApplicationWindow {
     signal screenOrientationUpdated(int screenOrientation)
 
     // ----- Size information
-    width:  320 * dp
-    height: 480 * dp
+    width:  320 * DevicePixelRatio
+    height: 480 * DevicePixelRatio
     // ----- Then comes the other properties. There's no predefined order to these.
     visible: true
     visibility:  (isMobile) ? Window.FullScreen : Window.Windowed
@@ -37,91 +40,126 @@ QQC2.ApplicationWindow {
         screenOrientationUpdated(screenOrientation);
     }
 
+//    ///TODO move to qquickcontrols.2
+//    Material.theme: Material.Light
+//    Material.primary: "#1de9b6"
+//    Material.accent: "#3d5afe"
 
     // ----- Visual children
-    header: QQC2.ToolBar {
-        RowLayout {
+    header: QQC2.ToolBar{
+        Material.background: Material.Orange
+        RowLayout{
             anchors.fill: parent
-            QQC2.ToolButton {
-                text: qsTr("‹")
-                font {
-                    family: font_families;
-                    pointSize:16
+
+            QQC2.ToolButton{
+                id: btnDrawer
+                icon.source:  "qrc:/res/images/icons/ic_drawer.svg"
+                onClicked: {
+
+                    if(!navDrawer.opened)
+                        navDrawer.open()
+
+                    if(navDrawer.opened)
+                        navDrawer.close()
                 }
-                onClicked: pageBack()
             }
-            QQC2.Label {
-                id:pageTitle
-                text: swipeView.currentItem ? swipeView.currentItem.title : qsTr("Hardware monitor")
-                font {
-                    family: font_families;
-                    pointSize:16
-                }
-                elide: QQC2.Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
+
+            Item{
                 Layout.fillWidth: true
             }
-            QQC2.ToolButton {
-                text: qsTr("⋮")
-                font {
-                    family: font_families;
-                    pointSize:18
-                }
 
+            QQC2.ToolButton{
+                id: btnMoreMenu
+                visible: isMoreMenuNeed
+                icon.source: "qrc:/res/images/icons/ic_bullet.svg"
                 action: optionsMenuAction
-
-                QQC2.Menu {
-                    id: optionsMenu
-                    x: parent.width - width
-                    transformOrigin: QQC2.Menu.TopRight
-
-                    QQC2.MenuItem {
-                        id: menuSettingsItem
-                        action:settingsMenuAction
-                    }
-                    QQC2.MenuItem {
-                        id: menuMemoryItem
-                        action:memoryUsageAction
-                    }
-                    QQC2.MenuItem {
-                        id: menuCpuItem
-                        action:cpuUsageAction
-                    }
-                    QQC2.MenuItem {
-                        id: menuStorageUsageItem
-                        action:storageUsageAction
-                    }
-                    QQC2.MenuItem {
-                        id: menuBatteryItem
-                        action:batteryInfoAction
-                    }
-                    QQC2.MenuItem {
-                        id: menuProcessesItem
-                        action:processesInfoAction
-                    }
-                    QQC2.MenuSeparator { }
-                    QQC2.MenuItem {
-                        id: menuHelpItem
-                        action:helpMenuAction
-                    }
-                    QQC2.MenuItem {
-                        id: menuAboutItem
-                        action:aboutMenuAction
-                    }
-                }
             }
+
         }
     }
 
-//    Image{
-//        id:bgImage
-//        z: -1
-//        source: "qrc:/res/images/cover.jpg"
-//        anchors.fill: parent
-//        fillMode: Image.PreserveAspectCrop
-//        opacity: 0.8
-//    }
+    HDrawer {
+        id: navDrawer
+
+        iconTitle: Qt.application.name
+        iconSource: "qrc:/res/images/logo.svg"
+        iconSubtitle: qsTr ("Version "+Qt.application.version)
+
+        //
+        // Define the actions to take for each drawer item
+        // Drawers 5 and 6 are ignored, because they are used for
+        // displaying a spacer and a separator
+        //
+        actions: {
+            0: function() { toggleMoreMenuVisible()},
+            1: function() { console.log ("Item 2 clicked!") },
+            2: function() { console.log ("Item 3 clicked!") },
+            3: function() { console.log ("Item 4 clicked!") },
+            4: function() { console.log ("Item 5 clicked!") },
+            5: function() { console.log ("Item 6 clicked!") },
+            6: function() { console.log ("Item 7 clicked!") },
+            7: function() { console.log ("Item 8 clicked!") },
+            10: function() { console.log ("Item 11 clicked!") },
+            11: function() { console.log ("Item 12 clicked!") }
+        }
+
+        //
+        // Define the drawer items
+        //
+        items: ListModel {
+            id: pagesModel
+
+            ListElement {
+                pageTitle: qsTr ("Summary")
+                pageIcon: "qrc:/res/images/icons/ic_hardware.png"
+            }
+
+            ListElement {
+                pageTitle: qsTr ("Uptime")
+                pageIcon: "qrc:/icons/item2.svg"
+            }
+
+            ListElement {
+                pageTitle: qsTr ("Memory")
+                pageIcon: "qrc:/res/images/icons/ic_ram.png"
+            }
+
+            ListElement {
+                pageTitle: qsTr ("CPUs")
+                pageIcon: "qrc:/res/images/icons/ic_cpu.png"
+            }
+
+            ListElement {
+                pageTitle: qsTr ("Battery")
+                pageIcon: "qrc:/res/images/icons/ic_battery.png"
+            }
+            ListElement {
+                pageTitle: qsTr ("Process")
+                pageIcon: "qrc:/res/images/icons/ic_hardware.png"
+            }
+            ListElement {
+                pageTitle: qsTr ("Storage")
+                pageIcon: "qrc:/res/images/icons/id_sd-card.png"
+            }
+            ListElement {
+                spacer: true
+            }
+
+            ListElement {
+                separator: true
+            }
+
+            ListElement {
+                pageTitle: qsTr ("Help")
+                pageIcon: "qrc:/icons/item6.svg"
+            }
+
+            ListElement {
+                pageTitle: qsTr ("About")
+                pageIcon: "qrc:/icons/item7.svg"
+            }
+        }
+    }
 
     QQC2.SwipeView {
         id: swipeView
@@ -149,7 +187,10 @@ QQC2.ApplicationWindow {
         currentIndex: swipeView.currentIndex
         count: swipeView.count
     }
+
     // ----- Qt provided non-visual children
+
+
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
@@ -190,6 +231,7 @@ QQC2.ApplicationWindow {
             //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
             console.log("Memory usage click")
         }
+
     }
     QQC2.Action {
         id: cpuUsageAction
@@ -232,6 +274,9 @@ QQC2.ApplicationWindow {
 
     // ----- JavaScript functions
     // Обработка нажатия кнопки выхода с текущей страницы
-
+    function toggleMoreMenuVisible(){
+        isMoreMenuNeed = !isMoreMenuNeed
+        console.log ("isMoreMenuNeed:"+isMoreMenuNeed)
+    }
 }
 
