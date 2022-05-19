@@ -50,12 +50,14 @@ QQC2.ApplicationWindow {
         //Material.background: Material.Teal
         RowLayout{
             anchors.fill: parent
-
+            spacing: 2 * DevicePixelRatio
             QQC2.ToolButton{
                 id: btnDrawer
-                icon.source:  "qrc:/res/images/icons/ic_drawer.svg"
-                onClicked: {
+                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 
+                icon.source:  "qrc:/res/images/icons/ic_drawer.svg"
+
+                onClicked: {
                     if(!navDrawer.opened)
                         navDrawer.open()
 
@@ -64,8 +66,28 @@ QQC2.ApplicationWindow {
                 }
             }
 
-            Item{
+            Item {
+                // spacer item
+                Layout.fillHeight: true
+            }
+
+            QQC2.Label {
+                id:toolBarPageTitle
+                text: "Title"
+                elide: QQC2.Label.ElideRight
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
+                color:Material.primaryColor
+                font {
+                    family: font_families
+                    pointSize: 18
+                }
+            }
+
+            Item {
+                // spacer item
+                Layout.fillHeight: true
             }
 
             QQC2.ToolButton{
@@ -74,7 +96,6 @@ QQC2.ApplicationWindow {
                 icon.source: "qrc:/res/images/icons/ic_bullet.svg"
                 action: optionsMenuAction
             }
-
         }
     }
 
@@ -180,6 +201,11 @@ QQC2.ApplicationWindow {
 
         About {
             id:aboutPage
+
+        }
+
+        onCurrentIndexChanged: {
+            toolBarPageTitle.text = swipeView.currentItem.title
         }
     }
 
