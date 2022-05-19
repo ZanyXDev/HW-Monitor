@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 
 QQC2.ItemDelegate {
+     id: delegateRoot
     //
     // Do not allow user to click spacers and separators
     //
@@ -79,6 +80,7 @@ QQC2.ItemDelegate {
         }
 
         Image {
+            id:itemImage
             Layout.alignment: Qt.AlignVCenter
 
             smooth: true
@@ -95,6 +97,7 @@ QQC2.ItemDelegate {
         }
 
         QQC2.Label {
+            id:itemLabel
             Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: true
 
@@ -106,6 +109,23 @@ QQC2.ItemDelegate {
                 weight: Font.Medium
             }
         }
+//        states: State {
+//            name: "Selected"
+//            when: delegateRoot.ListView.isCurrentItem === true
+//            PropertyChanges {
+//                target: itemImage
+//                scale: 1.2
+//                y: -5
+//            }
+//            PropertyChanges {
+//                target: itemLabel
+//                scale: 1.2
+//                y: -5
+//            }
+//        }
+//        transitions: Transition {
+//            NumberAnimation { properties: "scale,y" }
+//        }
     }
 
     // ----- JavaScript functions
