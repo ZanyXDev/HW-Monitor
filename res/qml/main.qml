@@ -105,23 +105,22 @@ QQC2.ApplicationWindow {
         iconTitle: Qt.application.name
         iconSource: "qrc:/res/images/logo.svg"
         iconSubtitle: qsTr ("Version "+Qt.application.version)
-
+        highlighted: false
         //
         // Define the actions to take for each drawer item
-        // Drawers 5 and 6 are ignored, because they are used for
+        // Drawers 7 and 8 are ignored, because they are used for
         // displaying a spacer and a separator
         //
         actions: {
-            0: function() { toggleMoreMenuVisible()},
-            1: function() { console.log ("Item 2 clicked!") },
-            2: function() { console.log ("Item 3 clicked!") },
-            3: function() { console.log ("Item 4 clicked!") },
-            4: function() { console.log ("Item 5 clicked!") },
-            5: function() { console.log ("Item 6 clicked!") },
-            6: function() { console.log ("Item 7 clicked!") },
-            7: function() { console.log ("Item 8 clicked!") },
-            10: function() { console.log ("Item 11 clicked!") },
-            11: function() { console.log ("Item 12 clicked!") }
+            0: function() { gotoPage(0) },
+            1: function() { gotoPage(1) },
+            2: function() { gotoPage(2) },
+            3: function() { gotoPage(3) },
+            4: function() { gotoPage(4) },
+            5: function() { gotoPage(5) },
+            6: function() { gotoPage(6) },
+            9: function() { gotoPage(9) },
+            10: function() { gotoPage(10) }
         }
 
         //
@@ -137,7 +136,7 @@ QQC2.ApplicationWindow {
 
             ListElement {
                 pageTitle: qsTr ("Uptime")
-                pageIcon: "qrc:/icons/item2.svg"
+                pageIcon: "qrc:/res/images/icons/ic_uptime.png"
             }
 
             ListElement {
@@ -175,12 +174,12 @@ QQC2.ApplicationWindow {
 
             ListElement {
                 pageTitle: qsTr ("Help")
-                pageIcon: "qrc:/icons/item6.svg"
+                pageIcon: "qrc:/res/images/icons/ic_help.png"
             }
 
             ListElement {
-                pageTitle: qsTr ("About")
-                pageIcon: "qrc:/icons/item7.svg"
+                pageTitle: qsTr ("Info")
+                pageIcon: "qrc:/res/images/icons/ic_info.png"
             }
         }
     }
@@ -306,12 +305,24 @@ QQC2.ApplicationWindow {
     }
     // ----- Custom non-visual children
 
-
     // ----- JavaScript functions
-    // Обработка нажатия кнопки выхода с текущей страницы
+
     function toggleMoreMenuVisible(){
         isMoreMenuNeed = !isMoreMenuNeed
         console.log ("isMoreMenuNeed:"+isMoreMenuNeed)
+    }
+
+    function gotoPage(pageIndex){
+        console.log("swipeView.count:"+swipeView.count)
+        if(pageIndex === swipeView.currentIndex) {
+            // it's the current page
+            return
+        }
+
+        if(pageIndex > swipeView.count || pageIndex < 0) {
+            return
+        }
+        swipeView.setCurrentIndex( pageIndex )
     }
 }
 
