@@ -71,8 +71,8 @@ int main(int argc, char *argv[]) {
     myappTranslator.load(QLocale(), QLatin1String("qml_hwmonitor"), QLatin1String("_"),
                          QLatin1String(":/i18n"));
     app.installTranslator(&myappTranslator);
-    //TODO it is
-    QQuickStyle::setStyle(QStringLiteral("Matherial"));
+
+    QQuickStyle::setStyle("Material");
 
 
     int density = 0;
