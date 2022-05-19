@@ -9,5 +9,6 @@
         <file>res/qml/common/HDrawer.qml</file>
         <file>res/qml/common/DrawerItem.qml</file>
         <file>res/qml/common/SVGImage.qml</file>
+        <file>res/qml/common/MyDebugRect.qml</file>
     </qresource>
 </RCC>
