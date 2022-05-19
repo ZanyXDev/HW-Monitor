@@ -195,7 +195,7 @@ QQC2.Drawer {
                 onClicked: {
                     runActions( index )
                     inlineListView.currentIndex = index
-                    control.close()
+                    //control.close()
                 }
 
             }
