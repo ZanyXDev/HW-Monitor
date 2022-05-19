@@ -24,7 +24,7 @@ QQC2.Drawer {
     property size iconSize: Qt.size (72, 72)
     property color iconBgColorLeft: "#de6262"
     property color iconBgColorRight: "#ffb850"
-
+    property bool highlighted: false
     //
     // List model that generates the page selector
     // Options for selector items are:
@@ -165,7 +165,9 @@ QQC2.Drawer {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            highlightFollowsCurrentItem: true
+
+            highlightFollowsCurrentItem: control.highlighted
+
             highlight: Component{
                 Rectangle {
                     visible: isActiveItem( index )
