@@ -40,14 +40,14 @@ QQC2.ApplicationWindow {
         screenOrientationUpdated(screenOrientation);
     }
 
-//    ///TODO move to qquickcontrols.2
-//    Material.theme: Material.Light
-//    Material.primary: "#1de9b6"
-//    Material.accent: "#3d5afe"
+    //    ///TODO move to qquickcontrols.2
+    Material.theme: Material.Dark
+    //Material.primary: "#1de9b6"
+    //Material.accent: "#3d5afe"
 
     // ----- Visual children
     header: QQC2.ToolBar{
-        Material.background: Material.Orange
+        //Material.background: Material.Teal
         RowLayout{
             anchors.fill: parent
 
@@ -133,14 +133,17 @@ QQC2.ApplicationWindow {
                 pageTitle: qsTr ("Battery")
                 pageIcon: "qrc:/res/images/icons/ic_battery.png"
             }
+
             ListElement {
                 pageTitle: qsTr ("Process")
                 pageIcon: "qrc:/res/images/icons/ic_hardware.png"
             }
+
             ListElement {
                 pageTitle: qsTr ("Storage")
                 pageIcon: "qrc:/res/images/icons/id_sd-card.png"
             }
+
             ListElement {
                 spacer: true
             }
@@ -190,12 +193,12 @@ QQC2.ApplicationWindow {
 
     // ----- Qt provided non-visual children
 
-
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
         onTriggered: optionsMenu.open()
     }
+
     QQC2.Action {
         id: settingsMenuAction
         text: qsTr("&Settings ...")
@@ -203,6 +206,7 @@ QQC2.ApplicationWindow {
             console.log("settings menu")
         }
     }
+
     QQC2.Action {
         id: helpMenuAction
         text:  qsTr("&Help")
@@ -211,6 +215,7 @@ QQC2.ApplicationWindow {
             console.log("help menu")
         }
     }
+
     QQC2.Action {
         id: aboutMenuAction
         text: qsTr("About")
@@ -223,6 +228,7 @@ QQC2.ApplicationWindow {
 
 
     }
+
     QQC2.Action {
         id: memoryUsageAction
         text:  qsTr("&Memory usage...")
@@ -242,6 +248,7 @@ QQC2.ApplicationWindow {
             console.log("CPUs usage click")
         }
     }
+
     QQC2.Action {
         id: storageUsageAction
         text:  qsTr("&Storage usage...")
@@ -251,6 +258,7 @@ QQC2.ApplicationWindow {
             console.log("Storage usage click")
         }
     }
+
     QQC2.Action {
         id: batteryInfoAction
         text:  qsTr("&Battery info...")
@@ -260,6 +268,7 @@ QQC2.ApplicationWindow {
             console.log("Battery Info click")
         }
     }
+
     QQC2.Action {
         id: processesInfoAction
         text:  qsTr("&Processes info...")
