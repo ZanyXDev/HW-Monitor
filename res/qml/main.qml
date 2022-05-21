@@ -4,16 +4,19 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12  as QQC2
 import QtQuick.LocalStorage 2.12
 import QtQuick.Controls.Material 2.12
+import QtQuick.Controls.Material.impl 2.12
 
 import "common"
 import "Pages"
+
+import  Theme 1.0
 
 ///TODO текст как в матрице фоном https://thecode.media/cloudly/
 
 QQC2.ApplicationWindow {
     id:appWnd
     // ----- Property Declarations
-    property bool isMoreMenuNeed: false
+    property bool isMoreMenuNeed: true
 
     // Required properties should be at the top.
     readonly property int screenOrientation: Screen.orientation
@@ -33,21 +36,19 @@ QQC2.ApplicationWindow {
                                   Qt.LandscapeOrientation |
                                   Qt.InvertedPortraitOrientation |
                                   Qt.InvertedLandscapeOrientation
+    Material.theme: Theme.theme
     // ----- Then attached properties and attached signal handlers.
+
     // ----- States and transitions.
     // ----- Signal handlers
     onScreenOrientationChanged: {
         screenOrientationUpdated(screenOrientation);
     }
 
-    //    ///TODO move to qquickcontrols.2
-    Material.theme: Material.Dark
-    //Material.primary: "#1de9b6"
-    //Material.accent: "#3d5afe"
-
     // ----- Visual children
     header: QQC2.ToolBar{
-        //Material.background: Material.Teal
+        Material.primary:Theme.primaryColor
+
         RowLayout{
             anchors.fill: parent
             spacing: 2 * DevicePixelRatio
@@ -78,7 +79,7 @@ QQC2.ApplicationWindow {
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
-                color:Material.primaryColor
+                //color:"white"
                 font {
                     family: font_families
                     pointSize: 18
@@ -187,11 +188,10 @@ QQC2.ApplicationWindow {
     QQC2.SwipeView {
         id: swipeView
         anchors.fill: parent
-        background: Image {
-            source: "qrc:/res/images/cover.jpg"
+
+        background: Rectangle {
+            color: Theme.backgroundColor
             anchors.fill: parent
-            fillMode: Image.PreserveAspectCrop
-            opacity: 0.8
         }
 
         Summary {
@@ -209,19 +209,41 @@ QQC2.ApplicationWindow {
     }
 
     QQC2.PageIndicator {
+        id:pageIndicator
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
 
         currentIndex: swipeView.currentIndex
         count: swipeView.count
+
+        delegate: Rectangle {
+            implicitWidth: 8 *  DevicePixelRatio
+            implicitHeight: 8 * DevicePixelRatio
+
+            radius: (width / 2) * DevicePixelRatio
+            color: Theme.foregroundColor
+
+            opacity: index === pageIndicator.currentIndex ? 0.95 : pressed ? 0.7 : 0.45
+
+            Behavior on opacity {
+                OpacityAnimator {
+                    duration: 300
+                }
+            }
+        }
     }
+
+
 
     // ----- Qt provided non-visual children
 
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
-        onTriggered: optionsMenu.open()
+        onTriggered: {
+            Theme.toggleTheme()
+            //   optionsMenu.open()
+        }
     }
 
     QQC2.Action {
@@ -264,6 +286,7 @@ QQC2.ApplicationWindow {
         }
 
     }
+
     QQC2.Action {
         id: cpuUsageAction
         text:  qsTr("&CPUs usage...")
