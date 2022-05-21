@@ -19,13 +19,19 @@
 #include <QtAndroidExtras/QAndroidJniEnvironment>
 #endif
 
+#ifdef QT_DEBUG
+#include <QDirIterator>
+#endif
+
 #include "monitor.h"
 
 void createAppConfigFolder()
 {
     QDir dirConfig(
                 QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
-    qDebug() << "dirConfig.path()" << dirConfig.path();
+#ifdef QT_DEBUG
+ qDebug() << "dirConfig.path()" << dirConfig.path();
+#endif
     if (dirConfig.exists() == false) {
         dirConfig.mkpath(dirConfig.path());
     }
@@ -42,9 +48,12 @@ const QString getAppFont(){
         QFont font;
         font_families << font.defaultFamily();
     }
-    qDebug() << "font:" <<font_families.first();
-    return font_families.first();
 
+#ifdef QT_DEBUG
+ qDebug() << "font:" <<font_families.first();
+#endif
+
+    return font_families.first();
 }
 
 int main(int argc, char *argv[]) {
@@ -74,16 +83,14 @@ int main(int argc, char *argv[]) {
 
     QQuickStyle::setStyle("Material");
 
-
     int density = 0;
     bool isMobile = false;
     /// TODO replace +android folder
     const QUrl url(QStringLiteral("qrc:/res/qml/main.qml"));
+
 #ifdef Q_OS_ANDROID
     //  BUG with dpi on some androids: https://bugreports.qt-project.org/browse/QTBUG-35701
     // density = QtAndroid::androidActivity().callMethod<jint>("getScreenDpi");
-
-
 
     QtAndroid::hideSplashScreen();
 
@@ -126,9 +133,10 @@ int main(int argc, char *argv[]) {
              << "xDpi: " << xDpi ;
     qDebug() << "++++++++++++++++++++++++";
 #else
-
     QScreen *screen = qApp->primaryScreen();
     density = screen->physicalDotsPerInch() * screen->devicePixelRatio();
+
+#ifdef QT_DEBUG
     qDebug() << "Native destop app =>>>";
     qDebug() << "DensityDPI: " << density << " | "
              << "physicalDPI: " << screen->physicalDotsPerInch() << " | "
@@ -136,13 +144,12 @@ int main(int argc, char *argv[]) {
     qDebug() << "++++++++++++++++++++++++";
 #endif
 
+#endif
+
     double scale = density >= 640 ? 4 :
                                     density >= 480 ? 3 :
                                                      density >= 320 ? 2 :
                                                                       density >= 240 ? 1.5 : 1;
-#ifdef QT_DEBUG
-    scale = 1.75;
-#endif
 
     // allocate monitor before the engine to ensure that it outlives it
     QScopedPointer<Monitor> monitor(new Monitor);
@@ -151,6 +158,14 @@ int main(int argc, char *argv[]) {
     QQmlApplicationEngine engine;
 
     engine.addImportPath(":/res/qml");
+
+#ifdef QT_DEBUG
+    scale = 1.75;
+    QDirIterator it(":", QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        qDebug() << it.next();
+    }
+#endif
 
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("mm",density / 25.4);
