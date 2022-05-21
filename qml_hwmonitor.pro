@@ -56,4 +56,4 @@ QMAKE_LFLAGS += $$(QMAKE_LFLAGS_ENV)
 QML_DESIGNER_IMPORT_PATH =
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH += $$PWD
+QML_IMPORT_PATH = $$PWD/res/qml

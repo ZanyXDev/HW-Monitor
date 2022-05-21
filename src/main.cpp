@@ -150,6 +150,8 @@ int main(int argc, char *argv[]) {
     ///TODO release https://code.qt.io/cgit/qt/qtandroidextras.git/tree/examples/androidextras/customactivity?h=5.15
     QQmlApplicationEngine engine;
 
+    engine.addImportPath(":/res/qml");
+
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("mm",density / 25.4);
     context->setContextProperty("pt", 1);
