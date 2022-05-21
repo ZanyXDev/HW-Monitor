@@ -7,10 +7,10 @@ Item{
 
     property int theme:      Material.theme
 
-    readonly property var primaryColor:    theme  ? Material.Orange: "#3e4559"
-    readonly property var accentColor:     theme  ? Material.DeepOrange: "#26a69a"
-    readonly property var backgroundColor: theme  ? "#fff4e5": "#2d3140"
-    readonly property var foregroundColor: theme  ? Material.Orange: "#3e4559"
+    readonly property color primaryColor:    theme  ? "#3e4559": Material.color(Material.Orange)
+    readonly property color accentColor:     theme  ? "#26a69a": Material.color(Material.DeepOrange)
+    readonly property color backgroundColor: theme  ? "#2d3140": "#fff4e5"
+    readonly property color foregroundColor: theme  ? "#3e4559": Material.color(Material.Orange)
 
     function toggleTheme(){
         control.theme = (control.theme === 1 ? 0 : 1)
