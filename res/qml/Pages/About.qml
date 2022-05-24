@@ -9,6 +9,8 @@ QQC2.Page {
 
     // ----- Property Declarations
     // Required properties should be at the top.
+
+
      title:  qsTr("About")
     // ----- Signal declarations
 

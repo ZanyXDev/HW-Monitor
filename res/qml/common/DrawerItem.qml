@@ -3,14 +3,13 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 
 QQC2.ItemDelegate {
-    //
+    id: delegateRoot
+
     // Do not allow user to click spacers and separators
-    //
+
     enabled: !isSpacer (index) && !isSeparator (index)
 
-    //
     // Alias to parent list view
-    //
     property ListModel model
     property ListView listView
     property int baseDimen: 8  * DevicePixelRatio
@@ -21,64 +20,31 @@ QQC2.ItemDelegate {
 
     height: calculateHeight(index)
 
-    //
-    // Separator layout
-    //
-    ColumnLayout {
-        id:separatorLayout
-        spacing: 8 * DevicePixelRatio
-        anchors.fill: parent
+    // Separator item
+    QQC2.Frame{
+        id:separatorItem
         visible: isSeparator (index)
-        anchors.verticalCenter: parent.verticalCenter
-
-        Item {
-            Layout.fillHeight: true
-        }
-
-        Rectangle {
-            Layout.fillWidth: true
-
-            height: 0.5 * DevicePixelRatio
-            opacity: 0.20
-            color: "#000000"
-        }
-
-        QQC2.Label {
-            Layout.margins: 8 * DevicePixelRatio
-            Layout.fillWidth: true
-
-            opacity: 0.54
-            color: "#000000"
-            font {
-                family: font_families
-                pointSize: 14
-                weight: Font.Medium
-            }
-
-            text: hasSeparatorText (index) ? separatorText : ""
-        }
-
-        Item {
-            Layout.fillHeight: true
+        implicitHeight:  1 * DevicePixelRatio
+        anchors{
+            left: parent.left
+            right: parent.right
         }
     }
 
-    //
     // Normal layout
-    //
     RowLayout {
         id:normalLayout
-        spacing: baseDimen
-
-        anchors.fill: parent
-
         visible: !isSpacer (index)
 
+        spacing: baseDimen
+        anchors.fill: parent
+
         Item {
-            width: baseDimen
+            Layout.preferredWidth: baseDimen
         }
 
         Image {
+            id:itemImage
             Layout.alignment: Qt.AlignVCenter
 
             smooth: true
@@ -91,10 +57,11 @@ QQC2.ItemDelegate {
         }
 
         Item {
-            width:baseDimen
+            Layout.preferredWidth: baseDimen
         }
 
         QQC2.Label {
+            id:itemLabel
             Layout.alignment: Qt.AlignVCenter
             Layout.fillWidth: true
 
@@ -105,6 +72,10 @@ QQC2.ItemDelegate {
                 pointSize: 14
                 weight: Font.Medium
             }
+        }
+
+        Item {
+            Layout.preferredWidth: baseDimen
         }
     }
 

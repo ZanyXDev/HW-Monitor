@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.12
+import QtQuick.Shapes 1.0
 
 
 QQC2.Drawer {
@@ -22,9 +23,13 @@ QQC2.Drawer {
     property string iconSource: ""
     property string iconSubtitle: ""
     property size iconSize: Qt.size (72, 72)
-    property color iconBgColorLeft: "#de6262"
-    property color iconBgColorRight: "#ffb850"
 
+    property color primaryColor: Material.color(Material.primary)
+    property color highlightedColor: Material.color(Material.accent)
+    property color bgColor:  Material.color(Material.background)
+    property color foregroundColor:  Material.color(Material.foreground)
+
+    property bool highlighted: false
     //
     // List model that generates the page selector
     // Options for selector items are:
@@ -36,7 +41,6 @@ QQC2.Drawer {
     //
     property alias items: inlineListView.model
     property alias index: inlineListView.currentIndex
-
 
     //
     // A list with functions that correspond with the index of each drawer item
@@ -64,42 +68,27 @@ QQC2.Drawer {
     //
     // Main layout of the drawer
     //
+
     ColumnLayout {
-        spacing: 0
+        id: mainLayout
+        spacing: 2 * DevicePixelRatio
         anchors.margins: 0
         anchors.fill: parent
 
-        //
         // Icon controls
-        //
-        Rectangle {
-            z: 1
-            height: 64 * DevicePixelRatio
+        QQC2.Pane {
             id: iconRect
             Layout.fillWidth: true
 
-            Rectangle {
-                anchors.fill: parent
-
-                LinearGradient {
-                    anchors.fill: parent
-                    start: Qt.point (0, 0)
-                    end: Qt.point (parent.width, 0)
-
-                    gradient: Gradient {
-                        GradientStop { position: 0; color: iconBgColorLeft }
-                        GradientStop { position: 1; color: iconBgColorRight }
-                    }
-                }
-            }
-
+            z: 1
+            Layout.preferredHeight: 64 * DevicePixelRatio
             RowLayout {
                 spacing: 8 * DevicePixelRatio
 
                 anchors {
                     fill: parent
                     centerIn: parent
-                    margins: 8 * DevicePixelRatio
+                    //  margins: 8 * DevicePixelRatio
                 }
 
                 Image {
@@ -117,7 +106,7 @@ QQC2.Drawer {
                     }
 
                     QQC2.Label {
-                        color: "#fff"
+                        color: foregroundColor
                         text: iconTitle
 
                         elide: Text.ElideRight
@@ -129,7 +118,7 @@ QQC2.Drawer {
                     }
 
                     QQC2.Label {
-                        color: "#fff"
+                        color: foregroundColor
                         opacity: 0.87
                         text: iconSubtitle
                         elide: Text.ElideRight
@@ -150,28 +139,30 @@ QQC2.Drawer {
                 }
             }
         }
-
-
+        QQC2.Frame{
+            id:spacerFrame
+            Layout.fillWidth: true
+            Layout.preferredHeight: 1 * DevicePixelRatio
+        }
 
         ListView {
-            z: 0
             id: inlineListView
-
-            currentIndex: -1
-
-            focus: true
-            clip: true
 
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            highlightFollowsCurrentItem: true
+            z: 0
+            currentIndex: -1
+            focus: true
+            clip: true
+            highlightFollowsCurrentItem: control.highlighted
+
             highlight: Component{
                 Rectangle {
                     visible: isActiveItem( index )
 
-                    color: Material.color(Material.Orange)
-                    radius: 5 * DevicePixelRatio
+                    color: highlightedColor
+                    // radius: 5 * DevicePixelRatio
 
                     y: inlineListView.currentItem.y
 
@@ -193,7 +184,7 @@ QQC2.Drawer {
                 onClicked: {
                     runActions( index )
                     inlineListView.currentIndex = index
-                    // control.close()
+                    control.close()
                 }
 
             }
@@ -207,25 +198,11 @@ QQC2.Drawer {
         }
     }
     // ----- JavaScript functions
-    function runActions( idx ){
-        var isSpacer = false
-        var isSeparator = false
-        var item = items.get (idx)
-
-        if (typeof (item) !== "undefined") {
-            if (typeof (item.spacer) !== "undefined")
-                isSpacer = item.spacer
-
-            if (typeof (item.separator) !== "undefined")
-                isSeparator = item.separator
-
-            if (!isSpacer && !isSeparator){
-                if (typeof (actions [idx]) !== "undefined")
-                    actions [idx]()
-                else
-                    console.log("actions[" + idx +"] " + actions [idx])
-            }
-        }
+    function runActions( index ){
+        if ( isActiveItem(index) && (typeof (actions [index]) !== "undefined") )
+            actions [index]()
+        else
+            console.log("actions[" + index +"] " + actions [index])
     }
 
     function isActiveItem (index){
@@ -243,7 +220,7 @@ QQC2.Drawer {
             console.log("item(" + index +") undefined" )
             return false
         }
-        console.log("isActiveItem(" + index +")" + !isSpacer + !isSeparator )
+
         return (!isSpacer && !isSeparator)
     }
 
