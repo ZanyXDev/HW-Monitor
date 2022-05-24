@@ -209,11 +209,6 @@ QQC2.ApplicationWindow {
         id: swipeView
         anchors.fill: parent
 
-        background: Rectangle {
-            color: Theme.backgroundColor
-            anchors.fill: parent
-        }
-
         Summary {
             id:summaryPage
         }
@@ -241,13 +236,13 @@ QQC2.ApplicationWindow {
             implicitHeight: 8 * DevicePixelRatio
 
             radius: (width / 2) * DevicePixelRatio
-            color: Theme.foregroundColor
+            color: Theme.accent
 
             opacity: index === pageIndicator.currentIndex ? 0.95 : pressed ? 0.7 : 0.45
 
             Behavior on opacity {
                 OpacityAnimator {
-                    duration: 300
+                    duration: 100
                 }
             }
         }
