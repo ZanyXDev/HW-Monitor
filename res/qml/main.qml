@@ -247,7 +247,19 @@ QQC2.ApplicationWindow {
         }
     }
 
+    Toast{
+        id:mainToast
+        bgColor:Theme.primary
+        Material.elevation: 8
+    }
+    Connections {
+        target: navDrawer
+        function onShowEasterEgg() {
+            mainToast.show("rrrrr",3000)
+        }
+    }
     // ----- Qt provided non-visual children
+
 
     QQC2.Action {
         id: optionsMenuAction
