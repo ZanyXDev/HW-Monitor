@@ -40,6 +40,7 @@ QQC2.Page {
         if (appInForeground && pageActive) {
             if (!pageInitialized) {
                 pageInitialized = true;
+                ///TODO move to app activeChanged()
                 Monitor.init();
             }
         } else {
