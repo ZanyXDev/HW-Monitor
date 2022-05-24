@@ -13,10 +13,9 @@ QQC2.Page {
 
     // ----- Property Declarations
     // Required properties should be at the top.
-    readonly property bool appInForeground:     Qt.application.state === Qt.ApplicationActive
-    readonly property bool pageActive:          QQC2.StackView.status === QQC2.StackView.Active
+    readonly property bool pageActive:  QQC2.SwipeView.isCurrentItem
     property bool pageInitialized:          false
-     title:  qsTr("Summary")
+    title:  qsTr("Summary")
     // ----- Signal declarations
 
     // ----- Size information
@@ -25,31 +24,21 @@ QQC2.Page {
     // ----- Then attached properties and attached signal handlers.
     // ----- States and transitions.
     // ----- Signal handlers
-    onAppInForegroundChanged: {
-        if (appInForeground && pageActive) {
-            if (!pageInitialized) {
-                pageInitialized = true;
 
-
-            }
-        } else {
-            console.log("onAppInForegroundChanged-> [appInForeground:"+appInForeground+", pageInitialized:"+pageInitialized+"]")
-        }
-    }
     onPageActiveChanged: {
-        if (appInForeground && pageActive) {
+        if ( pageActive) {
             if (!pageInitialized) {
                 pageInitialized = true;
                 ///TODO move to app activeChanged()
                 Monitor.init();
             }
         } else {
-            console.log("onAppInForegroundChanged:[appInForeground"+appInForeground+", pageInitialized"+pageInitialized+"]")
+            console.log("Page title:"+title+" pageAvtive ["+ pageActive+"]","pageInitialized ["+pageInitialized+"]")
         }
     }
 
     Component.onCompleted: {
-        console.log("Summary page completed")
+        console.log("Summary page completed"," pageAvtive ["+ pageActive+"]")
     }
     // ----- Visual children.
     background:{ null }
