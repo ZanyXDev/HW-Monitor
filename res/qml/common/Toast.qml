@@ -14,16 +14,16 @@ QQC2.Pane {
     // ----- Property Declarations
     readonly property int longDelay: 3500; // 3.5 seconds
     readonly property int shortDelay: 2000; // 2 seconds
-    readonly property real defaultTime: longDelay
     readonly property real fadeTime: longDelay / 10
-    property real time: defaultTime
-    property real margin: 10
+    property real time: shortDelay
+    property real margin: 32 * DevicePixelRatio
     // whether this Toast will self-destroy when it is finished
     property bool selfDestroying: false
     property bool flat: control.enabled && control.Material.elevation > 0
     property color bgColor:  Material.color(Material.primary)
     property color foregroundColor:  Material.color(Material.foreground)
-    property int radius: 4
+    property int radius: 4 * DevicePixelRatio
+
     // ----- Signal declarations
 
     // ----- In this section, we group the size and position information together.
@@ -37,8 +37,8 @@ QQC2.Pane {
         margins: margin
     }
 
-    height: message.height + margin
-    opacity: 1
+    implicitHeight:  24 * DevicePixelRatio
+    opacity: 0
 
     // ----- Then comes the other properties. There's no predefined order to these.
 
@@ -60,7 +60,7 @@ QQC2.Pane {
     // ----- Visual children.
     background: Rectangle {
         border.color: flat ? Qt.rgba(0,0,0,0.2) : "transparent"
-        color: bgColor
+        color:  bgColor
 
         radius: control.Material.elevation > 0 ? control.radius : 0
 
@@ -71,31 +71,33 @@ QQC2.Pane {
     }
 
     RowLayout {
-        spacing: 8 * DevicePixelRatio
-
-        anchors {
-            fill: parent
-            centerIn: parent
-        }
+        anchors.fill: parent
+        spacing: 2 * DevicePixelRatio
 
         Item {
-            Layout.fillHeight: true
+            Layout.fillWidth:  true
         }
 
-        QQC2.Label {
+        QQC2.Label{
             id: message
-            //color: "white"
+
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
+            text: "111"
             font {
                 family: font_families
                 pointSize: 14
             }
-
         }
-        Item {
-            Layout.fillWidth: true
 
+        Item {
+            Layout.fillWidth:  true
         }
     }
 
@@ -103,7 +105,6 @@ QQC2.Pane {
     SequentialAnimation on opacity {
         id: animation
         running: false
-
 
         NumberAnimation {
             to: .9
@@ -118,9 +119,10 @@ QQC2.Pane {
             to: 0
             duration: fadeTime
         }
+
         onRunningChanged: {
             if (!running && selfDestroying) {
-                root.destroy();
+                control.destroy();
             }
         }
 
@@ -136,12 +138,15 @@ QQC2.Pane {
     function show(text, duration) {
         message.text = text;
 
-        console.log("show toast")
         if (typeof duration !== "undefined") { // checks if parameter was passed
-            time = Math.max(duration, 2 * fadeTime);
+            time = shortDelay;
         }
-        else {
-            time = defaultTime;
+        if ( duration > longDelay){
+            time = longDelay
+        }
+
+        if ( duration < shortDelay){
+            time = shortDelay;
         }
         animation.start();
     }
