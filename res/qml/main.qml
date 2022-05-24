@@ -125,7 +125,11 @@ QQC2.ApplicationWindow {
         iconTitle: Qt.application.name
         iconSource: "qrc:/res/images/logo.svg"
         iconSubtitle: qsTr ("Version "+Qt.application.version)
-        highlighted: false
+        highlighted: true
+        highlightedColor:Theme.primary
+        bgColor:Theme.background
+        primaryColor:Theme.primary
+        foregroundColor:Theme.foreground
         //
         // Define the actions to take for each drawer item
         // Drawers 7 and 8 are ignored, because they are used for
