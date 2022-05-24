@@ -25,44 +25,57 @@ QQC2.ItemDelegate {
     //
     // Separator layout
     //
-    ColumnLayout {
-        id:separatorLayout
-        spacing: 8 * DevicePixelRatio
-        anchors.fill: parent
-        visible: isSeparator (index)
-        anchors.verticalCenter: parent.verticalCenter
 
-        Item {
-            Layout.fillHeight: true
-        }
+    QQC2.Frame{
+        id:spacerFrame
+         visible: isSeparator (index)
+         anchors.fill: parent
 
-        Rectangle {
-            Layout.fillWidth: true
+         implicitWidth:1 * DevicePixelRatio
+             implicitHeight:  1 * DevicePixelRatio
 
-            height: 0.5 * DevicePixelRatio
-            opacity: 0.20
-            color: "#000000"
-        }
-
-        QQC2.Label {
-            Layout.margins: 8 * DevicePixelRatio
-            Layout.fillWidth: true
-
-            opacity: 0.54
-            color: "#000000"
-            font {
-                family: font_families
-                pointSize: 14
-                weight: Font.Medium
-            }
-
-            text: hasSeparatorText (index) ? separatorText : ""
-        }
-
-        Item {
-            Layout.fillHeight: true
-        }
+        //opacity: 0.20
     }
+
+//    ColumnLayout {
+//        id:separatorLayout
+//        spacing: 8 * DevicePixelRatio
+//        anchors.fill: parent
+//        visible: isSeparator (index)
+//        anchors.verticalCenter: parent.verticalCenter
+
+//        Item {
+//            Layout.fillHeight: true
+//        }
+
+//        QQC2.Frame{
+//            id:spacerFrame
+//            Layout.fillWidth: true
+//            Layout.preferredHeight: 1 * DevicePixelRatio
+//            //opacity: 0.20
+//        }
+
+
+//        QQC2.Label {
+//            Layout.margins: 8 * DevicePixelRatio
+//            Layout.fillWidth: true
+
+//            opacity: 0.54
+
+
+//            font {
+//                family: font_families
+//                pointSize: 14
+//                weight: Font.Medium
+//            }
+
+//            text: hasSeparatorText (index) ? separatorText : ""
+//        }
+
+//        Item {
+//            Layout.fillHeight: true
+//        }
+//    }
 
     //
     // Normal layout
@@ -76,7 +89,7 @@ QQC2.ItemDelegate {
         visible: !isSpacer (index)
 
         Item {
-            width: baseDimen
+            Layout.preferredWidth: baseDimen
         }
 
         Image {
@@ -93,7 +106,7 @@ QQC2.ItemDelegate {
         }
 
         Item {
-            width:baseDimen
+            Layout.preferredWidth: baseDimen
         }
 
         QQC2.Label {
@@ -108,6 +121,9 @@ QQC2.ItemDelegate {
                 pointSize: 14
                 weight: Font.Medium
             }
+        }
+        Item {
+            Layout.preferredWidth: baseDimen
         }
 //        states: State {
 //            name: "Selected"
