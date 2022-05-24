@@ -30,10 +30,7 @@ QQC2.Drawer {
     property color foregroundColor:  Material.color(Material.foreground)
 
     property bool highlighted: false
-    property bool isEasterEgg: false
-    property bool isEasterEggHand: false
-    property int easterEggCounter:6
-    //
+
     // List model that generates the page selector
     // Options for selector items are:
     //     - spacer: acts an expanding spacer between to items
@@ -68,11 +65,7 @@ QQC2.Drawer {
     //
     property var actions
 
-    //
     // Main layout of the drawer
-    //
-    signal showEasterEgg()
-
     ColumnLayout {
         id: mainLayout
         spacing: 2 * DevicePixelRatio
@@ -99,26 +92,6 @@ QQC2.Drawer {
                     id:iconImage
                     source: iconSource
                     sourceSize: iconSize
-
-                    MouseArea{
-                        id:icImageMouseArea
-                        anchors.fill: parent
-
-                        cursorShape: isEasterEggHand ? Qt.PointingHandCursor : Qt.ArrowCursor
-
-                        onClicked: {
-                            easterEggCounter--
-                            if (easterEggCounter < 3 ){
-                                isEasterEggHand = true
-                            }
-                            if (easterEggCounter == 0 ){
-                                control.showEasterEgg()
-                                clearEasterEggCounter()
-                                control.close()
-                            }
-
-                        }
-                    }
                 }
 
                 ColumnLayout {
@@ -249,9 +222,6 @@ QQC2.Drawer {
         return (!isSpacer && !isSeparator)
     }
 
-    function clearEasterEggCounter(){
-        easterEggCounter = 6
-        isEasterEggHand = false
-    }
+
 
 }

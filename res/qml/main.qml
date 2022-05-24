@@ -88,21 +88,13 @@ QQC2.ApplicationWindow {
                 Layout.fillHeight: true
             }
 
-            QQC2.Label {
+            EasterEggLabel {
                 id:toolBarPageTitle
-                text: swipeView.currentItem.title
-                elide: QQC2.Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
-                //color:"white"
-                Material.foreground: Theme.foregroundColor
+                text: swipeView.currentItem.title
                 font {
                     family: font_families
                     pointSize: 18
-                }
-                Component.onCompleted: {
-                    console.log("toolBarPageTitle.color:"+toolBarPageTitle.color)
                 }
             }
 
@@ -148,9 +140,7 @@ QQC2.ApplicationWindow {
             10: function() { gotoPage(10) }
         }
 
-        //
         // Define the drawer items
-        //
         items: ListModel {
             id: pagesModel
 
@@ -249,13 +239,14 @@ QQC2.ApplicationWindow {
 
     Toast{
         id:mainToast
+        z:100
         bgColor:Theme.primary
         Material.elevation: 8
     }
     Connections {
-        target: navDrawer
-        function onShowEasterEgg() {
-            mainToast.show("rrrrr",3000)
+        target: toolBarPageTitle
+        function onShowEasterEgg(msg) {
+            mainToast.show(msg)
         }
     }
     // ----- Qt provided non-visual children
