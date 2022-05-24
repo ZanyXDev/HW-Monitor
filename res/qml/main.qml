@@ -63,8 +63,6 @@ QQC2.ApplicationWindow {
     }
     // ----- Visual children
     header: QQC2.ToolBar{
-        //Material.primary:Theme.primaryColor
-
         RowLayout{
             anchors.fill: parent
             spacing: 2 * DevicePixelRatio
