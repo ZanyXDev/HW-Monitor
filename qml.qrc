@@ -13,5 +13,6 @@
         <file>res/qml/Theme/Theme.qml</file>
         <file>res/qml/Pages/About.qml</file>
         <file>res/qml/Pages/Summary.qml</file>
+        <file>res/qml/common/Toast.qml</file>
     </qresource>
 </RCC>
