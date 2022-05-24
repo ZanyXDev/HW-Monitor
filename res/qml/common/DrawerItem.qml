@@ -3,15 +3,13 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 
 QQC2.ItemDelegate {
-     id: delegateRoot
-    //
+    id: delegateRoot
+
     // Do not allow user to click spacers and separators
-    //
+
     enabled: !isSpacer (index) && !isSeparator (index)
 
-    //
     // Alias to parent list view
-    //
     property ListModel model
     property ListView listView
     property int baseDimen: 8  * DevicePixelRatio
@@ -22,71 +20,24 @@ QQC2.ItemDelegate {
 
     height: calculateHeight(index)
 
-    //
-    // Separator layout
-    //
-
+    // Separator item
     QQC2.Frame{
-        id:spacerFrame
-         visible: isSeparator (index)
-         anchors.fill: parent
-
-         implicitWidth:1 * DevicePixelRatio
-             implicitHeight:  1 * DevicePixelRatio
-
-        //opacity: 0.20
+        id:separatorItem
+        visible: isSeparator (index)
+        implicitHeight:  1 * DevicePixelRatio
+        anchors{
+            left: parent.left
+            right: parent.right
+        }
     }
 
-//    ColumnLayout {
-//        id:separatorLayout
-//        spacing: 8 * DevicePixelRatio
-//        anchors.fill: parent
-//        visible: isSeparator (index)
-//        anchors.verticalCenter: parent.verticalCenter
-
-//        Item {
-//            Layout.fillHeight: true
-//        }
-
-//        QQC2.Frame{
-//            id:spacerFrame
-//            Layout.fillWidth: true
-//            Layout.preferredHeight: 1 * DevicePixelRatio
-//            //opacity: 0.20
-//        }
-
-
-//        QQC2.Label {
-//            Layout.margins: 8 * DevicePixelRatio
-//            Layout.fillWidth: true
-
-//            opacity: 0.54
-
-
-//            font {
-//                family: font_families
-//                pointSize: 14
-//                weight: Font.Medium
-//            }
-
-//            text: hasSeparatorText (index) ? separatorText : ""
-//        }
-
-//        Item {
-//            Layout.fillHeight: true
-//        }
-//    }
-
-    //
     // Normal layout
-    //
     RowLayout {
         id:normalLayout
-        spacing: baseDimen
-
-        anchors.fill: parent
-
         visible: !isSpacer (index)
+
+        spacing: baseDimen
+        anchors.fill: parent
 
         Item {
             Layout.preferredWidth: baseDimen
@@ -122,26 +73,10 @@ QQC2.ItemDelegate {
                 weight: Font.Medium
             }
         }
+
         Item {
             Layout.preferredWidth: baseDimen
         }
-//        states: State {
-//            name: "Selected"
-//            when: delegateRoot.ListView.isCurrentItem === true
-//            PropertyChanges {
-//                target: itemImage
-//                scale: 1.2
-//                y: -5
-//            }
-//            PropertyChanges {
-//                target: itemLabel
-//                scale: 1.2
-//                y: -5
-//            }
-//        }
-//        transitions: Transition {
-//            NumberAnimation { properties: "scale,y" }
-//        }
     }
 
     // ----- JavaScript functions
