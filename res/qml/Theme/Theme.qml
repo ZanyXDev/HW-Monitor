@@ -9,25 +9,21 @@ Item{
 
     property int theme:      Material.Dark
 
-    property var primary:    Material.primary
-    property var accent:     Material.accent
-    property var background: Material.background
-    property var foreground: Material.foreground
+    property var primary:   (control.theme === Material.Dark) ? "#003946": "#d1cbb8"
+    property var accent:     (control.theme === Material.Dark) ? "#d13684": "#d33682"
+    property var background:  (control.theme === Material.Dark) ? "#002B36": "#fdf6e3"
+    property var foreground:  (control.theme === Material.Dark) ? "#839496": "#586e75"
 
     function toggleTheme(){
         control.theme = (control.theme === Material.Dark ? Material.Light : Material.Dark)
-        control.primary    =   (control.theme === Material.Dark) ? "#003946": "#d1cbb8"
-        control.accent     =   (control.theme === Material.Dark) ? "#d13684": "#d33682"
-        control.background =   (control.theme === Material.Dark) ? "#002B36": "#fdf6e3"
-        control.foreground =   (control.theme === Material.Dark) ? "#839496": "#586e75"
     }
 
     function isDarkMode(){
+        console.log("read isDarkMode()->" + control.theme)
         return control.theme === Material.Dark
     }
 
     function setDarkMode(){
         control.theme = Material.Dark
-        toggleTheme()
     }
 }
