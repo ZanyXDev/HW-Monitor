@@ -89,10 +89,10 @@ QQC2.Pane {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight
-            text: "111"
+
             font {
                 family: font_families
-                pointSize: 14
+                pointSize: 12
             }
         }
 
