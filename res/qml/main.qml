@@ -20,7 +20,7 @@ QQC2.ApplicationWindow {
 
     // Required properties should be at the top.
     readonly property int screenOrientation: Screen.orientation
-    readonly property bool appInForeground:     Qt.application.state === Qt.ApplicationActive
+    readonly property bool appInForeground:  Qt.application.state === Qt.ApplicationActive
     property bool appInitialized:          false
     // ----- Signal declarations
     signal screenOrientationUpdated(int screenOrientation)
@@ -50,6 +50,7 @@ QQC2.ApplicationWindow {
     onScreenOrientationChanged: {
         screenOrientationUpdated(screenOrientation);
     }
+
     onAppInForegroundChanged: {
         if (appInForeground ) {
             if (!appInitialized) {
@@ -89,7 +90,7 @@ QQC2.ApplicationWindow {
 
             QQC2.Label {
                 id:toolBarPageTitle
-                text: "Title"
+                text: swipeView.currentItem.title
                 elide: QQC2.Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
@@ -193,7 +194,6 @@ QQC2.ApplicationWindow {
             }
 
             ListElement {
-
                 separator: true
             }
 
@@ -219,11 +219,6 @@ QQC2.ApplicationWindow {
 
         About {
             id:aboutPage
-
-        }
-
-        onCurrentIndexChanged: {
-            toolBarPageTitle.text = swipeView.currentItem.title
         }
     }
 
@@ -251,8 +246,6 @@ QQC2.ApplicationWindow {
             }
         }
     }
-
-
 
     // ----- Qt provided non-visual children
 
