@@ -11,7 +11,7 @@
         <file>res/qml/common/MyDebugRect.qml</file>
         <file>res/qml/Theme/qmldir</file>
         <file>res/qml/Theme/Theme.qml</file>
-	<file>res/qml/Pages/About.qml</file>
+        <file>res/qml/Pages/About.qml</file>
         <file>res/qml/Pages/Summary.qml</file>
     </qresource>
 </RCC>
