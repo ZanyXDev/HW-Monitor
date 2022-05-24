@@ -20,7 +20,8 @@ QQC2.ApplicationWindow {
 
     // Required properties should be at the top.
     readonly property int screenOrientation: Screen.orientation
-
+    readonly property bool appInForeground:     Qt.application.state === Qt.ApplicationActive
+    property bool appInitialized:          false
     // ----- Signal declarations
     signal screenOrientationUpdated(int screenOrientation)
 
@@ -44,7 +45,16 @@ QQC2.ApplicationWindow {
     onScreenOrientationChanged: {
         screenOrientationUpdated(screenOrientation);
     }
-
+    onAppInForegroundChanged: {
+        if (appInForeground ) {
+            if (!appInitialized) {
+                appInitialized = true;
+                Theme.setDarkMode()
+            }
+        } else {
+            console.log("onAppInForegroundChanged-> [appInForeground:"+appInForeground+", appInitialized:"+appInitialized+"]")
+        }
+    }
     // ----- Visual children
     header: QQC2.ToolBar{
         Material.primary:Theme.primaryColor
@@ -170,6 +180,7 @@ QQC2.ApplicationWindow {
             }
 
             ListElement {
+
                 separator: true
             }
 
