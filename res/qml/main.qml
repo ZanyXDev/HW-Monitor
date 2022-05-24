@@ -38,6 +38,11 @@ QQC2.ApplicationWindow {
                                   Qt.InvertedPortraitOrientation |
                                   Qt.InvertedLandscapeOrientation
     Material.theme: Theme.theme
+    Material.primary: Theme.primary
+    Material.accent:  Theme.accent
+    Material.background: Theme.background
+    Material.foreground: Theme.foreground
+
     // ----- Then attached properties and attached signal handlers.
 
     // ----- States and transitions.
@@ -57,7 +62,7 @@ QQC2.ApplicationWindow {
     }
     // ----- Visual children
     header: QQC2.ToolBar{
-        Material.primary:Theme.primaryColor
+        //Material.primary:Theme.primaryColor
 
         RowLayout{
             anchors.fill: parent
@@ -90,9 +95,13 @@ QQC2.ApplicationWindow {
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 //color:"white"
+                Material.foreground: Theme.foregroundColor
                 font {
                     family: font_families
                     pointSize: 18
+                }
+                Component.onCompleted: {
+                    console.log("toolBarPageTitle.color:"+toolBarPageTitle.color)
                 }
             }
 
