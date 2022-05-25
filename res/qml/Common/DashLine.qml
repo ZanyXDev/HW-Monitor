@@ -12,8 +12,8 @@ Shape{
     ShapePath {
         id:shapePath
 
-       // NumberAnimation on strokeWidth { id:anim;from: 1; to: 5; duration: 500; running: false}
-        strokeColor: "white"
+        // NumberAnimation on strokeWidth { id:anim;from: 1; to: 5; duration: 500; running: false}
+        strokeColor: stroke_color
         strokeWidth: stroke_width
         strokeStyle: ShapePath.DashLine
         startX: 0
@@ -21,7 +21,17 @@ Shape{
         PathLine { x: control.width; y: 0 }
 
     }
-
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.NoButton
+        hoverEnabled: true
+        onEntered: {
+            control.state = "ON"
+        }
+        onExited: {
+            control.state= "OFF"
+        }
+    }
     states: [
         State {
             name: "ON"
@@ -33,29 +43,29 @@ Shape{
         }
     ]
     transitions: [
-            Transition {
-                from: "ON"
-                to: "OFF"
-                NumberAnimation {
-                    target: shapePath;
-                    property: "strokeWidth";
-                    from: 1;
-                    to: 5;
-                    duration: 500
-                }
-            },
-            Transition {
-                from: "OFF"
-                to: "ON"
-                NumberAnimation {
-                    target: shapePath;
-                    property: "strokeWidth";
-                    from: 5;
-                    to: 1;
-                    duration: 500
-                }
+        Transition {
+            from: "ON"
+            to: "OFF"
+            NumberAnimation {
+                target: shapePath;
+                property: "strokeWidth";
+                from: 1;
+                to: 5;
+                duration: 500
             }
-        ]
+        },
+        Transition {
+            from: "OFF"
+            to: "ON"
+            NumberAnimation {
+                target: shapePath;
+                property: "strokeWidth";
+                from: 5;
+                to: 1;
+                duration: 500
+            }
+        }
+    ]
     // ----- JavaScript functions
     function toggle() {
         if (control.state === "ON")
