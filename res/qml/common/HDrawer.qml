@@ -30,7 +30,7 @@ QQC2.Drawer {
     property color foregroundColor:  Material.color(Material.foreground)
 
     property bool highlighted: false
-    //
+
     // List model that generates the page selector
     // Options for selector items are:
     //     - spacer: acts an expanding spacer between to items
@@ -65,10 +65,7 @@ QQC2.Drawer {
     //
     property var actions
 
-    //
     // Main layout of the drawer
-    //
-
     ColumnLayout {
         id: mainLayout
         spacing: 2 * DevicePixelRatio
@@ -92,6 +89,7 @@ QQC2.Drawer {
                 }
 
                 Image {
+                    id:iconImage
                     source: iconSource
                     sourceSize: iconSize
                 }
@@ -223,5 +221,7 @@ QQC2.Drawer {
 
         return (!isSpacer && !isSeparator)
     }
+
+
 
 }

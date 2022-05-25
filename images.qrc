@@ -14,5 +14,6 @@
         <file>res/images/icons/ic_uptime.png</file>
         <file>res/images/icons/ic_info.png</file>
         <file>res/images/icons/ic_help.png</file>
+        <file>res/images/Particle/smoke.png</file>
     </qresource>
 </RCC>

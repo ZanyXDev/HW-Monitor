@@ -9,7 +9,8 @@ import QtQuick.Controls.Material.impl 2.12
 import "common"
 import "Pages"
 
-import  Theme 1.0
+import Theme 1.0
+import MParticles 1.0
 
 ///TODO текст как в матрице фоном https://thecode.media/cloudly/
 
@@ -62,9 +63,8 @@ QQC2.ApplicationWindow {
         }
     }
     // ----- Visual children
-    header: QQC2.ToolBar{
-        //Material.primary:Theme.primaryColor
 
+    header: QQC2.ToolBar{
         RowLayout{
             anchors.fill: parent
             spacing: 2 * DevicePixelRatio
@@ -88,21 +88,13 @@ QQC2.ApplicationWindow {
                 Layout.fillHeight: true
             }
 
-            QQC2.Label {
+            EasterEggLabel {
                 id:toolBarPageTitle
-                text: swipeView.currentItem.title
-                elide: QQC2.Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
-                //color:"white"
-                Material.foreground: Theme.foregroundColor
+                text: swipeView.currentItem.title
                 font {
                     family: font_families
                     pointSize: 18
-                }
-                Component.onCompleted: {
-                    console.log("toolBarPageTitle.color:"+toolBarPageTitle.color)
                 }
             }
 
@@ -148,9 +140,7 @@ QQC2.ApplicationWindow {
             10: function() { gotoPage(10) }
         }
 
-        //
         // Define the drawer items
-        //
         items: ListModel {
             id: pagesModel
 
@@ -247,7 +237,31 @@ QQC2.ApplicationWindow {
         }
     }
 
+    Toast{
+        id:mainToast
+        z:100
+        bgColor:Theme.primary
+        Material.elevation: 8
+    }
+
+    Explosion{
+        id:explosion
+    }
+
+    Smoke{
+        id:smoke
+    }
+
     // ----- Qt provided non-visual children
+
+    Connections {
+        target: toolBarPageTitle
+        function onShowEasterEgg(msg) {
+            mainToast.show(msg)
+            explosion.explode()
+            smoke.explode()
+        }
+    }
 
     QQC2.Action {
         id: optionsMenuAction
