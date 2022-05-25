@@ -15,5 +15,8 @@
         <file>res/qml/Pages/Summary.qml</file>
         <file>res/qml/common/Toast.qml</file>
         <file>res/qml/common/EasterEggLabel.qml</file>
+        <file>res/qml/MParticles/Explosion.qml</file>
+        <file>res/qml/MParticles/qmldir</file>
+        <file>res/qml/MParticles/Smoke.qml</file>
     </qresource>
 </RCC>
