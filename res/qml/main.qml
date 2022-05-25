@@ -9,7 +9,8 @@ import QtQuick.Controls.Material.impl 2.12
 import "common"
 import "Pages"
 
-import  Theme 1.0
+import Theme 1.0
+import MParticles 1.0
 
 ///TODO текст как в матрице фоном https://thecode.media/cloudly/
 
@@ -62,6 +63,7 @@ QQC2.ApplicationWindow {
         }
     }
     // ----- Visual children
+
     header: QQC2.ToolBar{
         RowLayout{
             anchors.fill: parent
@@ -241,14 +243,25 @@ QQC2.ApplicationWindow {
         bgColor:Theme.primary
         Material.elevation: 8
     }
+
+    Explosion{
+        id:explosion
+    }
+
+    Smoke{
+        id:smoke
+    }
+
+    // ----- Qt provided non-visual children
+
     Connections {
         target: toolBarPageTitle
         function onShowEasterEgg(msg) {
             mainToast.show(msg)
+            explosion.explode()
+            smoke.explode()
         }
     }
-    // ----- Qt provided non-visual children
-
 
     QQC2.Action {
         id: optionsMenuAction
