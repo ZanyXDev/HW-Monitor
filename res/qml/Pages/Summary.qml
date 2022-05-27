@@ -8,7 +8,7 @@ import QtGraphicalEffects 1.0
 
 
 import io.github.zanyxdev.qml_hwmonitor 1.0
-import "../common"
+import Common 1.0
 import Theme 1.0
 
 QQC2.Page {

@@ -6,11 +6,10 @@ import QtQuick.LocalStorage 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Material.impl 2.12
 
-import "common"
-import "Pages"
-
+import Common 1.0
 import Theme 1.0
 import MParticles 1.0
+import Pages 1.0
 
 ///TODO текст как в матрице фоном https://thecode.media/cloudly/
 

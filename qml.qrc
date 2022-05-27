@@ -2,18 +2,18 @@
     <qresource prefix="/">
         <file alias="qtquickcontrols2.conf">res/qml/qtquickcontrols2.conf</file>
         <file>res/qml/main.qml</file>
-	<file>res/qml/common/qmldir</file>
-        <file>res/qml/common/HWProgressBar.qml</file>
-        <file>res/qml/common/LinkButton.qml</file>
-        <file>res/qml/common/DashLine.qml</file>
-        <file>res/qml/common/HDrawer.qml</file>
-        <file>res/qml/common/DrawerItem.qml</file>
-        <file>res/qml/common/SVGImage.qml</file>
-        <file>res/qml/common/MyDebugRect.qml</file>             
-        <file>res/qml/common/Toast.qml</file>
-        <file>res/qml/common/EasterEggLabel.qml</file>
+        <file>res/qml/Common/qmldir</file>
+        <file>res/qml/Common/HWProgressBar.qml</file>
+        <file>res/qml/Common/LinkButton.qml</file>
+        <file>res/qml/Common/DashLine.qml</file>
+        <file>res/qml/Common/HDrawer.qml</file>
+        <file>res/qml/Common/DrawerItem.qml</file>
+        <file>res/qml/Common/SVGImage.qml</file>
+        <file>res/qml/Common/MyDebugRect.qml</file>
+        <file>res/qml/Common/Toast.qml</file>
+        <file>res/qml/Common/EasterEggLabel.qml</file>
         <file>res/qml/Theme/qmldir</file>
-        <file>res/qml/Theme/Theme.qml</file>   
+        <file>res/qml/Theme/Theme.qml</file>
         <file>res/qml/MParticles/qmldir</file>
         <file>res/qml/MParticles/Explosion.qml</file>
         <file>res/qml/MParticles/Smoke.qml</file>

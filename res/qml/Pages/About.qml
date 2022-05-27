@@ -3,7 +3,8 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 
-import "../common"
+import Common 1.0
+
 QQC2.Page {
     id:aboutPage
 
