@@ -71,7 +71,7 @@ Item {
                     spacing:4 * DevicePixelRatio
                     QQC2.Label{
                         id:primaryLabel
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+                        Layout.alignment: Qt.AlignLeft
                         Layout.preferredHeight:24
                         Layout.fillWidth: true
                         font {
@@ -79,6 +79,9 @@ Item {
                             bold: true
                             pointSize: 14
                         }
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
                         text: cardPrimaryTitle
                     }
                     Rectangle{
