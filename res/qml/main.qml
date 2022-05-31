@@ -58,7 +58,8 @@ QQC2.ApplicationWindow {
                 Theme.setDarkMode()
             }
         } else {
-            console.log("onAppInForegroundChanged-> [appInForeground:"+appInForeground+", appInitialized:"+appInitialized+"]")
+            if (isDebugMode)
+                console.log("onAppInForegroundChanged-> [appInForeground:"+appInForeground+", appInitialized:"+appInitialized+"]")
         }
     }
     // ----- Visual children
@@ -275,7 +276,8 @@ QQC2.ApplicationWindow {
         id: settingsMenuAction
         text: qsTr("&Settings ...")
         onTriggered: {
-            console.log("settings menu")
+            if (isDebugMode)
+                console.log("settings menu")
         }
     }
 
@@ -284,7 +286,8 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Help")
         icon.name: "help"
         onTriggered:  {
-            console.log("help menu")
+            if (isDebugMode)
+                console.log("help menu")
         }
     }
 
@@ -294,11 +297,10 @@ QQC2.ApplicationWindow {
         icon.name: "about"
         onTriggered:  {
             swipeView.setCurrentIndex(1)
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/About.qml"))
-            console.log("About")
+
+            if (isDebugMode)
+                console.log("About")
         }
-
-
     }
 
     QQC2.Action {
@@ -306,10 +308,10 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Memory usage...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Memory usage click")
-        }
 
+            if (isDebugMode)
+                console.log("Memory usage click")
+        }
     }
 
     QQC2.Action {
@@ -317,8 +319,9 @@ QQC2.ApplicationWindow {
         text:  qsTr("&CPUs usage...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("CPUs usage click")
+
+            if (isDebugMode)
+                console.log("CPUs usage click")
         }
     }
 
@@ -327,8 +330,9 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Storage usage...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Storage usage click")
+
+            if (isDebugMode)
+                console.log("Storage usage click")
         }
     }
 
@@ -337,8 +341,8 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Battery info...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Battery Info click")
+            if (isDebugMode)
+                console.log("Battery Info click")
         }
     }
 
@@ -347,8 +351,8 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Processes info...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Processes click")
+            if (isDebugMode)
+                console.log("Processes click")
         }
     }
     // ----- Custom non-visual children
@@ -357,7 +361,8 @@ QQC2.ApplicationWindow {
 
     function toggleMoreMenuVisible(){
         isMoreMenuNeed = !isMoreMenuNeed
-        console.log ("isMoreMenuNeed:"+isMoreMenuNeed)
+        if (isDebugMode)
+            console.log ("isMoreMenuNeed:"+isMoreMenuNeed)
     }
 
     function gotoPage(pageIndex){

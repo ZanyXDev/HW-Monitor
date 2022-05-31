@@ -173,7 +173,9 @@ int main(int argc, char *argv[]) {
     context->setContextProperty("DevicePixelRatio", scale);
     context->setContextProperty("isMobile",isMobile);
     context->setContextProperty("font_families",getAppFont() );
-
+#ifdef QT_DEBUG
+    context->setContextProperty("isDebugMode",true );
+#endif
     QObject::connect(
                 &engine, &QQmlApplicationEngine::objectCreated, &app,
                 [url](QObject *obj, const QUrl &objUrl) {

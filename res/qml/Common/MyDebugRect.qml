@@ -21,19 +21,20 @@ Rectangle {
     */
     function logAndReturnValue(varToLog)
     {
-      console.log("value: " + varToLog);
-      return varToLog;
+        if (isDebugMode)
+            console.log("value: " + varToLog);
+        return varToLog;
     }
 
     Component.onCompleted: {
-        console.log("------------ debugRect ----------")
-        console.log("debugRect.height:"+debugRect.height)
-        console.log("debugRect.width:"+debugRect.width)
+        if (isDebugMode){
+            console.log("------------ debugRect ----------")
+            console.log("parent.height:"+parent.height)
+            console.log("parent.width:"+parent.width)
 
-        console.log("parent.height:"+parent.height)
-        console.log("parent.width:"+parent.width)
-        for (var prop in debugRect) {
-            print(prop += " (" + typeof(debugRect[prop]) + ") = " + debugRect[prop]);
+            for (var prop in debugRect) {
+                print(prop += " (" + typeof(debugRect[prop]) + ") = " + debugRect[prop]);
+            }
         }
     }
 }

@@ -36,17 +36,54 @@ QQC2.Page {
                 Monitor.init();
             }
         } else {
-            console.log("Page title:"+title+" pageAvtive ["+ pageActive+"]","pageInitialized ["+pageInitialized+"]")
+            if (isDebugMode)
+                console.log("Page title:"+title+" pageAvtive ["+ pageActive+"]","pageInitialized ["+pageInitialized+"]")
         }
     }
 
     Component.onCompleted: {
-        console.log("Summary page completed"," pageAvtive ["+ pageActive+"]")
+        if (isDebugMode){
+            console.log("Summary page completed"," pageAvtive ["+ pageActive+"]")
+            console.log(summaryPage.height,summaryPage.width)
+        }
     }
     // ----- Visual children.
     background:{ null }
 
+    Flow {
+        anchors.fill: parent
+        anchors.margins: 8 * DevicePixelRatio
+        spacing: 8 * DevicePixelRatio
+
+        MaterialCard{
+            id:tst1
+            primaryColor: Theme.primary
+            accentColor: Theme.accent
+            foregroundColor: Theme.foreground
+            backgroundColor: Theme.background
+            iconSource:"qrc:/res/images/icons/ic_hardware.png"
+            width: (summaryPage.width / 2) - (12 * DevicePixelRatio)
+            cardPrimaryTitle:qsTr("Uptime:")
+            cardSecondaryText:Monitor.uptime
+        }
+
+        MaterialCard{
+            id:tst2
+            primaryColor: Theme.primary
+            accentColor: Theme.accent
+            foregroundColor: Theme.foreground
+            backgroundColor: Theme.background
+            iconSource:"qrc:/res/images/icons/ic_hardware.png"
+            width: (summaryPage.width / 2) - (12 * DevicePixelRatio)
+            cardPrimaryTitle:qsTr("Memory usage:")
+            cardSecondaryText:( Monitor.memoryUsage + " %")
+        }
+
+    }
+
+
     ColumnLayout{
+        visible: false
         id:mainScreenLayout
         anchors.fill: parent
         spacing: 2 * DevicePixelRatio
@@ -56,6 +93,7 @@ QQC2.Page {
             Layout.preferredHeight: 32 * DevicePixelRatio
             Layout.fillWidth: true
         }
+
 
         QQC2.Pane {
             id:control
@@ -118,7 +156,7 @@ QQC2.Page {
                 }
 
                 Item {
-                   Layout.fillHeight:  true
+                    Layout.fillHeight:  true
                 }
             }
 
