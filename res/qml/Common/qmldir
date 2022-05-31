@@ -1,5 +1,5 @@
 module Common
-Dashline 1.0 DashLine.qml
+DashLine 1.0 DashLine.qml
 EasterEggLabel 1.0 EasterEggLabel.qml
 HDrawer 1.0 HDrawer.qml
 DrawerItem 1.0 DrawerItem.qml
@@ -8,4 +8,5 @@ LinkButton 1.0 LinkButton.qml
 MyDebugRect 1.0 MyDebugRect.qml
 SVGImage 1.0 SVGImage.qml
 Toast 1.0 Toast.qml
+MaterialCard 1.0 MaterialCard.qml
 RoundImage 1.0 RoundImage.qml
