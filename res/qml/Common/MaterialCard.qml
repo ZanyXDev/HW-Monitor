@@ -12,7 +12,6 @@ Item {
     property string cardPrimaryTitle
     property string cardSecondaryText
     property string cardSubtitle
-
     property string iconSource
     property size iconSize: Qt.size (72, 72)
 
@@ -20,13 +19,14 @@ Item {
     property color accentColor: Material.color(Material.accent)
     property color backgroundColor:  Material.color(Material.background)
     property color foregroundColor:  Material.color(Material.foreground)
-    property bool flat: control.enabled && control.Material.elevation > 0
 
     property int radius: 4 * DevicePixelRatio
-    property int elevation: 2 * DevicePixelRatio
 
     property bool isSperateLineShow: false
-    property var actions
+    property bool flat: control.enabled && control.Material.elevation > 0
+    property bool showActionButton: false
+    property bool showShareButton: false
+
     implicitHeight: 120 * DevicePixelRatio
     implicitWidth:  160 * DevicePixelRatio
     QQC2.Pane {
@@ -35,18 +35,18 @@ Item {
         anchors.margins: 0
         anchors.fill: parent
 
-        Material.elevation: control.elevation
+        Material.elevation:  control.Material.elevation
 
         background: Rectangle {
-            border.color: flat ? Qt.rgba(0,0,0,0.2) : "transparent"
+            border.color: control.flat ? Qt.rgba(0,0,0,0.2) : "transparent"
 
             color: primaryColor
 
-            radius: control.elevation > 0 ? control.radius : 0
+            radius:  control.Material.elevation > 0 ? control.radius : 0
 
-            layer.enabled: flat
+            layer.enabled: control.flat
             layer.effect: ElevationEffect {
-                elevation: control.elevation
+                elevation: control.Material.elevation
             }
         }
 
@@ -136,19 +136,22 @@ Item {
                 }
                 QQC2.ToolButton{
                     id: btnShare
+                    visible: showShareButton
                     Layout.alignment: Qt.AlignTop | Qt.AlignRight
 
                     icon.source:  "qrc:/res/images/icons/ic_share.png"
 
                     onClicked: {
+                        control.sharedButtonClicked()
                         if (isDebugMode)
                             console.log("btnShare.click()")
                     }
                 }
             }
             Component.onCompleted: {
-                if (isDebugMode)
-                    console.log("cardHLayout:",cardHLayout.height,cardHLayout.width)
+                if (isDebugMode){
+                    console.log("control.Material.elevation:",control.Material.elevation,control.flat,radius)
+                }
             }
         }
     }
