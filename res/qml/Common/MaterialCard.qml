@@ -90,50 +90,6 @@ Item {
                 }
             }
 
-            //           RowLayout{
-            //                id:headerRow
-            //                spacing:4 * DevicePixelRatio
-            //                RoundImage{
-            //
-            //
-            //                    source: iconSource
-            //                    sourceSize: iconSize
-            //                }
-            //                ColumnLayout{
-            //                     Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
-            //                    //Layout.fillHeight: true
-            //                    //Layout.fillWidth: true
-            //                    spacing: 4 * DevicePixelRatio
-
-            //                    QQC2.Label{
-            //                        id:primaryLabel
-            //                        //Layout.preferredHeight: 24 * DevicePixelRatio
-            //                        Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
-            //                        font {
-            //                            family: font_families
-            //                            bold: true
-            //                            pointSize: 14
-            //                        }
-            //                        color:foregroundColor
-            //                        text: cardPrimaryTitle
-            //                    }
-            //                    QQC2.Label{
-            //                        id:secondaryLabel
-            //                        Layout.preferredHeight: 24 * DevicePixelRatio
-            //                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            //                        font {
-            //                            family: font_families
-            //                            pointSize: 12
-            //                        }
-            //                        text: cardSecondaryText
-            //                    }
-            //                    Item {
-            //                        // spacer item
-            //                        Layout.fillHeight:  true
-            //                    }
-
-            //                }
-            //            }
             QQC2.Frame{
                 id:spacerFrame
                 Layout.fillWidth: true
@@ -160,12 +116,14 @@ Item {
                     icon.source:  "qrc:/res/images/icons/ic_share.png"
 
                     onClicked: {
-                        console.log("btnShare.click()")
+                        if (isDebugMode)
+                            console.log("btnShare.click()")
                     }
                 }
             }
             Component.onCompleted: {
-                console.log("cardHLayout:",cardHLayout.height,cardHLayout.width)
+                if (isDebugMode)
+                    console.log("cardHLayout:",cardHLayout.height,cardHLayout.width)
             }
         }
     }

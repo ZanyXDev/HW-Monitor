@@ -199,8 +199,10 @@ QQC2.Drawer {
     function runActions( index ){
         if ( isActiveItem(index) && (typeof (actions [index]) !== "undefined") )
             actions [index]()
-        else
-            console.log("actions[" + index +"] " + actions [index])
+        else{
+            if (isDebugMode)
+                console.log("actions[" + index +"] " + actions [index])
+        }
     }
 
     function isActiveItem (index){
@@ -215,13 +217,11 @@ QQC2.Drawer {
             if (typeof (item.separator) !== "undefined")
                 isSeparator = item.separator
         } else{
-            console.log("item(" + index +") undefined" )
+            if (isDebugMode){
+                console.log("item(" + index +") undefined" )
+            }
             return false
         }
-
         return (!isSpacer && !isSeparator)
     }
-
-
-
 }

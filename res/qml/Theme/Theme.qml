@@ -19,7 +19,9 @@ Item{
     }
 
     function isDarkMode(){
-        console.log("read isDarkMode()->" + control.theme)
+        if (isDebugMode){
+            console.log("read isDarkMode()->" + control.theme)
+        }
         return control.theme === Material.Dark
     }
 
