@@ -55,7 +55,7 @@ Item {
             anchors.fill: parent
             spacing: 4 * DevicePixelRatio
             RowLayout{
-                id:debugRow
+                id:infoRowLayout
                 Layout.fillWidth: true
                 Layout.preferredHeight: (4 * DevicePixelRatio) + 72
                 spacing:4 * DevicePixelRatio
@@ -94,6 +94,31 @@ Item {
                 id:spacerFrame
                 Layout.fillWidth: true
                 Layout.preferredHeight: 1 * DevicePixelRatio
+            }
+            RowLayout{
+                id:subtitleRowLayout
+                Layout.fillWidth: true
+                Layout.preferredHeight: (4 * DevicePixelRatio) + 72
+                spacing:4 * DevicePixelRatio
+                Item {
+                    // spacer item
+                    Layout.fillWidth:  true
+                }
+                QQC2.Label{
+                    id:subTitleLabel
+
+                    Layout.fillWidth: true
+                    font {
+                        family: font_families
+                        bold: true
+                        pointSize: 10
+                    }
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                    wrapMode: Text.Wrap
+                    text: cardSubtitle
+                }
             }
             Item { Layout.fillHeight:  true  }
             RowLayout{
