@@ -155,8 +155,6 @@ Item {
                     }
                     onClicked: {
                         control.actionButtonClicked()
-                        if (isDebugMode)
-                            console.log("btnAction.click()")
                     }
                 }
                 Item {
@@ -172,8 +170,6 @@ Item {
 
                     onClicked: {
                         control.sharedButtonClicked()
-                        if (isDebugMode)
-                            console.log("btnShare.click()")
                     }
                 }
             }
