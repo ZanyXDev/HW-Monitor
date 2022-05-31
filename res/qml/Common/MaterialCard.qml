@@ -22,7 +22,7 @@ Item {
 
     property int radius: 4 * DevicePixelRatio
 
-    property bool isSperateLineShow: false
+    property bool isSeparetedLineShow: false
     property bool flat: control.enabled && control.Material.elevation > 0
     property bool showActionButton: false
     property bool showShareButton: false
@@ -92,6 +92,7 @@ Item {
 
             QQC2.Frame{
                 id:spacerFrame
+                visible: isSeparetedLineShow
                 Layout.fillWidth: true
                 Layout.preferredHeight: 1 * DevicePixelRatio
             }
