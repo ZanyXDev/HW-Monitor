@@ -13,6 +13,7 @@ Item {
     property string cardSecondaryText
     property string cardSubtitle
     property string iconSource
+    property string actionButtonText
 
     property color primaryColor: Material.color(Material.primary)
     property color accentColor: Material.color(Material.accent)
@@ -30,6 +31,10 @@ Item {
 
     implicitHeight: 120 * DevicePixelRatio
     implicitWidth:  160 * DevicePixelRatio
+
+    //https://doc.qt.io/qt-5/qtqml-syntax-signals.html#adding-signals-to-custom-qml-types
+    signal actionButtonClicked()
+    signal sharedButtonClicked()
     QQC2.Pane {
         id:card
         spacing: 2 * DevicePixelRatio
@@ -131,9 +136,20 @@ Item {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 spacing: 2 * DevicePixelRatio
-                QQC2.Button{
-                    id:btn
-                    text: "Action"
+                QQC2.ToolButton{
+                    id:btnAction
+                    visible:showActionButton
+                    text:actionButtonText
+
+                    font {
+                        family: font_families
+                        capitalization:Font.MixedCase
+                    }
+                    onClicked: {
+                        control.actionButtonClicked()
+                        if (isDebugMode)
+                            console.log("btnAction.click()")
+                    }
                 }
                 Item {
                     // spacer item
