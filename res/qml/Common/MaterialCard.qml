@@ -13,12 +13,13 @@ Item {
     property string cardSecondaryText
     property string cardSubtitle
     property string iconSource
-    property size iconSize: Qt.size (72, 72)
 
     property color primaryColor: Material.color(Material.primary)
     property color accentColor: Material.color(Material.accent)
     property color backgroundColor:  Material.color(Material.background)
     property color foregroundColor:  Material.color(Material.foreground)
+
+    property size iconSize: Qt.size (72, 72)
 
     property int radius: 4 * DevicePixelRatio
 
