@@ -89,12 +89,20 @@ Item {
                         elide: Text.ElideRight
                         text: cardPrimaryTitle
                     }
-                    Rectangle{
+                    QQC2.Label{
                         id:secondaryLabel
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+                        Layout.alignment:  Qt.AlignCenter
                         Layout.preferredHeight:24
                         Layout.fillWidth: true
-                        color:"yellow"
+                        font {
+                            family: font_families
+                            bold: true
+                            pointSize: 12
+                        }
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
+                        text: cardSecondaryText
                     }
                 }
             }
