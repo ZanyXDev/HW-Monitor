@@ -8,3 +8,4 @@ LinkButton 1.0 LinkButton.qml
 MyDebugRect 1.0 MyDebugRect.qml
 SVGImage 1.0 SVGImage.qml
 Toast 1.0 Toast.qml
+RoundImage 1.0 RoundImage.qml

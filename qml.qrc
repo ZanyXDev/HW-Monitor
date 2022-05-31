@@ -20,5 +20,6 @@
         <file>res/qml/Pages/qmldir</file>
         <file>res/qml/Pages/About.qml</file>
         <file>res/qml/Pages/Summary.qml</file>
+        <file>res/qml/Common/RoundImage.qml</file>
     </qresource>
 </RCC>
