@@ -25,6 +25,8 @@ QQC2.ApplicationWindow {
     // ----- Signal declarations
     signal screenOrientationUpdated(int screenOrientation)
 
+
+
     // ----- Size information
     width:  320 * DevicePixelRatio
     height: 480 * DevicePixelRatio
@@ -142,12 +144,14 @@ QQC2.ApplicationWindow {
         }
 
         // Define the drawer items
+        /// TODO extract list model to other file
         items: ListModel {
             id: pagesModel
 
             ListElement {
                 pageTitle: qsTr ("Summary")
                 pageIcon: "qrc:/res/images/icons/ic_hardware.png"
+
             }
 
             ListElement {
@@ -194,9 +198,10 @@ QQC2.ApplicationWindow {
             }
 
             ListElement {
-                pageTitle: qsTr ("Info")
+                pageTitle: qsTr ("About")
                 pageIcon: "qrc:/res/images/icons/ic_info.png"
             }
+
         }
     }
 
@@ -206,10 +211,16 @@ QQC2.ApplicationWindow {
 
         Summary {
             id:summaryPage
+            title:  qsTr("Summary")
         }
 
         About {
+            id:testPage
+            title:  qsTr("Test")
+        }
+        About {
             id:aboutPage
+            title:  qsTr("About")
         }
     }
 
