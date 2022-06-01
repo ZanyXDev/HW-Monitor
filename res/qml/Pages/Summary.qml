@@ -10,6 +10,7 @@ import QtGraphicalEffects 1.0
 import io.github.zanyxdev.qml_hwmonitor 1.0
 import Common 1.0
 import Theme 1.0
+import Pages 1.0
 
 QQC2.Page {
     id:summaryPage
@@ -18,9 +19,9 @@ QQC2.Page {
     // Required properties should be at the top.
     readonly property bool pageActive:  QQC2.SwipeView.isCurrentItem
     property bool pageInitialized:          false
-    title:  qsTr("Summary")
-    // ----- Signal declarations
 
+    // ----- Signal declarations
+    signal swipeToPage(int pageIndex)
     // ----- Size information
     // ----- Then comes the other properties. There's no predefined order to these.
 
@@ -55,252 +56,93 @@ QQC2.Page {
         anchors.margins: 8 * DevicePixelRatio
         spacing: 8 * DevicePixelRatio
 
-        MaterialCard{
-            id:tst1
+        component BaseMCard: MaterialCard{
             primaryColor: Theme.primary
             accentColor: Theme.accent
             foregroundColor: Theme.foreground
             backgroundColor: Theme.background
-            iconSource:"qrc:/res/images/icons/ic_hardware.png"
+            Material.elevation:2 * DevicePixelRatio
             width: (summaryPage.width / 2) - (12 * DevicePixelRatio)
-            cardPrimaryTitle:qsTr("Uptime:")
+            isSeparetedLineShow: true
+            showActionButton: true
+            actionButtonText: qsTr("Show more ...")
+        }
+
+        BaseMCard{
+            id:uptimeCard
+
+            iconSource:"qrc:/res/images/icons/ic_uptime.png"
+
+            cardPrimaryTitle:qsTr("Uptime")
             cardSecondaryText:Monitor.uptime
+            cardSubtitle: qsTr("Time's since last boot")
+
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.Uptime)
+            }
         }
 
-        MaterialCard{
-            id:tst2
-            primaryColor: Theme.primary
-            accentColor: Theme.accent
-            foregroundColor: Theme.foreground
-            backgroundColor: Theme.background
-            iconSource:"qrc:/res/images/icons/ic_hardware.png"
-            width: (summaryPage.width / 2) - (12 * DevicePixelRatio)
-            cardPrimaryTitle:qsTr("Memory usage:")
+        BaseMCard{
+            id:memoryCard
+            iconSource:"qrc:/res/images/icons/ic_ram.png"
+            cardPrimaryTitle:qsTr("Memory usage")
             cardSecondaryText:( Monitor.memoryUsage + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.Memory)
+            }
         }
 
+        BaseMCard{
+            id:cpusCard
+            iconSource:"qrc:/res/images/icons/ic_cpu.png"
+            cardPrimaryTitle:qsTr("CPUs usage")
+            cardSecondaryText:(Monitor.cpuUsage + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
+            }
+        }
+        BaseMCard{
+            id:batteryCard
+            iconSource:"qrc:/res/images/icons/ic_battery.png"
+            cardPrimaryTitle:qsTr("Battery capacity")
+            cardSecondaryText:(Monitor.battareyCapacity + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
+            }
+        }
+        BaseMCard{
+            id:processCard
+            iconSource:"qrc:/res/images/icons/ic_hardware.png"
+            cardPrimaryTitle:qsTr("Processes")
+            cardSecondaryText:(Monitor.currentProcess + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
+            }
+        }
+        BaseMCard{
+            id:storageCard
+            iconSource:"qrc:/res/images/icons/id_sd-card.png"
+            cardPrimaryTitle:qsTr("Storage usage")
+            cardSecondaryText:(Monitor.storageUsage + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            isRoundImage:true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
+            }
+        }
     }
 
-
-    ColumnLayout{
-        visible: false
-        id:mainScreenLayout
-        anchors.fill: parent
-        spacing: 2 * DevicePixelRatio
-
-        Item {
-            // spacer item
-            Layout.preferredHeight: 32 * DevicePixelRatio
-            Layout.fillWidth: true
-        }
-
-
-        QQC2.Pane {
-            id:control
-            Layout.preferredHeight: 48 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            property int radius: 4 * DevicePixelRatio
-
-            Material.elevation: 8
-            background: Rectangle {
-                border.color: "transparent"
-                color:  Theme.primary
-
-                radius: control.Material.elevation > 0 ? control.radius : 0
-
-                layer.enabled: true
-                layer.effect: ElevationEffect {
-                    elevation: control.Material.elevation
-                }
-            }
-
-
-            ColumnLayout {
-                anchors.fill: parent
-                spacing: 2 * DevicePixelRatio
-
-                Item {
-                    Layout.fillHeight:  true
-                }
-
-                QQC2.Label{
-                    id: message
-
-                    Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-
-                    wrapMode: Text.Wrap
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-
-                    font {
-                        family: font_families
-                        pointSize: 18
-                    }
-                    text: qsTr("Uptime: " + Monitor.uptime)
-                }
-                Item{
-                    Layout.preferredHeight: 4 * DevicePixelRatio
-                    Layout.fillWidth:  true
-                    //Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-                    Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-                    layer.enabled: true
-                    layer.samples: 4
-                    DashLine{
-                        anchors.fill: parent
-                        stroke_width: 2 *  DevicePixelRatio
-                        stroke_color: Theme.accent
-                    }
-                }
-
-                Item {
-                    Layout.fillHeight:  true
-                }
-            }
-
-        }
-
-
-
-        QQC2.Label{
-            id:memoryUsageLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Memory usage: " + Monitor.memoryUsage + " %")
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:memoryDashLine
-                anchors.fill: parent
-                stroke_width: 2 *  DevicePixelRatio
-                stroke_color: Theme.accent
-            }
-        }
-
-        QQC2.Label{
-            id:cpuLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("CPUs:" + Monitor.cpuUsage + " %")
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:cpuDashLine
-                anchors.fill: parent
-                stroke_width: 2 *  DevicePixelRatio
-                stroke_color: Theme.accent
-            }
-        }
-
-        QQC2.Label{
-            id:batteryCapacityLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Battery capacity:" + Monitor.battareyCapacity + " %")
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:batteryDashLine
-                anchors.fill: parent
-                stroke_width: 2 *  DevicePixelRatio
-                stroke_color: Theme.accent
-            }
-        }
-
-        QQC2.Label{
-            id:storageLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Storage usage:" + Monitor.storageUsage + " %")
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:storageDashLine
-                anchors.fill: parent
-                stroke_width: 2 *  DevicePixelRatio
-                stroke_color: Theme.accent
-            }
-        }
-
-        QQC2.Label{
-            id:processLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Processes: " + Monitor.currentProcess)
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:processDashLine
-                anchors.fill: parent
-                stroke_width: 2 *  DevicePixelRatio
-                stroke_color: Theme.accent
-            }
-        }
-
-        Item {
-            // spacer item
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-        }
-    }
     // ----- Qt provided non-visual children
+
     Timer {
         interval: 1000; running: true; repeat: true;
         onTriggered: Monitor.updateSystemInfo()
