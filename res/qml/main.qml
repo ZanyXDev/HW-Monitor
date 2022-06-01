@@ -128,16 +128,17 @@ QQC2.ApplicationWindow {
         // Drawers 7 and 8 are ignored, because they are used for
         // displaying a spacer and a separator
         //
+        /// TODO invert action to signal(id action)
         actions: {
-            0: function() { gotoPage(0) },
-            1: function() { gotoPage(1) },
+            0: function() { gotoPage(PageEnums.Index.Summary) },
+            1: function() { gotoPage(PageEnums.Index.Uptime) },
             2: function() { gotoPage(2) },
             3: function() { gotoPage(3) },
             4: function() { gotoPage(4) },
             5: function() { gotoPage(5) },
             6: function() { gotoPage(6) },
             9: function() { gotoPage(9) },
-            10: function() { gotoPage(10) }
+            10: function() { gotoPage(PageEnums.Index.About) }
         }
 
         // Define the drawer items
@@ -263,6 +264,14 @@ QQC2.ApplicationWindow {
         }
     }
 
+    Connections {
+        target: summaryPage
+        function onSwipeToPage(pageIndex) {
+            gotoPage( pageIndex )
+            if (isDebugMode)
+                console.log ("onSwipeToPage:"+pageIndex)
+        }
+    }
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
