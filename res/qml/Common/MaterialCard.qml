@@ -20,11 +20,12 @@ Item {
     property color backgroundColor:  Material.color(Material.background)
     property color foregroundColor:  Material.color(Material.foreground)
 
-    property size iconSize: Qt.size (72, 72)
+    property size iconSize: Qt.size (64, 64)
 
     property int radius: 4 * DevicePixelRatio
 
     property bool isSeparetedLineShow: false
+    property bool isRoundImage: false
     property bool flat: control.enabled && control.Material.elevation > 0
     property bool showActionButton: false
     property bool showShareButton: false
@@ -67,6 +68,14 @@ Item {
                 spacing:4 * DevicePixelRatio
                 RoundImage{
                     id:roundIconImage
+                    visible: isRoundImage
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+                    source: iconSource
+                    sourceSize: iconSize
+                }
+                Image{
+                    id:iconImage
+                    visible: !isRoundImage
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
                     source: iconSource
                     sourceSize: iconSize
@@ -180,5 +189,4 @@ Item {
             }
         }
     }
-
 }
