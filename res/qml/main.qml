@@ -6,11 +6,10 @@ import QtQuick.LocalStorage 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Material.impl 2.12
 
-import "common"
-import "Pages"
-
+import Common 1.0
 import Theme 1.0
 import MParticles 1.0
+import Pages 1.0
 
 ///TODO текст как в матрице фоном https://thecode.media/cloudly/
 
@@ -25,6 +24,8 @@ QQC2.ApplicationWindow {
     property bool appInitialized:          false
     // ----- Signal declarations
     signal screenOrientationUpdated(int screenOrientation)
+
+
 
     // ----- Size information
     width:  320 * DevicePixelRatio
@@ -59,7 +60,8 @@ QQC2.ApplicationWindow {
                 Theme.setDarkMode()
             }
         } else {
-            console.log("onAppInForegroundChanged-> [appInForeground:"+appInForeground+", appInitialized:"+appInitialized+"]")
+            if (isDebugMode)
+                console.log("onAppInForegroundChanged-> [appInForeground:"+appInForeground+", appInitialized:"+appInitialized+"]")
         }
     }
     // ----- Visual children
@@ -128,25 +130,28 @@ QQC2.ApplicationWindow {
         // Drawers 7 and 8 are ignored, because they are used for
         // displaying a spacer and a separator
         //
+        /// TODO invert action to signal(id action)
         actions: {
-            0: function() { gotoPage(0) },
-            1: function() { gotoPage(1) },
+            0: function() { gotoPage(PageEnums.Index.Summary) },
+            1: function() { gotoPage(PageEnums.Index.Uptime) },
             2: function() { gotoPage(2) },
             3: function() { gotoPage(3) },
             4: function() { gotoPage(4) },
             5: function() { gotoPage(5) },
             6: function() { gotoPage(6) },
             9: function() { gotoPage(9) },
-            10: function() { gotoPage(10) }
+            10: function() { gotoPage(PageEnums.Index.About) }
         }
 
         // Define the drawer items
+        /// TODO extract list model to other file
         items: ListModel {
             id: pagesModel
 
             ListElement {
                 pageTitle: qsTr ("Summary")
                 pageIcon: "qrc:/res/images/icons/ic_hardware.png"
+
             }
 
             ListElement {
@@ -193,9 +198,10 @@ QQC2.ApplicationWindow {
             }
 
             ListElement {
-                pageTitle: qsTr ("Info")
+                pageTitle: qsTr ("About")
                 pageIcon: "qrc:/res/images/icons/ic_info.png"
             }
+
         }
     }
 
@@ -205,10 +211,16 @@ QQC2.ApplicationWindow {
 
         Summary {
             id:summaryPage
+            title:  qsTr("Summary")
         }
 
         About {
+            id:testPage
+            title:  qsTr("Test")
+        }
+        About {
             id:aboutPage
+            title:  qsTr("About")
         }
     }
 
@@ -263,6 +275,14 @@ QQC2.ApplicationWindow {
         }
     }
 
+    Connections {
+        target: summaryPage
+        function onSwipeToPage(pageIndex) {
+            gotoPage( pageIndex )
+            if (isDebugMode)
+                console.log ("onSwipeToPage:"+pageIndex)
+        }
+    }
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
@@ -276,7 +296,8 @@ QQC2.ApplicationWindow {
         id: settingsMenuAction
         text: qsTr("&Settings ...")
         onTriggered: {
-            console.log("settings menu")
+            if (isDebugMode)
+                console.log("settings menu")
         }
     }
 
@@ -285,7 +306,8 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Help")
         icon.name: "help"
         onTriggered:  {
-            console.log("help menu")
+            if (isDebugMode)
+                console.log("help menu")
         }
     }
 
@@ -295,11 +317,10 @@ QQC2.ApplicationWindow {
         icon.name: "about"
         onTriggered:  {
             swipeView.setCurrentIndex(1)
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/About.qml"))
-            console.log("About")
+
+            if (isDebugMode)
+                console.log("About")
         }
-
-
     }
 
     QQC2.Action {
@@ -307,10 +328,10 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Memory usage...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Memory usage click")
-        }
 
+            if (isDebugMode)
+                console.log("Memory usage click")
+        }
     }
 
     QQC2.Action {
@@ -318,8 +339,9 @@ QQC2.ApplicationWindow {
         text:  qsTr("&CPUs usage...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("CPUs usage click")
+
+            if (isDebugMode)
+                console.log("CPUs usage click")
         }
     }
 
@@ -328,8 +350,9 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Storage usage...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Storage usage click")
+
+            if (isDebugMode)
+                console.log("Storage usage click")
         }
     }
 
@@ -338,8 +361,8 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Battery info...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Battery Info click")
+            if (isDebugMode)
+                console.log("Battery Info click")
         }
     }
 
@@ -348,8 +371,8 @@ QQC2.ApplicationWindow {
         text:  qsTr("&Processes info...")
         icon.name: "about"
         onTriggered:  {
-            //mainStackView.push(Qt.resolvedUrl("qrc:/res/qml/Pages/Memory.qml"))
-            console.log("Processes click")
+            if (isDebugMode)
+                console.log("Processes click")
         }
     }
     // ----- Custom non-visual children
@@ -358,7 +381,8 @@ QQC2.ApplicationWindow {
 
     function toggleMoreMenuVisible(){
         isMoreMenuNeed = !isMoreMenuNeed
-        console.log ("isMoreMenuNeed:"+isMoreMenuNeed)
+        if (isDebugMode)
+            console.log ("isMoreMenuNeed:"+isMoreMenuNeed)
     }
 
     function gotoPage(pageIndex){
