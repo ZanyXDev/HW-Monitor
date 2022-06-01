@@ -3,15 +3,15 @@ import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
 
-import "../common"
+import Common 1.0
+
 QQC2.Page {
     id:aboutPage
 
     // ----- Property Declarations
     // Required properties should be at the top.
-
-
-     title:  qsTr("About")
+     readonly property bool pageActive:  QQC2.SwipeView.isCurrentItem
+    property int pageID
     // ----- Signal declarations
 
     // ----- Size information
@@ -23,18 +23,5 @@ QQC2.Page {
 
     // ----- Visual children.
     background:{ null }
-    header:  QQC2.Label {
-        id:aboutLabel
 
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        padding: 2 * DevicePixelRatio
-        color:"white"
-        font {
-            family: font_families
-            pointSize: 24
-            italic: true
-        }
-        text: qsTr("about")
-    }
 }

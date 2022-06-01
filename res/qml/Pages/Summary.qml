@@ -2,11 +2,15 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls.Material 2.12
+import QtQuick.Controls.Material.impl 2.12
 import QtGraphicalEffects 1.0
 
 
 import io.github.zanyxdev.qml_hwmonitor 1.0
-import "../common"
+import Common 1.0
+import Theme 1.0
+import Pages 1.0
 
 QQC2.Page {
     id:summaryPage
@@ -15,9 +19,9 @@ QQC2.Page {
     // Required properties should be at the top.
     readonly property bool pageActive:  QQC2.SwipeView.isCurrentItem
     property bool pageInitialized:          false
-    title:  qsTr("Summary")
-    // ----- Signal declarations
 
+    // ----- Signal declarations
+    signal swipeToPage(int pageIndex)
     // ----- Size information
     // ----- Then comes the other properties. There's no predefined order to these.
 
@@ -33,248 +37,119 @@ QQC2.Page {
                 Monitor.init();
             }
         } else {
-            console.log("Page title:"+title+" pageAvtive ["+ pageActive+"]","pageInitialized ["+pageInitialized+"]")
+            if (isDebugMode)
+                console.log("Page title:"+title+" pageAvtive ["+ pageActive+"]","pageInitialized ["+pageInitialized+"]")
         }
     }
 
     Component.onCompleted: {
-        console.log("Summary page completed"," pageAvtive ["+ pageActive+"]")
+        if (isDebugMode){
+            console.log("Summary page completed"," pageAvtive ["+ pageActive+"]")
+            console.log(summaryPage.height,summaryPage.width)
+        }
     }
     // ----- Visual children.
     background:{ null }
 
-    ColumnLayout{
-        id:mainScreenLayout
+    Flow {
         anchors.fill: parent
-        spacing: 2 * DevicePixelRatio
+        anchors.margins: 8 * DevicePixelRatio
+        spacing: 8 * DevicePixelRatio
 
-        QQC2.Label {
-            id:summaryLabel
-
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignRight
-            Layout.topMargin: 16 * DevicePixelRatio
-            Layout.rightMargin: 10 * DevicePixelRatio
-
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            padding: 2 * DevicePixelRatio
-            color:"white"
-            font {
-                family: font_families
-                pointSize: 24
-                italic: true
-            }
-            text: qsTr("Summary")
+        component BaseMCard: MaterialCard{
+            primaryColor: Theme.primary
+            accentColor: Theme.accent
+            foregroundColor: Theme.foreground
+            backgroundColor: Theme.background
+            Material.elevation:2 * DevicePixelRatio
+            width: (summaryPage.width / 2) - (12 * DevicePixelRatio)
+            isSeparetedLineShow: true
+            showActionButton: true
+            actionButtonText: qsTr("Show more ...")
         }
 
-        Item {
-            // spacer item
-            Layout.preferredHeight: 32 * DevicePixelRatio
-            Layout.fillWidth: true
-        }
+        BaseMCard{
+            id:uptimeCard
 
-        LinkButton{
-            id:uptimeLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Uptime: " + Monitor.uptime)
-        }
+            iconSource:"qrc:/res/images/icons/ic_uptime.png"
 
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                anchors.fill: parent
+            cardPrimaryTitle:qsTr("Uptime")
+            cardSecondaryText:Monitor.uptime
+            cardSubtitle: qsTr("Time's since last boot")
+
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.Uptime)
             }
         }
 
-        LinkButton{
-            id:memoryUsageLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Memory usage: " + Monitor.memoryUsage + " %")
-            toolTipText: qsTr("Tap for more information about memory usage")
-            action: memoryUsageAction
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:memoryDashLine
-                anchors.fill: parent
-                Connections {
-                    target: memoryUsageLabel
-                    function onHoverChanged() {
-                        memoryDashLine.toggle()
-                    }
-                }
+        BaseMCard{
+            id:memoryCard
+            iconSource:"qrc:/res/images/icons/ic_ram.png"
+            cardPrimaryTitle:qsTr("Memory usage")
+            cardSecondaryText:( Monitor.memoryUsage + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.Memory)
             }
         }
 
-        LinkButton{
-            id:cpuLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("CPUs:" + Monitor.cpuUsage + " %")
-            toolTipText: qsTr("Tap for more information about CPUs usage")
-            action: cpuUsageAction
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:cpuDashLine
-                anchors.fill: parent
-                Connections {
-                    target: cpuLabel
-                    function onHoverChanged() {
-                        cpuDashLine.toggle()
-                    }
-                }
+        BaseMCard{
+            id:cpusCard
+            iconSource:"qrc:/res/images/icons/ic_cpu.png"
+            cardPrimaryTitle:qsTr("CPUs usage")
+            cardSecondaryText:(Monitor.cpuUsage + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
             }
         }
-
-        LinkButton{
-            id:batteryCapacityLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Battery capacity:" + Monitor.battareyCapacity + " %")
-            toolTipText: qsTr("Tap for more information about Battery")
-            action: batteryInfoAction
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:batteryDashLine
-                anchors.fill: parent
-                Connections {
-                    target: batteryCapacityLabel
-                    function onHoverChanged() {
-                        batteryDashLine.toggle()
-                    }
-                }
+        BaseMCard{
+            id:batteryCard
+            iconSource:"qrc:/res/images/icons/ic_battery.png"
+            cardPrimaryTitle:qsTr("Battery capacity")
+            cardSecondaryText:(Monitor.battareyCapacity + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
             }
         }
-
-        LinkButton{
-            id:storageLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
-            }
-            text: qsTr("Storage usage:" + Monitor.storageUsage + " %")
-            toolTipText: qsTr("Tap for more information about Storage usage")
-            action: storageUsageAction
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:storageDashLine
-                anchors.fill: parent
-                Connections {
-                    target: storageLabel
-                    function onHoverChanged() {
-                        storageDashLine.toggle()
-                    }
-                }
+        BaseMCard{
+            id:processCard
+            iconSource:"qrc:/res/images/icons/ic_hardware.png"
+            cardPrimaryTitle:qsTr("Processes")
+            cardSecondaryText:(Monitor.currentProcess + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
             }
         }
-
-        LinkButton{
-            id:processLabel
-            Layout.preferredHeight: 24 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            Layout.topMargin: 10 * DevicePixelRatio
-            font {
-                family: font_families
-                pointSize: 18
+        BaseMCard{
+            id:storageCard
+            iconSource:"qrc:/res/images/icons/id_sd-card.png"
+            cardPrimaryTitle:qsTr("Storage usage")
+            cardSecondaryText:(Monitor.storageUsage + " %")
+            cardSubtitle: qsTr("Average value for last second's")
+            showShareButton: true
+            isRoundImage:true
+            onActionButtonClicked:{
+                swipeToPage(PageEnums.Index.CPUs)
             }
-            text: qsTr("Processes: " + Monitor.currentProcess)
-            toolTipText: qsTr("Tap for more information about Processes")
-            action: processesInfoAction
-        }
-
-        Item{
-            Layout.preferredHeight: 4 * DevicePixelRatio
-            Layout.preferredWidth: parent.width - 140 * DevicePixelRatio
-            Layout.alignment: Qt.AlignTop | Qt.AlignCenter
-            layer.enabled: true
-            layer.samples: 4
-            DashLine{
-                id:processDashLine
-                anchors.fill: parent
-                Connections {
-                    target: processLabel
-                    function onHoverChanged() {
-                        processDashLine.toggle()
-                    }
-                }
-            }
-        }
-
-        Item {
-            // spacer item
-            Layout.fillHeight: true
-            Layout.fillWidth: true
         }
     }
+
     // ----- Qt provided non-visual children
+
     Timer {
         interval: 1000; running: true; repeat: true;
         onTriggered: Monitor.updateSystemInfo()
     }
 
     // ----- Custom non-visual children
-    Connections {
-        target: memoryUsageLabel
-        function hovered() {
-            console.log("memoryUsageLabel hovered signal")
-        }
-    }
+
     // ----- JavaScript functions
 }
 
