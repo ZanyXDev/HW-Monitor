@@ -52,6 +52,7 @@ QQC2.Page {
     background:{ null }
 
     Flow {
+        /// TODO Drag and drop https://habr.com/ru/post/134377/
         anchors.fill: parent
         anchors.margins: 8 * DevicePixelRatio
         spacing: 8 * DevicePixelRatio
@@ -95,14 +96,14 @@ QQC2.Page {
         }
 
         BaseMCard{
-            id:cpusCard
+            id:socCard
             iconSource:"qrc:/res/images/icons/ic_cpu.png"
             cardPrimaryTitle:qsTr("CPUs usage")
             cardSecondaryText:(Monitor.cpuUsage + " %")
             cardSubtitle: qsTr("Average value for last second's")
             showShareButton: true
             onActionButtonClicked:{
-                swipeToPage(PageEnums.Index.CPUs)
+                swipeToPage(PageEnums.Index.Soc)
             }
         }
         BaseMCard{
@@ -113,7 +114,7 @@ QQC2.Page {
             cardSubtitle: qsTr("Average value for last second's")
             showShareButton: true
             onActionButtonClicked:{
-                swipeToPage(PageEnums.Index.CPUs)
+                swipeToPage(PageEnums.Index.Battery)
             }
         }
         BaseMCard{
@@ -124,7 +125,7 @@ QQC2.Page {
             cardSubtitle: qsTr("Average value for last second's")
             showShareButton: true
             onActionButtonClicked:{
-                swipeToPage(PageEnums.Index.CPUs)
+                swipeToPage(PageEnums.Index.Process)
             }
         }
         BaseMCard{
@@ -136,7 +137,7 @@ QQC2.Page {
             showShareButton: true
             isRoundImage:true
             onActionButtonClicked:{
-                swipeToPage(PageEnums.Index.CPUs)
+                swipeToPage(PageEnums.Index.Storage)
             }
         }
     }
