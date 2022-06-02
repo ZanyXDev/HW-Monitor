@@ -11,7 +11,6 @@ Item {
         Process,
         Storage,
         Help,
-        Info,
         About
     }
 }
