@@ -5,6 +5,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.12
 import QtQuick.Shapes 1.0
 
+import Pages 1.0
 
 QQC2.Drawer {
     id: control
@@ -30,6 +31,7 @@ QQC2.Drawer {
     property color foregroundColor:  Material.color(Material.foreground)
 
     property bool highlighted: false
+    property bool isDarkMode: false
 
     // List model that generates the page selector
     // Options for selector items are:
@@ -41,29 +43,9 @@ QQC2.Drawer {
     //
     property alias items: inlineListView.model
     property alias index: inlineListView.currentIndex
-
-    //
-    // A list with functions that correspond with the index of each drawer item
-    // provided with the \a pages property
-    //
-    // For a string-based example, check this SO answer:
-    //     https://stackoverflow.com/a/26731377
-    //
-    // The only difference is that we are working with the index of each element
-    // in the list view, for example, if you want to define the function to call
-    // when the first item of the drawer is clicked, you should write:
-    //
-    //     actions: {
-    //         0: function() {
-    //             console.log ("First item clicked!")
-    //         },
-    //
-    //         1: function() {}...,
-    //         2: function() {}...,
-    //         n: function() {}...
-    //     }
-    //
-    property var actions
+    property int itemsCount:  inlineListView.model.count
+        // ----- Signal declarations
+        signal clickListItem(int itemIndex)
 
     // Main layout of the drawer
     ColumnLayout {
@@ -155,9 +137,10 @@ QQC2.Drawer {
             clip: true
             highlightFollowsCurrentItem: control.highlighted
 
+
             highlight: Component{
                 Rectangle {
-                    visible: isActiveItem( index )
+                    visible: (!items.spacer && !items.separator)
 
                     color: highlightedColor
                     // radius: 5 * DevicePixelRatio
@@ -175,16 +158,22 @@ QQC2.Drawer {
 
             delegate: DrawerItem {
                 id:drawerItem
-                model: items
                 width: parent.width
-                listView:  inlineListView
+                implicitHeight:  ( model.spacer) ? ( 128 * DevicePixelRatio) : (model.separator) ? 4 * DevicePixelRatio   :  32 * DevicePixelRatio
+
+                isSeparator: model.separator
+                isSpacer:   model.spacer
+                itemText:   enabled ? model.pageTitle: ""
+                iconSource: enabled ? model.pageIcon: ""
+                isDark: control.isDarkMode
+                // Do not allow user to click spacers and separators
+                enabled: !isSpacer  && !isSeparator
 
                 onClicked: {
-                    runActions( index )
+                    clickListItem( model.pageIndex )
                     inlineListView.currentIndex = index
-                    control.close()
+                    //control.close()
                 }
-
             }
 
             QQC2.ScrollBar.vertical: QQC2.ScrollBar {
@@ -196,32 +185,4 @@ QQC2.Drawer {
         }
     }
     // ----- JavaScript functions
-    function runActions( index ){
-        if ( isActiveItem(index) && (typeof (actions [index]) !== "undefined") )
-            actions [index]()
-        else{
-            if (isDebugMode)
-                console.log("actions[" + index +"] " + actions [index])
-        }
-    }
-
-    function isActiveItem (index){
-        var isSpacer = false
-        var isSeparator = false
-        var item = items.get ( index )
-
-        if (typeof (item) !== "undefined") {
-            if (typeof (item.spacer) !== "undefined")
-                isSpacer = item.spacer
-
-            if (typeof (item.separator) !== "undefined")
-                isSeparator = item.separator
-        } else{
-            if (isDebugMode){
-                console.log("item(" + index +") undefined" )
-            }
-            return false
-        }
-        return (!isSpacer && !isSeparator)
-    }
 }
