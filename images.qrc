@@ -16,5 +16,9 @@
         <file>res/images/icons/ic_help.png</file>
         <file>res/images/Particle/smoke.png</file>
         <file>res/images/icons/ic_share.png</file>
+        <file>res/images/Sprites/flash.png</file>
+        <file>res/images/Sprites/anim_flash.png</file>
+        <file>res/images/Particle/particle.png</file>
+        <file>res/images/soc.png</file>
     </qresource>
 </RCC>

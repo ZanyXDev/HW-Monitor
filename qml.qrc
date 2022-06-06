@@ -23,5 +23,6 @@
         <file>res/qml/Common/MaterialCard.qml</file>
         <file>res/qml/Common/RoundImage.qml</file>
         <file>res/qml/Pages/PageEnums.qml</file>
+        <file>res/qml/Pages/Soc.qml</file>
     </qresource>
 </RCC>
