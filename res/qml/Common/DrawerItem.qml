@@ -46,7 +46,7 @@ QQC2.ItemDelegate {
             opacity: isDark ? 0.54 : 1.0
             fillMode: Image.Pad
             source: iconSource
-            sourceSize: Qt.size (3  * baseDimen, 3  * baseDimen)
+            sourceSize: Qt.size (24,24)
         }
 
         Item { Layout.preferredWidth: baseDimen }

@@ -44,8 +44,8 @@ QQC2.Drawer {
     property alias items: inlineListView.model
     property alias index: inlineListView.currentIndex
     property int itemsCount:  inlineListView.model.count
-        // ----- Signal declarations
-        signal clickListItem(int itemIndex)
+    // ----- Signal declarations
+    signal clickListItem(int itemIndex)
 
     // Main layout of the drawer
     ColumnLayout {

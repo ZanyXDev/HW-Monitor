@@ -182,11 +182,11 @@ Item {
                     }
                 }
             }
-            Component.onCompleted: {
-                if (isDebugMode){
-                    console.log("control.Material.elevation:",control.Material.elevation,control.flat,radius)
-                }
-            }
+//            Component.onCompleted: {
+//                if (isDebugMode){
+//                    console.log("control.Material.elevation:",control.Material.elevation,control.flat,radius)
+//                }
+//            }
         }
     }
 }
