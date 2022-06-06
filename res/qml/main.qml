@@ -125,24 +125,7 @@ QQC2.ApplicationWindow {
         bgColor:Theme.background
         primaryColor:Theme.primary
         foregroundColor:Theme.foreground
-        //
-        // Define the actions to take for each drawer item
-        // Drawers 7 and 8 are ignored, because they are used for
-        // displaying a spacer and a separator
-        //
-        /// TODO invert action to signal(id action)
-        actions: {
-            0: function() { gotoPage(PageEnums.Index.Summary) },
-            1: function() { gotoPage(PageEnums.Index.Uptime) },
-            2: function() { gotoPage(2) },
-            3: function() { gotoPage(3) },
-            4: function() { gotoPage(4) },
-            5: function() { gotoPage(5) },
-            6: function() { gotoPage(6) },
-            9: function() { gotoPage(9) },
-            10: function() { gotoPage(PageEnums.Index.About) }
-        }
-
+        isDarkMode:Theme.isDarkMode()
         // Define the drawer items
         /// TODO extract list model to other file
         items: ListModel {
@@ -151,37 +134,43 @@ QQC2.ApplicationWindow {
             ListElement {
                 pageTitle: qsTr ("Summary")
                 pageIcon: "qrc:/res/images/icons/ic_hardware.png"
-
+                pageIndex:PageEnums.Index.Summary
             }
 
             ListElement {
                 pageTitle: qsTr ("Uptime")
                 pageIcon: "qrc:/res/images/icons/ic_uptime.png"
+                pageIndex:PageEnums.Index.Uptime
             }
 
             ListElement {
                 pageTitle: qsTr ("Memory")
                 pageIcon: "qrc:/res/images/icons/ic_ram.png"
+                pageIndex:PageEnums.Index.Memory
             }
 
             ListElement {
-                pageTitle: qsTr ("CPUs")
+                pageTitle: qsTr ("Soc")
                 pageIcon: "qrc:/res/images/icons/ic_cpu.png"
+                pageIndex:PageEnums.Index.Soc
             }
 
             ListElement {
                 pageTitle: qsTr ("Battery")
                 pageIcon: "qrc:/res/images/icons/ic_battery.png"
+                pageIndex:PageEnums.Index.Battery
             }
 
             ListElement {
                 pageTitle: qsTr ("Process")
                 pageIcon: "qrc:/res/images/icons/ic_hardware.png"
+                pageIndex:PageEnums.Index.Process
             }
 
             ListElement {
                 pageTitle: qsTr ("Storage")
                 pageIcon: "qrc:/res/images/icons/id_sd-card.png"
+                pageIndex:PageEnums.Index.Storage
             }
 
             ListElement {
@@ -195,14 +184,23 @@ QQC2.ApplicationWindow {
             ListElement {
                 pageTitle: qsTr ("Help")
                 pageIcon: "qrc:/res/images/icons/ic_help.png"
+                pageIndex:PageEnums.Index.Help
             }
 
             ListElement {
                 pageTitle: qsTr ("About")
                 pageIcon: "qrc:/res/images/icons/ic_info.png"
+                pageIndex:PageEnums.Index.About
             }
 
         }
+        onClickListItem: function(itemIndex) {
+            if (isDebugMode)
+                console.log ("onClickListItem:"+itemIndex)
+            gotoPage( itemIndex )
+            navDrawer.close()
+        }
+
     }
 
     QQC2.SwipeView {
@@ -215,12 +213,16 @@ QQC2.ApplicationWindow {
         }
 
         About {
-            id:testPage
-            title:  qsTr("Test")
+            id:uptimePage
+            title:  qsTr("Uptime")
         }
         About {
-            id:aboutPage
-            title:  qsTr("About")
+            id:memoryPage
+            title:  qsTr("Memory")
+        }
+        Soc {
+            id:socPage
+            title:  qsTr("Soc")
         }
     }
 
@@ -283,6 +285,7 @@ QQC2.ApplicationWindow {
                 console.log ("onSwipeToPage:"+pageIndex)
         }
     }
+
     QQC2.Action {
         id: optionsMenuAction
         icon.name: "menu"
