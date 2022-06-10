@@ -65,7 +65,7 @@ QQC2.Page {
                     }
                 }
                 RowLayout {
-                    id:normalLayout
+                    id:headerRowLayout
                     anchors.fill: parent
                     spacing: 8 * DevicePixelRatio
                     Item{
@@ -74,6 +74,59 @@ QQC2.Page {
                         Layout.preferredWidth: 72 * DevicePixelRatio
                         Layout.preferredHeight: 72 * DevicePixelRatio
                     }
+                    Item{
+                        id:socDescribeItem
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        ColumnLayout{
+                            id:headerTextColumnLayout
+                            anchors.fill: socDescribeItem
+                            spacing: 8 * DevicePixelRatio
+                            component InfoLabel: QQC2.Label{
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+                                Layout.fillWidth : true
+                                Layout.fillHeight: true
+
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                elide: Text.ElideRight
+
+                                font { family: font_families }
+                            }
+                            InfoLabel{
+                                id:socNameText
+
+                                text:"SoC name"
+
+                                font {
+                                    pointSize: 24
+                                    weight: Font.Medium
+                                }
+                            }
+                            InfoLabel{
+                                id:socURLText
+
+                                visible: (text.length > 0) ? true: false
+                                ///TODO need write
+                                text: "To view more about Soc, <a href='https://www.back4app.com/database/paul-datasets'>click here</a>"
+                                font {
+                                    pointSize: 12
+                                }
+                                // Since Text (and Label) lack cursor-changing abilities of their own,
+                                // as suggested by QTBUG-30804, use a MouseAra to do our dirty work.
+                                // See comment https://bugreports.qt.io/browse/QTBUG-30804?#comment-206287
+                                // TODO: Once HoverHandler and friends are able to change cursor shapes, this will want changing to that method
+                                MouseArea {
+                                       anchors.fill: parent
+                                       acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
+                                       cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                   }
+
+
+                            }
+                        }
+                    }
+                    //Item { Layout.preferredWidth:   8 * DevicePixelRatio  }
                 }
             }
         }
