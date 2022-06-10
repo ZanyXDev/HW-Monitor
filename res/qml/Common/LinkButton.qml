@@ -69,7 +69,7 @@ QQC2.Label {
         onHoveredChanged: {
 
             control.hoverChanged()
-    }
+        }
     }
 }
 
