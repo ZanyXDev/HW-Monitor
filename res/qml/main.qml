@@ -66,6 +66,7 @@ QQC2.ApplicationWindow {
     }
     // ----- Visual children
 
+
     header: QQC2.ToolBar{
         RowLayout{
             anchors.fill: parent
