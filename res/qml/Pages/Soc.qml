@@ -174,6 +174,7 @@ QQC2.Page {
                     model:  SocModel {}
                     spacing: 2 * DevicePixelRatio
                     delegate: LWDelegate {
+                        primaryColor: Theme.background
                         width: socListView.width
                         implicitHeight: 24 * DevicePixelRatio
                         isCurrent:  ListView.isCurrentItem
