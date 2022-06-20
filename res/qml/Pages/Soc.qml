@@ -172,6 +172,7 @@ QQC2.Page {
                     clip: true
 
                     model:  SocModel {}
+                    spacing: 2 * DevicePixelRatio
                     delegate: LWDelegate {
                         width: socListView.width
                         implicitHeight: 24 * DevicePixelRatio
