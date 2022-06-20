@@ -9,6 +9,7 @@ import QtQuick.Shapes 1.0
 
 import Common 1.0
 import Theme 1.0
+import Test  1.0
 
 QQC2.Page {
     id:control
@@ -37,70 +38,20 @@ QQC2.Page {
     // ----- Visual children.
     background:{null}
 
-    Rectangle {
-        color: "lightGray"
-        anchors.fill: parent
-        Item {
-            width: 200
-            height: 100
-            anchors.centerIn: parent
-
-            Shape {
-                id: shape
-                anchors.fill: parent
-
-                ShapePath {
-                    strokeWidth: 10
-                    strokeColor: "black"
-                    fillColor: "transparent"
-
-                    startX: 144
-                    startY: 138
-                    PathLine { x:249; y:112}
-                    PathLine { x:352; y:138}
-                    PathLine { x:352; y:272}
-                    PathQuad { x:288; y:368;controlX:352;controlY:315}
-                    PathQuad {
-                        x: 150; y: 50
-                        controlX: cp.x; controlY: cp.y
-                    }
-                }
-            }
-
-            Rectangle {
-                id: cp
-                color: "red"
-                width: 10
-                height: 10
-                SequentialAnimation on x {
-                    loops: Animation.Infinite
-                    NumberAnimation {
-                        from: 0
-                        to: shape.width - cp.width
-                        duration: 5000
-                    }
-                    NumberAnimation {
-                        from: shape.width - cp.width
-                        to: 0
-                        duration: 5000
-                    }
-                }
-            }
-        }
-    }
-
-
     ColumnLayout {
-        visible: false
+        visible: true
         id: mainPageLayout
 
-        spacing: 4 * DevicePixelRatio
+        spacing: 2 * DevicePixelRatio
         anchors{
-            margins: 4  * DevicePixelRatio
+            topMargin: 2  * DevicePixelRatio
+            leftMargin: 2  * DevicePixelRatio
+            rightMargin: 2  * DevicePixelRatio
+            bottomMargin: 16  * DevicePixelRatio
             fill: parent
         }
-        component ProportionalRect: Item {
 
+        component ProportionalRect: Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: 1
@@ -116,7 +67,7 @@ QQC2.Page {
                 property bool flat: enabled && Material.elevation > 0
                 property int radius: 4 * DevicePixelRatio
                 anchors.fill: parent
-                Material.elevation:  2 * DevicePixelRatio
+                Material.elevation:  4 * DevicePixelRatio
 
                 background: Rectangle {
                     border.color: headerPanel.flat ? Qt.rgba(0,0,0,0.2) : "transparent"
@@ -158,7 +109,6 @@ QQC2.Page {
                             }
                             InfoLabel{
                                 id:socNameText
-
                                 text:"SoC name"
 
                                 font {
@@ -196,68 +146,54 @@ QQC2.Page {
         ProportionalRect {
             id:bodyListView
             Layout.preferredHeight: 380 * DevicePixelRatio
-            Rectangle{
+            QQC2.Pane{
+                /// TODO need extract to file
+                id:listViewPanel
+                property bool flat: enabled && Material.elevation > 0
+                property int radius: 4 * DevicePixelRatio
                 anchors.fill: parent
-                color: "green"
+                Material.elevation: 4 * DevicePixelRatio
+
+                background: Rectangle {
+                    border.color: headerPanel.flat ? Qt.rgba(0,0,0,0.2) : "transparent"
+                    color: Theme.primary
+                    radius:  headerPanel.Material.elevation > 0 ? headerPanel.radius : 0
+                    layer.enabled: headerPanel.flat
+                    layer.effect: ElevationEffect {
+                        elevation: headerPanel.Material.elevation
+                    }
+                }
+
+                ListView {
+                    id:socListView
+                    anchors.fill: parent
+
+                    focus: true
+                    clip: true
+
+                    model:  SocModel {}
+                    delegate: LWDelegate {
+                        width: socListView.width
+                        implicitHeight: 24 * DevicePixelRatio
+                        isCurrent:  ListView.isCurrentItem
+                        keyText:model.key
+                        valueText:model.value
+                        onClicked: {
+                            socListView.currentIndex = index
+                            console.log("socListView.currentIndex:",index)
+                        }
+                    }
+                    QQC2.ScrollBar.vertical: QQC2.ScrollBar {
+                        policy: socListView.contentHeight > socListView.height ?
+                                    QQC2.ScrollBar.AlwaysOn : QQC2.ScrollBar.AlwaysOff
+                    }
+                    keyNavigationEnabled: false // Disable key up and key down
+                    Component.onCompleted: currentIndex = 0
+                }
             }
         }
 
-        //            RowLayout {
-        //                id:normalLayout
-        //                Layout.fillWidth: true
-        //                Layout.fillHeight: true
-
-        //                spacing: 8 * DevicePixelRatio
-
-        //                Item { Layout.preferredWidth:   8 * DevicePixelRatio  }
-        //                Item {
-        //                    id:imageItemFinishPlace
-        //                    Layout.preferredWidth:   72 * DevicePixelRatio
-        //                    Layout.preferredHeight:  72 * DevicePixelRatio
-        //                    Layout.alignment:  Qt.AlignHCenter | Qt.AlignVCenter
-        //                }
-        //                Item { Layout.fillWidth: true }
-        //            }
-        //        ListView {
-        //            id: socListView
-
-        //            ///TODO separate model to cpp part
-        //            model: ListModel {
-        //                id: socModel
-
-        //                ListElement {
-
-        //                    socItemName: qsTr ("Snapdragon")
-        //                    socItemText: qsTr ("888")
-        //                    socItemDesc: qsTr ("888")
-        //                }
-        //                ListElement {
-
-        //                    socItemName: qsTr ("testName")
-        //                    socItemText: qsTr ("testText")
-        //                    socItemDesc: qsTr ("testDesc")
-        //                }
-        //            }
-        //            Layout.fillWidth: true
-        //            Layout.fillHeight: true
-
-        //            z: 0
-        //            currentIndex: -1
-        //            focus: true
-        //            clip: true
-        //            highlightFollowsCurrentItem: control.highlighted
-
-        //            delegate:
-        //                Rectangle{
-        //                implicitHeight:32 * DevicePixelRatio
-        //                width: parent.width
-        //                color:"green"
-        //            }
-
-        //        }
-
     }
-
 
     Item{
         id:firstRunParent
@@ -271,10 +207,10 @@ QQC2.Page {
             opacity: 0
             fillMode: Image.PreserveAspectFit
             source: "qrc:/res/images/soc.png"
-            state:"oldparent"
+            state: pageInitialized ? "OLD_PLACE" :"NEW_PLACE"
             states: [
                 State {
-                    name: "newparent"
+                    name: "NEW_PLACE"
                     ParentChange {
                         target: socImage
                         parent: imageItemFinishPlace
@@ -285,7 +221,7 @@ QQC2.Page {
                     }
                 },
                 State {
-                    name: "oldparent"
+                    name: "OLD_PLACE"
                     ParentChange {
                         target: socImage
                         parent: firstRunParent
@@ -318,8 +254,6 @@ QQC2.Page {
             easing.type: Easing.OutQuad;
         }
 
-
-
         NumberAnimation {
             target: socImage;
             properties: 'opacity';
@@ -328,8 +262,9 @@ QQC2.Page {
             duration: 500;
             easing.type: Easing.OutQuad;
         }
+
         onFinished: {
-            socImage.state = "newparent"
+            socImage.state = "NEW_PLACE"
             smoke.explode()
         }
     }
