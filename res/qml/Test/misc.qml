@@ -1,12 +1,66 @@
-  
-  
+
+
+Rectangle {
+    color: "lightGray"
+    anchors.fill: parent
+    Item {
+        width: 200
+        height: 100
+        anchors.centerIn: parent
+
+        Shape {
+            id: shape
+            anchors.fill: parent
+
+            ShapePath {
+                strokeWidth: 10
+                strokeColor: "black"
+                fillColor: "transparent"
+
+                startX: 144
+                startY: 138
+                PathLine { x:249; y:112}
+                PathLine { x:352; y:138}
+                PathLine { x:352; y:272}
+                PathQuad { x:288; y:368;controlX:352;controlY:315}
+                PathQuad {
+                    x: 150; y: 50
+                    controlX: cp.x; controlY: cp.y
+                }
+            }
+        }
+
+        Rectangle {
+            id: cp
+            color: "red"
+            width: 10
+            height: 10
+            SequentialAnimation on x {
+                loops: Animation.Infinite
+                NumberAnimation {
+                    from: 0
+                    to: shape.width - cp.width
+                    duration: 5000
+                }
+                NumberAnimation {
+                    from: shape.width - cp.width
+                    to: 0
+                    duration: 5000
+                }
+            }
+        }
+    }
+}
+
+
+
     Image{
         id:test
       fillMode: Image.Pad
         source: "qrc:/res/images/soc.png"
          sourceSize: Qt.size (92,92)
     }
-    
+
   AnimatedSprite {
         id:lightImage
         source: "qrc:/res/images/Sprites/anim_flash.png"
