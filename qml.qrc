@@ -12,6 +12,9 @@
         <file>res/qml/Common/MyDebugRect.qml</file>
         <file>res/qml/Common/Toast.qml</file>
         <file>res/qml/Common/EasterEggLabel.qml</file>
+	<file>res/qml/Common/LWDelegate.qml</file>
+        <file>res/qml/Common/MaterialCard.qml</file>
+        <file>res/qml/Common/RoundImage.qml</file>
         <file>res/qml/Theme/qmldir</file>
         <file>res/qml/Theme/Theme.qml</file>
         <file>res/qml/MParticles/qmldir</file>
@@ -20,9 +23,9 @@
         <file>res/qml/Pages/qmldir</file>
         <file>res/qml/Pages/About.qml</file>
         <file>res/qml/Pages/Summary.qml</file>
-        <file>res/qml/Common/MaterialCard.qml</file>
-        <file>res/qml/Common/RoundImage.qml</file>
         <file>res/qml/Pages/PageEnums.qml</file>
         <file>res/qml/Pages/Soc.qml</file>
+        <file>res/qml/Test/qmldir</file>
+        <file>res/qml/Test/SocModel.qml</file>
     </qresource>
 </RCC>
