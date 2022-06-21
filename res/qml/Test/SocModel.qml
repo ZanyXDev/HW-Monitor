@@ -6,6 +6,15 @@ ListModel {
 
     ListElement {
         key: qsTr ("Model")
+        value: qsTr ("Qualcomm Snapdragon 662")
+    }
+    ListElement {
+        key: qsTr ("CPU")
+        value: qsTr ("QTI SM6115")
+    }
+
+    ListElement {
+        key: qsTr ("Vendor")
         value: qsTr ("Qualcomm Techonlogies, Inc BENGAL")
     }
 
