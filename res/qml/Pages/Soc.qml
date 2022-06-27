@@ -109,10 +109,10 @@ QQC2.Page {
                             }
                             InfoLabel{
                                 id:socNameText
-                                text:"SoC name"
+                                text: getSocName()
 
                                 font {
-                                    pointSize: 24
+                                    pointSize: 16
                                     weight: Font.Medium
                                 }
                             }
@@ -170,9 +170,29 @@ QQC2.Page {
 
                     focus: true
                     clip: true
-
-                    model:  SocModel {}
+                    z: 0
+                    currentIndex: -1
+                    model: socModel
                     spacing: 2 * DevicePixelRatio
+                    highlightFollowsCurrentItem: true
+                    highlight: Component{
+
+                        Rectangle {
+                            z:2
+                            color: Theme.accent
+                            // extract radius property  for hightlight and item
+                            radius: 4 * DevicePixelRatio
+                            opacity: 0.72
+                            y: socListView.currentItem.y
+
+                            Behavior on y {
+                                SpringAnimation {
+                                    spring: 3
+                                    damping: 0.2
+                                }
+                            }
+                        }
+                    }
                     delegate: LWDelegate {
                         primaryColor: Theme.background
                         width: socListView.width
@@ -182,7 +202,9 @@ QQC2.Page {
                         valueText:model.value
                         onClicked: {
                             socListView.currentIndex = index
-                            console.log("socListView.currentIndex:",index)
+                            if (isDebugMode){
+                                console.log("socListView.currentIndex:",index)
+                            }
                         }
                     }
                     QQC2.ScrollBar.vertical: QQC2.ScrollBar {
@@ -267,12 +289,20 @@ QQC2.Page {
 
         onFinished: {
             socImage.state = "NEW_PLACE"
-            smoke.explode()
+            // smoke.explode()
         }
     }
 
     // ----- Custom non-visual children
-
+    SocModel {
+        id:socModel
+    }
     // ----- JavaScript functions
+    function getSocName(){
+        if (isDebugMode){
+            console.log("socModel.count:",socModel.count)
+        }
+        return (socModel.count > 0 ) ? socModel.get(0).value : "[Undefined]"
+    }
 }
 
