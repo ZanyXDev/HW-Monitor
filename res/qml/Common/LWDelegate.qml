@@ -87,7 +87,7 @@ QQC2.ItemDelegate {
 
         Component.onCompleted: {
             if (isDebugMode){
-                console.log("label:",keyText,valueText)
+               // console.log("label:",keyText,valueText)
             }
         }
     }
