@@ -213,7 +213,7 @@ QQC2.ApplicationWindow {
             title:  qsTr("Summary")
         }
 
-        About {
+        UpTime {
             id:uptimePage
             title:  qsTr("Uptime")
         }
