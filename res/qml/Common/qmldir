@@ -11,3 +11,4 @@ Toast 1.0 Toast.qml
 MaterialCard 1.0 MaterialCard.qml
 RoundImage 1.0 RoundImage.qml
 LWDelegate 1.0 LWDelegate.qml
+MaterialPane 1.0 materialpane.qml
