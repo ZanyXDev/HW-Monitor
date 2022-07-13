@@ -38,15 +38,16 @@ QQC2.Page {
     // ----- Visual children.
     background:{null}
 
+
     ColumnLayout {
         visible: true
         id: mainPageLayout
 
         spacing: 2 * DevicePixelRatio
         anchors{
-            topMargin: 2  * DevicePixelRatio
-            leftMargin: 2  * DevicePixelRatio
-            rightMargin: 2  * DevicePixelRatio
+            topMargin: 4  * DevicePixelRatio
+            leftMargin: 4  * DevicePixelRatio
+            rightMargin: 4  * DevicePixelRatio
             bottomMargin: 16  * DevicePixelRatio
             fill: parent
         }
@@ -61,23 +62,10 @@ QQC2.Page {
         ProportionalRect {
             id:headerTopRow
             Layout.preferredHeight: 92 * DevicePixelRatio
-            QQC2.Pane{
-                /// TODO need extract to file
+            MaterialPane{
                 id:headerPanel
-                property bool flat: enabled && Material.elevation > 0
-                property int radius: 4 * DevicePixelRatio
-                anchors.fill: parent
-                Material.elevation:  4 * DevicePixelRatio
+                primaryColor:Theme.primary
 
-                background: Rectangle {
-                    border.color: headerPanel.flat ? Qt.rgba(0,0,0,0.2) : "transparent"
-                    color: Theme.primary
-                    radius:  headerPanel.Material.elevation > 0 ? headerPanel.radius : 0
-                    layer.enabled: headerPanel.flat
-                    layer.effect: ElevationEffect {
-                        elevation: headerPanel.Material.elevation
-                    }
-                }
                 RowLayout {
                     id:headerRowLayout
                     anchors.fill: parent
@@ -117,6 +105,7 @@ QQC2.Page {
                                 }
                             }
                             InfoLabel{
+                                ///TODO need extract to component Label with link
                                 id:socURLText
 
                                 visible: (text.length > 0) ? true: false
@@ -134,8 +123,6 @@ QQC2.Page {
                                     acceptedButtons: Qt.NoButton // we don't want to eat clicks on the Text
                                     cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                                 }
-
-
                             }
                         }
                     }
@@ -143,26 +130,13 @@ QQC2.Page {
                 }
             }
         }
+
         ProportionalRect {
             id:bodyListView
             Layout.preferredHeight: 380 * DevicePixelRatio
-            QQC2.Pane{
-                /// TODO need extract to file
+            MaterialPane{
                 id:listViewPanel
-                property bool flat: enabled && Material.elevation > 0
-                property int radius: 4 * DevicePixelRatio
-                anchors.fill: parent
-                Material.elevation: 4 * DevicePixelRatio
-
-                background: Rectangle {
-                    border.color: headerPanel.flat ? Qt.rgba(0,0,0,0.2) : "transparent"
-                    color: Theme.primary
-                    radius:  headerPanel.Material.elevation > 0 ? headerPanel.radius : 0
-                    layer.enabled: headerPanel.flat
-                    layer.effect: ElevationEffect {
-                        elevation: headerPanel.Material.elevation
-                    }
-                }
+                primaryColor:Theme.primary
 
                 ListView {
                     id:socListView
@@ -180,8 +154,8 @@ QQC2.Page {
                         Rectangle {
                             z:2
                             color: Theme.accent
-                            // extract radius property  for hightlight and item
-                            radius: 4 * DevicePixelRatio
+                            radius: listViewPanel.radius
+
                             opacity: 0.72
                             y: socListView.currentItem.y
 
@@ -202,9 +176,6 @@ QQC2.Page {
                         valueText:model.value
                         onClicked: {
                             socListView.currentIndex = index
-                            if (isDebugMode){
-                                console.log("socListView.currentIndex:",index)
-                            }
                         }
                     }
                     QQC2.ScrollBar.vertical: QQC2.ScrollBar {
